@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>War Robots Helper: Leaderboard - Stunning Drones</title>
+    <link href="/warrobots-helper/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/warrobots-helper/leaderboard/css/stunning-drones.css?v=1.0.8" rel="stylesheet">
+</head>
+
+<body>
+    <div class="layout-container">
+        <div class="section-container">
+            <div class="section-content visible">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb py-2 fs-5 mb-0">
+                        <li class="breadcrumb-item">
+                            <a href="/warrobots-helper/index.html" class="text-decoration-none">
+                                <span class="d-none d-sm-inline">Warrobots Helper</span>
+                                <span class="d-inline d-sm-none">WH</span>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">
+                            Leaderboard - Stunning&nbsp;Drones
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="section-container">
+            <div id="sectionHeader1" class="section-header section-header-button" onclick="toggleSection(this)"
+                data-section-content="#sectionContent1">
+                <span class="section-header-button-icon">Modifier</span>
+            </div>
+            <div id="sectionContent1" class="section-content">
+                <div class="container-fluid px-0">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <label for="inputDiscountPercentage" class="col-form-label modifier-label">Discount %:</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" id="inputDiscountPercentage" class="form-control" min="0"
+                                        value="0" oninput="syncData()">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <label for="inputInitialPoints" class="col-form-label modifier-label">Initial Points:</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" id="inputInitialPoints" class="form-control" min="0" value="0"
+                                        oninput="syncData()">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <label for="inputBattlesToWin" class="col-form-label modifier-label">Battles To Win:</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" id="inputBattlesToWin" class="form-control" min="0" value="0"
+                                        oninput="syncData()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-container active">
+            <div id="sectionHeader2" class="section-header section-header-button" onclick="toggleSection(this)"
+                data-section-content="#sectionContent2">
+                <span class="section-header-button-icon">Drone Upgrades</span>
+            </div>
+            <div id="sectionContent2" class="section-content visible">
+                <div class="container-fluid px-0">
+                    <div id="droneUpgradeContainer" class="row g-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="section-container" style="box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08);">
+            <div class="section-header">
+                Total
+            </div>
+            <div class="section-content visible">
+                <div class="container-fluid px-0">
+                    <div class="row row-cols-2 justify-content-between align-items-center g-2 py-2 px-3 m-0">
+                        <div class="col-8">
+                            <div class="d-flex flex-wrap gap-1">
+                                <span class="badge bg-light text-dark border">
+                                    <span id="totalQuantity">0</span>&nbsp;Quantity
+                                </span>
+                                <span class="badge bg-light text-dark border">
+                                    <span id="totalMicrochipsCost">0</span>&nbsp;Microchips
+                                </span>
+                                <span class="badge bg-light text-dark border">
+                                    <span id="totalUpgradeTokensCost">0</span>&nbsp;Upgrade Tokens
+                                </span>
+                                <span class="badge bg-light text-dark border">
+                                    <span id="totalPoints">0</span>&nbsp;Points
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-auto m-0">
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="resetAll()">Reset
+                                All</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/warrobots-helper/leaderboard/js/stunning-drones.js?v=1.0.1"></script>
+    <script src="/warrobots-helper/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
