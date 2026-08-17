@@ -1,8 +1,8 @@
-# War Robots Helper 🤖
+# War Robots Calculator 🤖
 
-A modern web application featuring specialized calculators and planning tools for **War Robots** commanders to calculate upgrade costs, optimize event points, and maximize resource efficiency.
+A modern web application featuring specialized calculators for **War Robots** commanders to calculate upgrade costs, optimize event points, and maximize resource efficiency.
 
-🚀 **[Launch War Robots Helper](https://kokhong1995.github.io/warrobots-helper/)**
+🚀 **[Launch War Robots Calculator](https://kokhong1995.github.io/warrobots-calculator/)**
 
 ---
 
