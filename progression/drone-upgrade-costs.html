@@ -5,30 +5,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Primary Meta Tags -->
-    <title>Stunning Drones Leaderboard Calculator - War Robots</title>
-    <meta name="title" content="Stunning Drones Leaderboard Calculator - War Robots" />
+    <title>Drone Upgrade Costs Calculator - War Robots</title>
+    <meta name="title" content="Drone Upgrade Costs Calculator - War Robots" />
     <meta name="description"
-        content="Calculate the exact microchips and upgrade tokens required for drone upgrades to hit target leaderboard points in War Robots." />
+        content="Calculate the exact microchips and upgrade tokens required for drone upgrades in War Robots." />
     <meta name="keywords"
-        content="War Robots stunning drones, drone upgrade calculator, microchip calculator, upgrade tokens, leaderboard event" />
-    <link rel="canonical" href="https://kokhong1995.github.io/warrobots-calculator/leaderboard/stunning-drones.html" />
+        content="War Robots drone upgrade costs, drone level calculator, microchip calculator, upgrade tokens, progression cost" />
+    <link rel="canonical"
+        href="https://kokhong1995.github.io/warrobots-calculator/progression/drone-upgrade-costs.html" />
     <!-- Open Graph / Facebook / Discord -->
     <meta property="og:type" content="website" />
     <meta property="og:url"
-        content="https://kokhong1995.github.io/warrobots-calculator/leaderboard/stunning-drones.html" />
-    <meta property="og:title" content="Stunning Drones Leaderboard Calculator - War Robots" />
+        content="https://kokhong1995.github.io/warrobots-calculator/progression/drone-upgrade-costs.html" />
+    <meta property="og:title" content="Drone Upgrade Costs Calculator - War Robots" />
     <meta property="og:description"
-        content="Calculate the exact microchips and upgrade tokens required for drone upgrades to hit target leaderboard points in War Robots." />
+        content="Calculate the exact microchips and upgrade tokens required for drone upgrades in War Robots." />
     <!-- Twitter / X -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url"
-        content="https://kokhong1995.github.io/warrobots-calculator/leaderboard/stunning-drones.html" />
-    <meta property="twitter:title" content="Stunning Drones Leaderboard Calculator - War Robots" />
+        content="https://kokhong1995.github.io/warrobots-calculator/progression/drone-upgrade-costs.html" />
+    <meta property="twitter:title" content="Drone Upgrade Costs Calculator - War Robots" />
     <meta property="twitter:description"
-        content="Calculate the exact microchips and upgrade tokens required for drone upgrades to hit target leaderboard points in War Robots." />
+        content="Calculate the exact microchips and upgrade tokens required for drone upgrades in War Robots." />
     <link href="../bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/index.css?v=1.1.0" rel="stylesheet">
-    <link href="css/stunning-drones.css?v=1.1.0" rel="stylesheet">
+    <link href="css/drone-upgrade-costs.css?v=1.1.0" rel="stylesheet">
 </head>
 
 <body>
@@ -42,8 +43,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="card shadow-sm border-0 bg-light p-3 mb-4">
-                    <span class="badge bg-leaderboard w-auto align-self-start mb-2">Leaderboard</span>
-                    <h4 class="fw-bold mb-0">Stunning Drones</h4>
+                    <span class="badge bg-progression w-auto align-self-start mb-2">Progression</span>
+                    <h4 class="fw-bold mb-0">Drone Upgrade Costs</h4>
                 </div>
             </div>
         </div>
@@ -71,20 +72,6 @@
                                         %</label>
                                     <input type="number" class="form-control" id="inputDiscountPercentage" min="0"
                                         value="0" oninput="syncData()">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="inputInitialPoints"
-                                        class="form-label text-secondary small fw-medium">Initial
-                                        Points</label>
-                                    <input type="number" class="form-control" id="inputInitialPoints" min="0" value="0"
-                                        oninput="syncData()">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="inputBattlesToWin"
-                                        class="form-label text-secondary small fw-medium">Battles
-                                        To Win</label>
-                                    <input type="number" class="form-control" id="inputBattlesToWin" min="0" value="0"
-                                        oninput="syncData()">
                                 </div>
                             </div>
                         </div>
@@ -125,16 +112,13 @@
                         <div class="d-flex justify-content-between mb-2">
                             <span>Upgrade Tokens</span> <span id="totalUpgradeTokensCost" class="fw-bold">0</span>
                         </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Points</span> <span id="totalPoints" class="fw-bold">0</span>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script src="../data/ds-t4-drone-upgrades.js?v=1.1.0"></script>
-    <script src="js/stunning-drones.js?v=1.1.0"></script>
+    <script src="js/drone-upgrade-costs.js?v=1.1.0"></script>
     <script src="../bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

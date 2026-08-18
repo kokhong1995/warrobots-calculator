@@ -25,6 +25,7 @@
     <meta property="twitter:description"
         content="Optimize your War Robots progression. Free tools to calculate upgrade costs, microchips, upgrade tokens, and leaderboard event efficiency." />
     <link href="bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
 </head>
 
 <body>
@@ -46,19 +47,36 @@
     <!-- Main Content Grid Container -->
     <div class="container pb-5">
         <div class="row g-4">
-            <!-- Stunning Drones Tool Card -->
+            <!-- Leaderboard: Stunning Drones -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
                     <div class="card-body d-flex flex-column p-4">
                         <div class="mb-3">
-                            <span class="badge bg-primary mb-2">Leaderboard</span>
+                            <span class="badge bg-leaderboard mb-2">Leaderboard</span>
                             <h5 class="card-title fw-bold">Stunning Drones</h5>
                             <p class="card-text text-muted small">Calculate the microchips and upgrade tokens required
                                 for drone upgrades to reach target points.</p>
                         </div>
                         <div class="mt-auto pt-3">
                             <a href="leaderboard/stunning-drones.html"
-                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
+                                class="btn btn-outline-leaderboard w-100 fw-semibold">Open Calculator</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Progression: Drone Upgrades -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
+                    <div class="card-body d-flex flex-column p-4">
+                        <div class="mb-3">
+                            <span class="badge bg-progression mb-2">Progression</span>
+                            <h5 class="card-title fw-bold">Drone Upgrade Costs</h5>
+                            <p class="card-text text-muted small">Calculate the microchips and upgrade tokens required
+                                for drone upgrades.</p>
+                        </div>
+                        <div class="mt-auto pt-3">
+                            <a href="progression/drone-upgrade-costs.html"
+                                class="btn btn-outline-progression w-100 fw-semibold">Open Calculator</a>
                         </div>
                     </div>
                 </div>

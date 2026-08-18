@@ -9,6 +9,7 @@ A modern web application featuring specialized calculators for **War Robots** co
 ## 🛠️ Features
 
 - **Stunning Drones Calculator:** Calculate the microchips and upgrade tokens required to reach target points.
+- **Drone Upgrade Costs Calculator:** Calculate the microchips and upgrade tokens required for drone upgrades.
 - **Clean Dashboard Layout:** Modern, high-contrast UI designed for desktop and mobile navigation.
 - **More Tools Coming Soon:** Modular grid framework ready for additional resource calculators.
 
