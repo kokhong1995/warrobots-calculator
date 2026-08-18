@@ -47,26 +47,23 @@ function syncData() {
     let intInitialPoints = 0, intDiscountPercentage = 0, intBattlesToWinPoints = 0;
     let intQuantity = 0, intMicrochips = 0, intUpgradeTokens = 0, intPoints = 0;
     let intTotalQuantity = 0, intTotalMicrochipCost = 0, intTotalUpgradeTokenCost = 0, intTotalPoints = 0;
-    let i;
+    let i, index;
 
     // Get absolute value of discount percentage.
     intDiscountPercentage = Math.abs(toInt(inputDiscountPercentage.value));
 
-    if (droneUpgrades.length != inputQuantities.length) {
-        return;
-    }
-
-    for (i = 0; i < droneUpgrades.length; i++) {
+    for (i = 1; i < DS_DRONE_UPGRADES.length; i++) {
+        index = i - 1;
         // Calculate quantity, microchips, upgrade tokens, and points.
-        intQuantity = toInt(inputQuantities[i].value);
-        intMicrochips = applyDiscount(intDiscountPercentage, droneUpgrades[i].microchips * intQuantity);
-        intUpgradeTokens = droneUpgrades[i].upgradeTokens * intQuantity;
-        intPoints = droneUpgrades[i].points * intQuantity;
+        intQuantity = toInt(inputQuantities[index].value);
+        intMicrochips = applyDiscount(intDiscountPercentage, DS_DRONE_UPGRADES[i].microchips * intQuantity);
+        intUpgradeTokens = DS_DRONE_UPGRADES[i].upgradeTokens * intQuantity;
+        intPoints = DS_DRONE_UPGRADES[i].points.stunningDrones * intQuantity;
 
         // Set microchips, upgrade tokens, and  points.
-        microchips[i].textContent = intMicrochips;
-        upgradeTokens[i].textContent = intUpgradeTokens;
-        points[i].textContent = intPoints;
+        microchips[index].textContent = intMicrochips;
+        upgradeTokens[index].textContent = intUpgradeTokens;
+        points[index].textContent = intPoints;
 
         // Total up the quantity, microchip cost, upgrade token cost and total points. 
         intTotalQuantity += intQuantity;
@@ -104,107 +101,40 @@ function resetDroneUpgrades() {
     syncData();
 }
 
-const droneUpgrades = [
-    // {
-    //     level: 1,
-    //     microchips: 0,
-    //     upgradeTokens: 0,
-    //     points: 0
-    // },
-    {
-        level: 2,
-        microchips: 40,
-        upgradeTokens: 0,
-        points: 120
-    },
-    {
-        level: 3,
-        microchips: 60,
-        upgradeTokens: 0,
-        points: 180
-    },
-    {
-        level: 4,
-        microchips: 90,
-        upgradeTokens: 0,
-        points: 270
-    },
-    {
-        level: 5,
-        microchips: 100,
-        upgradeTokens: 0,
-        points: 300
-    },
-    {
-        level: 6,
-        microchips: 100,
-        upgradeTokens: 0,
-        points: 300
-    },
-    {
-        level: 7,
-        microchips: 100,
-        upgradeTokens: 0,
-        points: 300
-    },
-    {
-        level: 8,
-        microchips: 120,
-        upgradeTokens: 0,
-        points: 360
-    },
-    {
-        level: 9,
-        microchips: 120,
-        upgradeTokens: 0,
-        points: 360
-    },
-    {
-        level: 10,
-        microchips: 130,
-        upgradeTokens: 0,
-        points: 390
-    },
-    {
-        level: 11,
-        microchips: 140,
-        upgradeTokens: 0,
-        points: 420
-    },
-    {
-        level: 12,
-        microchips: 0,
-        upgradeTokens: 1,
-        points: 600
+function init() {
+    const droneUpgradeContainer = document.getElementById('droneUpgradeContainer');
+    let droneUpgradeContainerInnerHTML = '';
+    let i;
+
+    if (DS_DRONE_UPGRADES.length != 12) {
+        throw new Error("Drone upgrades length is " + DS_DRONE_UPGRADES.length + ", expected 12!");
     }
-];
 
-const droneUpgradeContainer = document.getElementById('droneUpgradeContainer');
-let droneUpgradeContainerInnerHTML = '';
-let i;
+    for (i = 1; i < DS_DRONE_UPGRADES.length; i++) {
+        droneUpgradeContainerInnerHTML += '<div class="col-md-6 col-xxl-4">' +
+            '<div class="item">' + '<div class="row align-items-center">' +
+            '<div class="col">' + '<div class="item-title">Level&nbsp;' + DS_DRONE_UPGRADES[i].level + '</div>' +
+            '</div>' +
+            '<div class="col">' +
+            '<div class="input-group">' +
+            '<button type="button" class="btn btn-danger" onclick="updateValue(\'-\', \'upgradeQuantity_' + i + '\')">-</button>' +
+            '<input id="upgradeQuantity_' + i + '" type="number" class="form-control quantities" min="0" value="0" oninput="syncData()">' +
+            '<button type="button" class="btn btn-success" onclick="updateValue(\'+\', \'upgradeQuantity_' + i + '\')">+</button>' +
+            '</div>' +
+            '</div>' +
+            '<div class="col-12">' +
+            '<div class="d-flex flex-wrap gap-1 mt-2">' +
+            '<span class="badge bg-light text-dark border"><span id="microchipsCost_' + i + '" class="microchips">0</span> Microchips</span>' +
+            '<span class="badge bg-light text-dark border"><span id="upgradeTokensCost_' + i + '" class="upgrade-tokens">0</span> Upgrade Tokens</span>' +
+            '<span class="badge bg-light text-dark border"><span id="points_' + i + '" class="points">0</span> Points</span>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+    }
 
-for (i = 0; i < droneUpgrades.length; i++) {
-    droneUpgradeContainerInnerHTML += '<div class="col-md-6 col-xxl-4">' +
-        '<div class="item">' + '<div class="row align-items-center">' +
-        '<div class="col">' + '<div class="item-title">Level&nbsp;' + droneUpgrades[i].level + '</div>' +
-        '</div>' +
-        '<div class="col">' +
-        '<div class="input-group">' +
-        '<button type="button" class="btn btn-danger" onclick="updateValue(\'-\', \'upgradeQuantity_' + i + '\')">-</button>' +
-        '<input id="upgradeQuantity_' + i + '" type="number" class="form-control quantities" min="0" value="0" oninput="syncData()">' +
-        '<button type="button" class="btn btn-success" onclick="updateValue(\'+\', \'upgradeQuantity_' + i + '\')">+</button>' +
-        '</div>' +
-        '</div>' +
-        '<div class="col-12">' +
-        '<div class="d-flex flex-wrap gap-1 mt-2">' +
-        '<span class="badge bg-light text-dark border"><span id="microchipsCost_' + i + '" class="microchips">0</span> Microchips</span>' +
-        '<span class="badge bg-light text-dark border"><span id="upgradeTokensCost_' + i + '" class="upgrade-tokens">0</span> Upgrade Tokens</span>' +
-        '<span class="badge bg-light text-dark border"><span id="points_' + i + '" class="points">0</span> Points</span>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '</div>';
+    droneUpgradeContainer.innerHTML = droneUpgradeContainerInnerHTML;
 }
 
-droneUpgradeContainer.innerHTML = droneUpgradeContainerInnerHTML;
+init();
