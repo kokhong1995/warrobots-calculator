@@ -28,8 +28,10 @@
     <meta property="twitter:description"
         content="Calculate the exact microchips and upgrade tokens required for drone upgrades in War Robots." />
     <link href="../bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/index.css?v=1.1.0" rel="stylesheet">
-    <link href="css/drone-upgrade-costs.css?v=1.1.0" rel="stylesheet">
+    <link href="../css/index.css?v=1.2.0" rel="stylesheet">
+    <link href="css/drone-upgrade-costs.css?v=1.2.0" rel="stylesheet">
+    <script src="../data/ds-drone-upgrades.js?v=1.2.0"></script>
+    <script src="js/drone-upgrade-costs.js?v=1.2.0" defer></script>
 </head>
 
 <body>
@@ -82,7 +84,17 @@
                     <div class="card-header">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
-                                <span class="font-weight-bold">2. Tier 4 Drone Upgrades</span>
+                                <div class="d-flex align-items-center">
+                                    <span class="font-weight-bold">2. Drone Upgrades</span>
+                                    <button type="button"
+                                        class="btn btn-sm btn-link text-secondary pt-0 pb-0 text-decoration-none fs-5"
+                                        data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus"
+                                        data-bs-html="true" data-bs-title="Max Level Caps"
+                                        data-bs-content="<ul class='list-unstyled mb-0 small'><li><strong>Tier 1:</strong> Max Level 3</li><li><strong>Tier 2:</strong> Max Level 6</li><li><strong>Tier 3:</strong> Max Level 9</li><li><strong>Tier 4:</strong> Max Level 12</li></ul>"
+                                        aria-label="Tier Level Limits Information">
+                                        <i class="bi bi-info-circle-fill"></i> ⓘ
+                                    </button>
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <button type="button" class="btn btn-sm btn-outline-danger"
@@ -117,8 +129,6 @@
             </div>
         </div>
     </div>
-    <script src="../data/ds-t4-drone-upgrades.js?v=1.1.0"></script>
-    <script src="js/drone-upgrade-costs.js?v=1.1.0"></script>
     <script src="../bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

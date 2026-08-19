@@ -1,4 +1,4 @@
-const DS_T4_DRONE_UPGRADES = [
+const DS_DRONE_UPGRADES = [
     {
         level: 1,
         microchips: 0,

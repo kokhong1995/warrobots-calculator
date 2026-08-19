@@ -49,12 +49,12 @@ function syncData() {
     // Get absolute value of discount percentage.
     intDiscountPercentage = Math.abs(toInt(inputDiscountPercentage.value));
 
-    for (i = 1; i < DS_T4_DRONE_UPGRADES.length; i++) {
+    for (i = 1; i < DS_DRONE_UPGRADES.length; i++) {
         index = i - 1;
         // Calculate quantity, microchips and upgrade tokens.
         intQuantity = toInt(inputQuantities[index].value);
-        intMicrochips = Math.round(applyDiscount(intDiscountPercentage, DS_T4_DRONE_UPGRADES[i].microchips * intQuantity));
-        intUpgradeTokens = DS_T4_DRONE_UPGRADES[i].upgradeTokens * intQuantity;
+        intMicrochips = Math.round(applyDiscount(intDiscountPercentage, DS_DRONE_UPGRADES[i].microchips * intQuantity));
+        intUpgradeTokens = Math.round(applyDiscount(intDiscountPercentage, DS_DRONE_UPGRADES[i].upgradeTokens * intQuantity));
 
         // Set microchips and upgrade tokens.
         microchips[index].textContent = intMicrochips;
@@ -91,14 +91,14 @@ function init() {
     let droneUpgradeContainerInnerHTML = '';
     let i;
 
-    if (DS_T4_DRONE_UPGRADES.length != 12) {
-        throw new Error("Drone upgrades length is " + DS_T4_DRONE_UPGRADES.length + ", expected 12!");
+    if (DS_DRONE_UPGRADES.length != 12) {
+        throw new Error("Drone upgrades length is " + DS_DRONE_UPGRADES.length + ", expected 12!");
     }
 
-    for (i = 1; i < DS_T4_DRONE_UPGRADES.length; i++) {
+    for (i = 1; i < DS_DRONE_UPGRADES.length; i++) {
         droneUpgradeContainerInnerHTML += '<div class="col-md-6 col-xxl-4">' +
             '<div class="item">' + '<div class="row align-items-center">' +
-            '<div class="col">' + '<div class="item-title">Level&nbsp;' + DS_T4_DRONE_UPGRADES[i].level + '</div>' +
+            '<div class="col">' + '<div class="item-title">Level&nbsp;' + DS_DRONE_UPGRADES[i].level + '</div>' +
             '</div>' +
             '<div class="col">' +
             '<div class="input-group">' +
@@ -119,6 +119,9 @@ function init() {
     }
 
     droneUpgradeContainer.innerHTML = droneUpgradeContainerInnerHTML;
+
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 }
 
 init();
