@@ -1,6 +1,6 @@
-import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.3.2';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.3.2';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.3.2';
+import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.5.0';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.5.0';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.5.0';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
