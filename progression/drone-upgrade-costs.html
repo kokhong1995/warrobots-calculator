@@ -27,21 +27,21 @@
     <meta property="twitter:title" content="Drone Upgrade Costs Calculator - War Robots" />
     <meta property="twitter:description"
         content="Calculate the exact microchips and upgrade tokens required for drone upgrades in War Robots." />
-    <link href="../bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/index.css?v=1.2.0" rel="stylesheet">
-    <link href="css/drone-upgrade-costs.css?v=1.2.0" rel="stylesheet">
-    <script src="../data/ds-drone-upgrades.js?v=1.2.0"></script>
-    <script src="js/drone-upgrade-costs.js?v=1.2.0" defer></script>
+    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.3.2">
+    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.3.2">
+    <link rel="stylesheet" href="./css/drone-upgrade-costs.css?v=1.3.2">
+    <script src="/warrobots-calculator/data/ds-drone-upgrades.js?v=1.3.2"></script>
+    <script type="module" src="./js/drone-upgrade-costs.js?v=1.3.2"></script>
 </head>
 
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-dark bg-dark shadow-sm sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="../index.html">War Robots Calculator</a>
+            <a class="navbar-brand fw-bold" href="/warrobots-calculator">War Robots Calculator</a>
         </div>
     </nav>
-    <div class="container my-4">
+    <div id="mainContainer" class="container my-4">
         <div class="row">
             <div class="col-12">
                 <div class="card shadow-sm border-0 bg-light p-3 mb-4">
@@ -60,8 +60,8 @@
                                 <span class="font-weight-bold">1. Modifiers</span>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-sm btn-outline-danger"
-                                    onclick="resetModifier()">Reset</button>
+                                <button type="button" id="buttonResetModifiers"
+                                    class="btn btn-sm btn-outline-danger">Reset</button>
                             </div>
                         </div>
                     </div>
@@ -69,11 +69,11 @@
                         <div class="container-fluid px-0">
                             <div class="row g-2 align-items-center">
                                 <div class="col-md-4">
-                                    <label for="inputDiscountPercentage"
-                                        class="form-label text-secondary small fw-medium">Discount
+                                    <label for="inputDroneUpgradeDiscountPercentage"
+                                        class="form-label text-secondary small fw-medium">Drone Upgrade Discount
                                         %</label>
-                                    <input type="number" class="form-control" id="inputDiscountPercentage" min="0"
-                                        value="0" oninput="syncData()">
+                                    <input type="number" class="form-control sync-data"
+                                        id="inputDroneUpgradeDiscountPercentage" min="0" value="0">
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                             </div>
                             <div class="col-auto">
                                 <button type="button" class="btn btn-sm btn-outline-danger"
-                                    onclick="resetDroneUpgrades()">Reset</button>
+                                    id="buttonResetDroneUpgrades">Reset</button>
                             </div>
                         </div>
                     </div>
@@ -119,17 +119,17 @@
                             <span>Quantity</span> <span id="totalQuantity" class="fw-bold">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Microchips</span> <span id="totalMicrochipsCost" class="fw-bold">0</span>
+                            <span>Microchips</span> <span id="totalMicrochips" class="fw-bold">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Upgrade Tokens</span> <span id="totalUpgradeTokensCost" class="fw-bold">0</span>
+                            <span>Upgrade Tokens</span> <span id="totalUpgradeTokens" class="fw-bold">0</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="../bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.3.2"></script>
 </body>
 
 </html>

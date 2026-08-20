@@ -1,6 +1,6 @@
-import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.3.1';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.3.1';
-import { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier } from '/warrobots-calculator/js/modifier-helper.js?v=1.3.1';
+import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.3.2';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.3.2';
+import { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier } from '/warrobots-calculator/js/modifier-helper.js?v=1.3.2';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -31,7 +31,7 @@ function syncData() {
             continue;
         }
 
-        inputQuantity = document.getElementById('upgradeQuantity_' + i);
+        inputQuantity = document.getElementById('quantity_' + i);
         spanSilverAmount = document.getElementById('silverAmount_' + i);
         spanGoldAmount = document.getElementById('goldAmount_' + i);
         spanUpgradeDuration = document.getElementById('upgradeDuration_' + i);
@@ -39,10 +39,10 @@ function syncData() {
 
         // Calculate quantity, silver amount, gold amount, upgrade duration and upgrade tokens.
         quantity = toInt(inputQuantity.value);
-        silverAmount = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_UPGRADES[i].silverAmount) * quantity);
-        goldAmount = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_UPGRADES[i].goldAmount) * quantity);
+        silverAmount = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_UPGRADES[i].silverAmount)) * quantity;
+        goldAmount = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_UPGRADES[i].goldAmount)) * quantity;
         upgradeDuration = applyUpgradeSpeedMultiplier(upgradeSpeedMultiplier, DS_T4_ROBOT_UPGRADES[i].upgradeDurationSeconds) * quantity;
-        upgradeTokens = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_UPGRADES[i].upgradeTokens) * quantity);
+        upgradeTokens = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_UPGRADES[i].upgradeTokens)) * quantity;
 
         // Set silver amount, gold amount, upgrade duration and upgrade tokens.
         spanSilverAmount.textContent = getStrAmount(silverAmount);
@@ -100,9 +100,9 @@ function init() {
             '</div>' +
             '<div class="col">' +
             '<div class="input-group">' +
-            '<button type="button" class="btn btn-danger btn-decrement" data-wc-target="upgradeQuantity_' + i + '">-</button>' +
-            '<input id="upgradeQuantity_' + i + '" type="number" class="form-control quantities sync-data" min="0" value="0">' +
-            '<button type="button" class="btn btn-success btn-increment" data-wc-target="upgradeQuantity_' + i + '">+</button>' +
+            '<button type="button" class="btn btn-danger btn-decrement" data-wc-target="quantity_' + i + '">-</button>' +
+            '<input id="quantity_' + i + '" type="number" class="form-control quantities sync-data" min="0" value="0">' +
+            '<button type="button" class="btn btn-success btn-increment" data-wc-target="quantity_' + i + '">+</button>' +
             '</div>' +
             '</div>' +
             '<div class="col-12">' +
@@ -138,6 +138,10 @@ function init() {
     // Set input event listener.
     document.getElementById('mainContainer').addEventListener('input', (e) => {
         if (e.target.matches('.sync-data')) {
+            // Minimum value is 0.
+            if (e.target.value < 0) {
+                e.target.value = 0;
+            }
             syncData();
         }
     });
