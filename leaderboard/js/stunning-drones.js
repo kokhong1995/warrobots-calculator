@@ -1,105 +1,79 @@
-function toInt(value) {
-    return parseInt(value) | 0;
-}
+import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.3.2';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.3.2';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.3.2';
 
-function updateValue(eventType, inputId) {
-    if (eventType == null || inputId == null) {
-        return;
-    }
-
-    let input = document.getElementById(inputId);
-    let intValue = toInt(input.value);
-
-    if (eventType == '+') {
-        intValue++;
-    }
-    else if (eventType == '-' && intValue > 0) {
-        intValue--;
-    }
-
-    input.value = intValue;
-
-    syncData();
-}
-
-function applyDiscount(discountPercentage, value) {
-    if (discountPercentage == null || value == null) {
-        return 0;
-    }
-
-    let discount = value * discountPercentage / 100;
-    let netValue = value - discount;
-
-    return netValue > 0 ? netValue : 0;
+function updateInputValue(eventType, inputId) {
+    updateNumberInput(eventType, inputId, syncData);
 }
 
 function syncData() {
-    const inputDiscountPercentage = document.getElementById('inputDiscountPercentage');
+    const inputDroneUpgradeDiscountPercentage = document.getElementById('inputDroneUpgradeDiscountPercentage');
     const inputInitialPoints = document.getElementById('inputInitialPoints');
     const inputBattlesToWin = document.getElementById('inputBattlesToWin');
     const inputQuantities = document.querySelectorAll(".quantities");
-    const microchips = document.querySelectorAll(".microchips");
-    const upgradeTokens = document.querySelectorAll(".upgrade-tokens");
-    const points = document.querySelectorAll(".points");
-    const totalQuantity = document.getElementById('totalQuantity');
-    const totalMicrochipCost = document.getElementById('totalMicrochipsCost');
-    const totalUpgradeTokenCost = document.getElementById('totalUpgradeTokensCost');
-    const totalPoints = document.getElementById('totalPoints');
-    let intInitialPoints = 0, intDiscountPercentage = 0, intBattlesToWinPoints = 0;
-    let intQuantity = 0, intMicrochips = 0, intUpgradeTokens = 0, intPoints = 0;
-    let intTotalQuantity = 0, intTotalMicrochipCost = 0, intTotalUpgradeTokenCost = 0, intTotalPoints = 0;
-    let i, index;
+    const spanTotalQuantity = document.getElementById('totalQuantity');
+    const spanTotalMicrochips = document.getElementById('totalMicrochips');
+    const spanTotalUpgradeTokens = document.getElementById('totalUpgradeTokens');
+    const spanTotalPoints = document.getElementById('totalPoints');
+    let inputQuantity, spanMicrochips, spanUpgradeTokens, spanPoints;
+    let upgradeDiscountPercentage = 0;
+    let quantity = 0, microchips = 0, upgradeTokens = 0, points = 0;
+    let totalQuantity = 0, totalMicrochips = 0, totalUpgradeTokens = 0;
+    let totalPoints = 0, initialPoints = 0, battlesToWinPoints = 0;
+    let i;
 
-    // Get absolute value of discount percentage.
-    intDiscountPercentage = Math.abs(toInt(inputDiscountPercentage.value));
+    // Get values of modifier inputs.
+    upgradeDiscountPercentage = toInt(inputDroneUpgradeDiscountPercentage.value);
 
-    for (i = 1; i < DS_DRONE_UPGRADES.length; i++) {
-        index = i - 1;
+    for (i = 0; i < DS_DRONE_UPGRADES.length; i++) {
+        if (DS_DRONE_UPGRADES[i].level == 1) {
+            continue;
+        }
+
+        inputQuantity = document.getElementById('quantity_' + i);
+        spanMicrochips = document.getElementById('microchips_' + i);
+        spanUpgradeTokens = document.getElementById('upgradeTokens_' + i);
+        spanPoints = document.getElementById('points_' + i);
+
         // Calculate quantity, microchips, upgrade tokens, and points.
-        intQuantity = toInt(inputQuantities[index].value);
-        intMicrochips = Math.round(applyDiscount(intDiscountPercentage, DS_DRONE_UPGRADES[i].microchips * intQuantity));
-        intUpgradeTokens = Math.round(applyDiscount(intDiscountPercentage, DS_DRONE_UPGRADES[i].upgradeTokens * intQuantity));
-        intPoints = DS_DRONE_UPGRADES[i].points.stunningDrones * intQuantity;
+        quantity = toInt(inputQuantity.value);
+        microchips = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_DRONE_UPGRADES[i].microchips)) * quantity;
+        upgradeTokens = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_DRONE_UPGRADES[i].upgradeTokens)) * quantity;
+        points = DS_DRONE_UPGRADES[i].points.stunningDrones * quantity;
 
-        // Set microchips, upgrade tokens, and  points.
-        microchips[index].textContent = intMicrochips;
-        upgradeTokens[index].textContent = intUpgradeTokens;
-        points[index].textContent = intPoints;
+        // Set microchips upgrade tokens, and points.
+        spanMicrochips.textContent = microchips;
+        spanUpgradeTokens.textContent = upgradeTokens;
+        spanPoints.textContent = points;
 
-        // Total up the quantity, microchip cost, upgrade token cost and total points. 
-        intTotalQuantity += intQuantity;
-        intTotalMicrochipCost += intMicrochips;
-        intTotalUpgradeTokenCost += intUpgradeTokens;
-        intTotalPoints += intPoints;
+        // Total up quantity, microchips, upgrade tokens, and points.
+        totalQuantity += quantity;
+        totalMicrochips += microchips;
+        totalUpgradeTokens += upgradeTokens;
+        totalPoints += points;
     }
     // Calculate total points.
-    intInitialPoints = toInt(inputInitialPoints.value);
-    intBattlesToWinPoints = toInt(inputBattlesToWin.value) * 10;
-    intTotalPoints += intInitialPoints + intBattlesToWinPoints;
+    initialPoints = toInt(inputInitialPoints.value);
+    battlesToWinPoints = toInt(inputBattlesToWin.value) * 10;
+    totalPoints += initialPoints + battlesToWinPoints;
 
-    // Set total quantity, total microchip cost, total upgrade token cost and total points.
-    totalQuantity.textContent = intTotalQuantity;
-    totalMicrochipCost.textContent = intTotalMicrochipCost;
-    totalUpgradeTokenCost.textContent = intTotalUpgradeTokenCost;
-    totalPoints.textContent = intTotalPoints;
+    // Set total quantity, total microchips, total upgrade tokens, and total points.
+    spanTotalQuantity.textContent = totalQuantity;
+    spanTotalMicrochips.textContent = totalMicrochips;
+    spanTotalUpgradeTokens.textContent = totalUpgradeTokens;
+    spanTotalPoints.textContent = totalPoints;
 }
 
-function resetModifier() {
-    const inputDiscountPercentage = document.getElementById('inputDiscountPercentage');
-    const inputInitialPoints = document.getElementById('inputInitialPoints');
-    const inputBattlesToWin = document.getElementById('inputBattlesToWin');
-
-    inputDiscountPercentage.value = 0;
-    inputInitialPoints.value = 0;
-    inputBattlesToWin.value = 0;
-    syncData();
+function resetModifiers() {
+    resetInputs([
+        '#inputDroneUpgradeDiscountPercentage', '#inputInitialPoints', '#inputBattlesToWin'
+    ], 0, syncData);
 }
 
 function resetDroneUpgrades() {
-    const inputQuantities = document.querySelectorAll(".quantities");
-
-    inputQuantities.forEach(input => input.value = 0);
-    syncData();
+    resetInputs([
+        '#droneUpgradeContainer .quantities'
+    ], 0, syncData);
 }
 
 function init() {
@@ -107,27 +81,27 @@ function init() {
     let droneUpgradeContainerInnerHTML = '';
     let i;
 
-    if (DS_DRONE_UPGRADES.length != 12) {
-        throw new Error("Drone upgrades length is " + DS_DRONE_UPGRADES.length + ", expected 12!");
-    }
+    for (i = 0; i < DS_DRONE_UPGRADES.length; i++) {
+        if (DS_DRONE_UPGRADES[i].level == 1) {
+            continue;
+        }
 
-    for (i = 1; i < DS_DRONE_UPGRADES.length; i++) {
         droneUpgradeContainerInnerHTML += '<div class="col-md-6 col-xxl-4">' +
             '<div class="item">' + '<div class="row align-items-center">' +
             '<div class="col">' + '<div class="item-title">Level&nbsp;' + DS_DRONE_UPGRADES[i].level + '</div>' +
             '</div>' +
             '<div class="col">' +
             '<div class="input-group">' +
-            '<button type="button" class="btn btn-danger" onclick="updateValue(\'-\', \'upgradeQuantity_' + i + '\')">-</button>' +
-            '<input id="upgradeQuantity_' + i + '" type="number" class="form-control quantities" min="0" value="0" oninput="syncData()">' +
-            '<button type="button" class="btn btn-success" onclick="updateValue(\'+\', \'upgradeQuantity_' + i + '\')">+</button>' +
+            '<button type="button" class="btn btn-danger btn-decrement" data-wc-target="quantity_' + i + '">-</button>' +
+            '<input id="quantity_' + i + '" type="number" class="form-control quantities sync-data" min="0" value="0">' +
+            '<button type="button" class="btn btn-success btn-increment" data-wc-target="quantity_' + i + '">+</button>' +
             '</div>' +
             '</div>' +
             '<div class="col-12">' +
             '<div class="d-flex flex-wrap gap-1 mt-2">' +
-            '<span class="badge bg-light text-dark border"><span id="microchipsCost_' + i + '" class="microchips">0</span> Microchips</span>' +
-            '<span class="badge bg-light text-dark border"><span id="upgradeTokensCost_' + i + '" class="upgrade-tokens">0</span> Upgrade Tokens</span>' +
-            '<span class="badge bg-light text-dark border"><span id="points_' + i + '" class="points">0</span> Points</span>' +
+            '<span class="badge bg-light text-dark border">Microchips: <span id="microchips_' + i + '" class="microchips">0</span></span>' +
+            '<span class="badge bg-light text-dark border">Upgrade Tokens: <span id="upgradeTokens_' + i + '" class="upgrade-tokens">0</span></span>' +
+            '<span class="badge bg-light text-dark border">Points: <span id="points_' + i + '" class="points">0</span></span>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -136,6 +110,32 @@ function init() {
     }
 
     droneUpgradeContainer.innerHTML = droneUpgradeContainerInnerHTML;
+
+    // Set click event listener.
+    document.getElementById('mainContainer').addEventListener('click', (e) => {
+        if (e.target.matches('#buttonResetModifiers')) {
+            resetModifiers();
+        }
+        if (e.target.matches('#buttonResetDroneUpgrades')) {
+            resetDroneUpgrades();
+        }
+        if (e.target.matches('.btn-decrement')) {
+            updateInputValue('-', e.target.dataset.wcTarget);
+        }
+        if (e.target.matches('.btn-increment')) {
+            updateInputValue('+', e.target.dataset.wcTarget);
+        }
+    });
+    // Set input event listener.
+    document.getElementById('mainContainer').addEventListener('input', (e) => {
+        if (e.target.matches('.sync-data')) {
+            // Minimum value is 0.
+            if (e.target.value < 0) {
+                e.target.value = 0;
+            }
+            syncData();
+        }
+    });
 
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
