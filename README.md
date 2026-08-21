@@ -25,3 +25,11 @@ A modern web application featuring specialized calculators for **War Robots** co
 * **Bootstrap 5** (Layout & Form Components)
 * **Bootstrap Icons**
 * **JavaScript**
+
+---
+
+## 💬 Community & Feedback
+
+Got questions, feature requests, or bug reports? Join our Discord community to chat with us and stay updated on new releases!
+
+👉 [Join the War Robots Calculator Discord Server](https://discord.gg/ehZtNgXDHq)
