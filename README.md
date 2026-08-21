@@ -9,6 +9,7 @@ A modern web application featuring specialized calculators for **War Robots** co
 ## 🛠️ Features
 
 - **Stunning Drones Calculator:** Calculate the microchips and upgrade tokens required to reach target points.
+- **Fight To The Death Calculator:** Calculate the silver amount, gold amount, upgrade duration, and upgrade tokens required to reach target points.
 - **Drone Upgrade Costs Calculator:** Calculate the microchips and upgrade tokens required for drone upgrades.
 - **Robot Upgrade Costs Calculator:** Calculate the silver amount, gold amount, upgrade duration, and upgrade tokens required for robot upgrades.
 - **Robot Weapon Upgrade Costs Calculator:** Calculate the silver amount, gold amount, upgrade duration, and upgrade tokens required for robot weapon upgrades.

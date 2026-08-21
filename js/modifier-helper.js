@@ -18,4 +18,11 @@ const applyUpgradeSpeedMultiplier = (speed, seconds) => {
     }
 };
 
-export { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier };
+const calculateTotalTitanDeployPoints = (totalTitanDeploys) => {
+    const titanDeployHonorPoints = 32;
+    const titanDeployPoints = Math.floor(titanDeployHonorPoints / 9);
+
+    return titanDeployPoints * totalTitanDeploys;
+};
+
+export { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier, calculateTotalTitanDeployPoints };
