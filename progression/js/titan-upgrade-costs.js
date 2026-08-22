@@ -1,6 +1,6 @@
-import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.0';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.0';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.0';
+import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.1';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.1';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.1';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -30,7 +30,7 @@ function syncData() {
 
             // Calculate quantity and platinum amount.
             quantity = toInt(inputQuantity.value);
-            platinumAmount = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_TITAN_UPGRADES[i][j].platinumAmount)) * quantity;
+            platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_TITAN_UPGRADES[i][j].platinumAmount) * quantity;
 
             // Set platinum amount.
             spanPlatinumAmount.textContent = platinumAmount;

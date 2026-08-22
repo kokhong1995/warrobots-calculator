@@ -4,7 +4,7 @@ const applyUpgradeDiscountPercentage = (upgradeDiscountPercentage, value) => {
     }
 
     let discount = value * upgradeDiscountPercentage / 100;
-    let netValue = value - discount;
+    let netValue = value - Math.round(discount);
 
     return netValue > 0 ? netValue : 0;
 };

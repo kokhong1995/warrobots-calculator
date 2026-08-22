@@ -1,6 +1,6 @@
-import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.0';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.0';
-import { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.0';
+import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.1';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.1';
+import { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.1';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -43,10 +43,10 @@ function syncData() {
 
             // Calculate quantity, silver amount, gold amount, upgrade duration, upgrade tokens and points.
             quantity = toInt(inputQuantity.value);
-            silverAmount = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_FIGHT_TO_THE_DEATH[i][j].silverAmount)) * quantity;
-            goldAmount = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_FIGHT_TO_THE_DEATH[i][j].goldAmount)) * quantity;
+            silverAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_FIGHT_TO_THE_DEATH[i][j].silverAmount) * quantity;
+            goldAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_FIGHT_TO_THE_DEATH[i][j].goldAmount) * quantity;
             upgradeDuration = applyUpgradeSpeedMultiplier(upgradeSpeedMultiplier, DS_FIGHT_TO_THE_DEATH[i][j].upgradeDurationSeconds) * quantity;
-            upgradeTokens = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_FIGHT_TO_THE_DEATH[i][j].upgradeTokens)) * quantity;
+            upgradeTokens = DS_FIGHT_TO_THE_DEATH[i][j].upgradeTokens * quantity;
             points = DS_FIGHT_TO_THE_DEATH[i][j].points.fightToTheDeath * quantity;
 
             // Set silver amount, gold amount, upgrade duration, upgrade tokens and points.

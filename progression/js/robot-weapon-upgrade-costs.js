@@ -1,6 +1,6 @@
-import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.0';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.0';
-import { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.0';
+import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.1';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.1';
+import { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.1';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -39,10 +39,10 @@ function syncData() {
 
         // Calculate quantity, silver amount, gold amount, upgrade duration and upgrade tokens.
         quantity = toInt(inputQuantity.value);
-        silverAmount = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_WEAPON_UPGRADES[i].silverAmount)) * quantity;
-        goldAmount = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_WEAPON_UPGRADES[i].goldAmount)) * quantity;
+        silverAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_WEAPON_UPGRADES[i].silverAmount) * quantity;
+        goldAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_WEAPON_UPGRADES[i].goldAmount) * quantity;
         upgradeDuration = applyUpgradeSpeedMultiplier(upgradeSpeedMultiplier, DS_T4_ROBOT_WEAPON_UPGRADES[i].upgradeDurationSeconds) * quantity;
-        upgradeTokens = Math.round(applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_WEAPON_UPGRADES[i].upgradeTokens)) * quantity;
+        upgradeTokens = DS_T4_ROBOT_WEAPON_UPGRADES[i].upgradeTokens * quantity;
 
         // Set silver amount, gold amount, upgrade duration and upgrade tokens.
         spanSilverAmount.textContent = getStrAmount(silverAmount);
