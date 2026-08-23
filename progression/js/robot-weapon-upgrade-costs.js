@@ -1,6 +1,6 @@
-import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.1';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.1';
-import { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.1';
+import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.2';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.2';
+import { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.2';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
