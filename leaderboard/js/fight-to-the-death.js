@@ -1,6 +1,6 @@
-import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.2';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.2';
-import { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.2';
+import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.3';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.3';
+import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.3';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -8,7 +8,6 @@ function updateInputValue(eventType, inputId) {
 
 function syncData() {
     const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
-    const inputUpgradeSpeedMultiplier = document.getElementById('inputUpgradeSpeedMultiplier');
     const inputInitialPoints = document.getElementById('inputInitialPoints');
     const inputTotalTitanDeploys = document.getElementById('inputTotalTitanDeploys');
     const spanTotalQuantity = document.getElementById('totalQuantity');
@@ -18,7 +17,7 @@ function syncData() {
     const spanTotalUpgradeTokens = document.getElementById('totalUpgradeTokens');
     const spanTotalPoints = document.getElementById('totalPoints');
     let inputQuantity, spanSilverAmount, spanGoldAmount, spanUpgradeDuration, spanUpgradeTokens, spanPoints;
-    let upgradeDiscountPercentage = 0, upgradeSpeedMultiplier = 0;
+    let upgradeDiscountPercentage = 0;
     let quantity = 0, silverAmount = 0, goldAmount = 0, upgradeDuration = 0, upgradeTokens = 0, points = 0;
     let totalQuantity = 0, totalSilverAmount = 0, totalGoldAmount = 0, totalUpgradeDuration = 0, totalUpgradeTokens = 0;
     let totalPoints = 0, initialPoints = 0, totalTitanDeploysPoints;
@@ -26,7 +25,6 @@ function syncData() {
 
     // Get values of modifier inputs.
     upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
-    upgradeSpeedMultiplier = Math.abs(toFloat(inputUpgradeSpeedMultiplier.value));
 
     for (i = 0; i < DS_FIGHT_TO_THE_DEATH.length; i++) {
         for (j = 0; j < DS_FIGHT_TO_THE_DEATH[i].length; j++) {
@@ -44,8 +42,8 @@ function syncData() {
             // Calculate quantity, silver amount, gold amount, upgrade duration, upgrade tokens and points.
             quantity = toInt(inputQuantity.value);
             silverAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_FIGHT_TO_THE_DEATH[i][j].silverAmount) * quantity;
-            goldAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_FIGHT_TO_THE_DEATH[i][j].goldAmount) * quantity;
-            upgradeDuration = applyUpgradeSpeedMultiplier(upgradeSpeedMultiplier, DS_FIGHT_TO_THE_DEATH[i][j].upgradeDurationSeconds) * quantity;
+            goldAmount = DS_FIGHT_TO_THE_DEATH[i][j].goldAmount * quantity;
+            upgradeDuration = DS_FIGHT_TO_THE_DEATH[i][j].upgradeDurationSeconds * quantity;
             upgradeTokens = DS_FIGHT_TO_THE_DEATH[i][j].upgradeTokens * quantity;
             points = DS_FIGHT_TO_THE_DEATH[i][j].points.fightToTheDeath * quantity;
 
@@ -85,21 +83,17 @@ function syncData() {
 
 function resetModifiers() {
     resetInputs([
-        '#inputUpgradeDiscountPercentage', '#inputUpgradeSpeedMultiplier',
-        '#inputInitialPoints', '#inputTotalTitanDeploys'
+        '#inputUpgradeDiscountPercentage', '#inputInitialPoints',
+        '#inputTotalTitanDeploys'
     ], 0, syncData);
 }
 
 function resetT4RobotUpgrades() {
-    resetInputs([
-        '#t4RobotUpgradesContainer .quantities'
-    ], 0, syncData);
+    resetInputs(['#t4RobotUpgradesContainer .quantities'], 0, syncData);
 }
 
 function resetT4RobotWeaponUpgrades() {
-    resetInputs([
-        '#t4RobotWeaponUpgradesContainer .quantities'
-    ], 0, syncData);
+    resetInputs(['#t4RobotWeaponUpgradesContainer .quantities'], 0, syncData);
 }
 
 function init() {
