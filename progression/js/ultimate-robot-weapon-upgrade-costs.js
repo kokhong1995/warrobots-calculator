@@ -1,4 +1,4 @@
-import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.4';
+import { toInt, thousandSeperator, getStrLevel, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.7.4';
 import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.4';
 import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.4';
 
@@ -10,56 +10,42 @@ function syncData() {
     const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
     const spanTotalQuantity = document.getElementById('totalQuantity');
     const spanTotalSilverAmount = document.getElementById('totalSilverAmount');
-    const spanTotalGoldAmount = document.getElementById('totalGoldAmount');
-    const spanTotalUpgradeDuration = document.getElementById("totalUpgradeDuration");
     const spanTotalUpgradeTokens = document.getElementById('totalUpgradeTokens');
-    let inputQuantity, spanSilverAmount, spanGoldAmount, spanUpgradeDuration, spanUpgradeTokens;
+    let inputQuantity, spanSilverAmount, spanUpgradeTokens;
     let upgradeDiscountPercentage = 0;
-    let quantity = 0, silverAmount = 0, goldAmount = 0, upgradeDuration = 0, upgradeTokens = 0;
-    let totalQuantity = 0, totalSilverAmount = 0, totalGoldAmount = 0, totalUpgradeDuration = 0, totalUpgradeTokens = 0;
+    let quantity = 0, silverAmount = 0, upgradeTokens = 0;
+    let totalQuantity = 0, totalSilverAmount = 0, totalUpgradeTokens = 0;
     let i;
 
     upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
 
-    for (i = 0; i < DS_T4_ROBOT_UPGRADES.length; i++) {
-        if ((DS_T4_ROBOT_UPGRADES[i].mark == 1 && DS_T4_ROBOT_UPGRADES[i].level == 1) ||
-            (DS_T4_ROBOT_UPGRADES[i].mark == 2 && DS_T4_ROBOT_UPGRADES[i].level == 1)
+    for (i = 0; i < DS_ULTIMATE_ROBOT_WEAPON_UPGRADES.length; i++) {
+        if ((DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 1 && DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].level == 1) ||
+            (DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 2 && DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].level == 1)
         ) {
             continue;
         }
 
         inputQuantity = document.getElementById('quantity_' + i);
         spanSilverAmount = document.getElementById('silverAmount_' + i);
-        spanGoldAmount = document.getElementById('goldAmount_' + i);
-        spanUpgradeDuration = document.getElementById('upgradeDuration_' + i);
         spanUpgradeTokens = document.getElementById('upgradeTokens_' + i);
 
         quantity = toInt(inputQuantity.value);
-        silverAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_UPGRADES[i].silverAmount) * quantity;
-        goldAmount = DS_T4_ROBOT_UPGRADES[i].goldAmount * quantity;
-        upgradeDuration = DS_T4_ROBOT_UPGRADES[i].upgradeDurationSeconds * quantity;
-        upgradeTokens = DS_T4_ROBOT_UPGRADES[i].upgradeTokens * quantity;
+        silverAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].silverAmount) * quantity;
+        upgradeTokens = DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].upgradeTokens * quantity;
 
         spanSilverAmount.textContent = getStrAmount(silverAmount);
         spanSilverAmount.parentElement.title = thousandSeperator(silverAmount, ' ') + ' Silver';
-        spanGoldAmount.textContent = getStrAmount(goldAmount);
-        spanGoldAmount.parentElement.title = thousandSeperator(goldAmount, ' ') + ' Gold';
-        spanUpgradeDuration.textContent = getStrDuration(upgradeDuration);
         spanUpgradeTokens.textContent = upgradeTokens;
 
         totalQuantity += quantity;
         totalSilverAmount += silverAmount;
-        totalGoldAmount += goldAmount;
-        totalUpgradeDuration += upgradeDuration;
         totalUpgradeTokens += upgradeTokens;
     }
 
     spanTotalQuantity.textContent = totalQuantity;
     spanTotalSilverAmount.textContent = getStrAmount(totalSilverAmount);
     spanTotalSilverAmount.title = thousandSeperator(totalSilverAmount, ' ') + ' Silver';
-    spanTotalGoldAmount.textContent = getStrAmount(totalGoldAmount);
-    spanTotalGoldAmount.title = thousandSeperator(totalGoldAmount, ' ') + ' Gold';
-    spanTotalUpgradeDuration.textContent = getStrDuration(totalUpgradeDuration);
     spanTotalUpgradeTokens.textContent = totalUpgradeTokens;
 }
 
@@ -76,9 +62,9 @@ function presetUpgrade(type) {
     let quantity = 0;
     let i;
 
-    for (i = 0; i < DS_T4_ROBOT_UPGRADES.length; i++) {
-        if ((DS_T4_ROBOT_UPGRADES[i].mark == 1 && DS_T4_ROBOT_UPGRADES[i].level == 1) ||
-            (DS_T4_ROBOT_UPGRADES[i].mark == 2 && DS_T4_ROBOT_UPGRADES[i].level == 1)
+    for (i = 0; i < DS_ULTIMATE_ROBOT_WEAPON_UPGRADES.length; i++) {
+        if ((DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 1 && DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].level == 1) ||
+            (DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 2 && DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].level == 1)
         ) {
             continue;
         }
@@ -86,24 +72,24 @@ function presetUpgrade(type) {
         // MK1 to MK2.
         if (type == 1) {
             // Skip MK2 : Level 0 above.
-            if (DS_T4_ROBOT_UPGRADES[i].mark == 2 &&
-                DS_T4_ROBOT_UPGRADES[i].level > 0) {
+            if (DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 2 &&
+                DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].level > 0) {
                 continue;
             }
             // Skip all MK3.
-            else if (DS_T4_ROBOT_UPGRADES[i].mark == 3) {
+            else if (DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 3) {
                 continue;
             }
         }
         // MK2 to MK3.
         else {
             // Skip all MK1.
-            if (DS_T4_ROBOT_UPGRADES[i].mark == 1) {
+            if (DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 1) {
                 continue;
             }
             // Skip MK2: Level 0 only.
-            else if (DS_T4_ROBOT_UPGRADES[i].mark == 2 &&
-                DS_T4_ROBOT_UPGRADES[i].level == 0) {
+            else if (DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 2 &&
+                DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].level == 0) {
                 continue;
             }
         }
@@ -121,16 +107,16 @@ function init() {
     let upgradeContainerInnerHTML = '';
     let i;
 
-    for (i = 0; i < DS_T4_ROBOT_UPGRADES.length; i++) {
-        if ((DS_T4_ROBOT_UPGRADES[i].mark == 1 && DS_T4_ROBOT_UPGRADES[i].level == 1) ||
-            (DS_T4_ROBOT_UPGRADES[i].mark == 2 && DS_T4_ROBOT_UPGRADES[i].level == 1)
+    for (i = 0; i < DS_ULTIMATE_ROBOT_WEAPON_UPGRADES.length; i++) {
+        if ((DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 1 && DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].level == 1) ||
+            (DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark == 2 && DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].level == 1)
         ) {
             continue;
         }
 
         upgradeContainerInnerHTML += '<div class="col-md-6">' +
             '<div class="item">' + '<div class="row align-items-center">' +
-            '<div class="col">' + '<div class="item-title">' + getStrLevel(DS_T4_ROBOT_UPGRADES[i].mark, DS_T4_ROBOT_UPGRADES[i].level) + '</div>' +
+            '<div class="col">' + '<div class="item-title">' + getStrLevel(DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].mark, DS_ULTIMATE_ROBOT_WEAPON_UPGRADES[i].level) + '</div>' +
             '</div>' +
             '<div class="col">' +
             '<div class="input-group">' +
@@ -142,8 +128,6 @@ function init() {
             '<div class="col-12">' +
             '<div class="d-flex flex-wrap gap-1 mt-2">' +
             '<span class="badge bg-light text-dark border" title="0 Silver">Silver: <span id="silverAmount_' + i + '" class="silver-amount">0</span></span>' +
-            '<span class="badge bg-light text-dark border" title="0 Gold">Gold: <span id="goldAmount_' + i + '" class="gold-amount">0</span></span>' +
-            '<span class="badge bg-light text-dark border">Upgrade Duration: <span id="upgradeDuration_' + i + '" class="upgrade-duration">0</span></span>' +
             '<span class="badge bg-light text-dark border">Upgrade Tokens: <span id="upgradeTokens_' + i + '" class="upgrade-tokens">0</span></span>' +
             '</div>' +
             '</div>' +

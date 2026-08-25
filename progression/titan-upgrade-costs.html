@@ -29,11 +29,11 @@
         content="Calculate the exact Platinum (Pt) required to upgrade your Titan's Hull, Core, and Engine subsystems in War Robots. Plan your base Titan level progression." />
     <link rel="icon" type="image/png" sizes="32x32" href="/warrobots-calculator/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/warrobots-calculator/apple-touch-icon.png">
-    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.7.3">
-    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.7.3">
-    <link rel="stylesheet" href="./css/titan-upgrade-costs.css?v=1.7.3">
-    <script src="/warrobots-calculator/data/ds-t4-titan-upgrades.js?v=1.7.3"></script>
-    <script type="module" src="./js/titan-upgrade-costs.js?v=1.7.3"></script>
+    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.7.4">
+    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.7.4">
+    <link rel="stylesheet" href="./css/titan-upgrade-costs.css?v=1.7.4">
+    <script src="/warrobots-calculator/data/ds-t4-titan-upgrades.js?v=1.7.4"></script>
+    <script type="module" src="./js/titan-upgrade-costs.js?v=1.7.4"></script>
 </head>
 
 <body>
@@ -88,7 +88,7 @@
                     <div class="card-header font-weight-bold">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
-                                <span class="font-weight-bold">1. Modifiers</span>
+                                <span class="font-weight-bold">Modifiers</span>
                             </div>
                             <div class="col-auto">
                                 <button type="button" id="buttonResetModifiers"
@@ -100,11 +100,11 @@
                         <div class="container-fluid px-0">
                             <div class="row g-2 align-items-center">
                                 <div class="col-md-4">
-                                    <label for="inputTitanUpgradeDiscountPercentage"
+                                    <label for="inputUpgradeDiscountPercentage"
                                         class="form-label text-secondary small fw-medium">Upgrade Discount
                                         %</label>
                                     <input type="number" class="form-control sync-data"
-                                        id="inputTitanUpgradeDiscountPercentage" min="0" value="0">
+                                        id="inputUpgradeDiscountPercentage" min="0" value="0">
                                 </div>
                             </div>
                         </div>
@@ -116,18 +116,26 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="font-weight-bold">2. Tier 4 Titan Hull Upgrades</span>
+                                    <span class="font-weight-bold">Tier 4 Titan Hull Upgrades</span>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-sm btn-outline-danger"
-                                    id="buttonResetT4TitanHullUpgrades">Reset</button>
+                                <div class="row gx-2">
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonT4HullPresetUpgrade">Max Level</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            id="buttonResetT4HullUpgrades">Reset</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="container-fluid px-0">
-                            <div id="t4TitanHullUpgradesContainer" class="row g-2"></div>
+                            <div id="t4HullUpgradeContainer" class="row g-2"></div>
                         </div>
                     </div>
                 </div>
@@ -137,18 +145,26 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="font-weight-bold">3. Tier 4 Titan Core Upgrades</span>
+                                    <span class="font-weight-bold">Tier 4 Titan Core Upgrades</span>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-sm btn-outline-danger"
-                                    id="buttonResetT4TitanCoreUpgrades">Reset</button>
+                                <div class="row gx-2">
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonT4CorePresetUpgrade">Max Level</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            id="buttonResetT4CoreUpgrades">Reset</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="container-fluid px-0">
-                            <div id="t4TitanCoreUpgradesContainer" class="row g-2"></div>
+                            <div id="t4CoreUpgradeContainer" class="row g-2"></div>
                         </div>
                     </div>
                 </div>
@@ -158,23 +174,30 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="font-weight-bold">4. Tier 4 Titan Engine Upgrades</span>
+                                    <span class="font-weight-bold">Tier 4 Titan Engine Upgrades</span>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-sm btn-outline-danger"
-                                    id="buttonResetT4TitanEngineUpgrades">Reset</button>
+                                <div class="row gx-2">
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonT4EnginePresetUpgrade">Max Level</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            id="buttonResetT4EngineUpgrades">Reset</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="container-fluid px-0">
-                            <div id="t4TitanEngineUpgradesContainer" class="row g-2"></div>
+                            <div id="t4EngineUpgradeContainer" class="row g-2"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- Right Column: Live Sticky Totals -->
             <div class="col-lg-4">
                 <div class="card border-primary sticky-top" style="top: 5rem; z-index: 1000;">
@@ -204,12 +227,12 @@
             </div>
             <div class="d-flex align-items-center gap-2">
                 <span
-                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.7.3</span>
-                <small class="text-muted">Updated Aug 24, 2026</small>
+                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.7.4</span>
+                <small class="text-muted">Updated Aug 26, 2026</small>
             </div>
         </div>
     </footer>
-    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.7.3"></script>
+    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.7.4"></script>
 </body>
 
 </html>

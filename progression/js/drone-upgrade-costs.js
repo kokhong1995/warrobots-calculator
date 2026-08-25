@@ -1,13 +1,13 @@
-import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.7.3';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.3';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.3';
+import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.7.4';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.4';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.4';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
 }
 
 function syncData() {
-    const inputDroneUpgradeDiscountPercentage = document.getElementById('inputDroneUpgradeDiscountPercentage');
+    const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
     const inputQuantities = document.querySelectorAll(".quantities");
     const spanTotalQuantity = document.getElementById('totalQuantity');
     const spanTotalMicrochips = document.getElementById('totalMicrochips');
@@ -18,8 +18,7 @@ function syncData() {
     let totalQuantity = 0, totalMicrochips = 0, totalUpgradeTokens = 0;
     let i;
 
-    // Get values of modifier inputs.
-    upgradeDiscountPercentage = toInt(inputDroneUpgradeDiscountPercentage.value);
+    upgradeDiscountPercentage = toInt(inputUpgradeDiscountPercentage.value);
 
     for (i = 0; i < DS_DRONE_UPGRADES.length; i++) {
         if (DS_DRONE_UPGRADES[i].level == 1) {
@@ -30,42 +29,34 @@ function syncData() {
         spanMicrochips = document.getElementById('microchips_' + i);
         spanUpgradeTokens = document.getElementById('upgradeTokens_' + i);
 
-        // Calculate quantity, microchips and upgrade tokens.
         quantity = toInt(inputQuantity.value);
         microchips = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_DRONE_UPGRADES[i].microchips) * quantity;
         upgradeTokens = DS_DRONE_UPGRADES[i].upgradeTokens * quantity;
 
-        // Set microchips and upgrade tokens.
         spanMicrochips.textContent = microchips;
         spanUpgradeTokens.textContent = upgradeTokens;
 
-        // Total up quantity, microchips, and upgrade tokens.
         totalQuantity += quantity;
         totalMicrochips += microchips;
         totalUpgradeTokens += upgradeTokens;
     }
 
-    // Set total quantity, total microchips and total upgrade tokens.
     spanTotalQuantity.textContent = totalQuantity;
     spanTotalMicrochips.textContent = totalMicrochips;
     spanTotalUpgradeTokens.textContent = totalUpgradeTokens;
 }
 
 function resetModifiers() {
-    resetInputs([
-        '#inputDroneUpgradeDiscountPercentage'
-    ], 0, syncData);
+    resetInputs(['#inputUpgradeDiscountPercentage'], 0, syncData);
 }
 
-function resetDroneUpgrades() {
-    resetInputs([
-        '#droneUpgradeContainer .quantities'
-    ], 0, syncData);
+function resetUpgrades() {
+    resetInputs(['#upgradeContainer .quantities'], 0, syncData);
 }
 
-function init() {
-    const droneUpgradeContainer = document.getElementById('droneUpgradeContainer');
-    let droneUpgradeContainerInnerHTML = '';
+function presetUpgrade(type) {
+    let inputQuantity;
+    let quantity = 0;
     let i;
 
     for (i = 0; i < DS_DRONE_UPGRADES.length; i++) {
@@ -73,7 +64,41 @@ function init() {
             continue;
         }
 
-        droneUpgradeContainerInnerHTML += '<div class="col-md-6">' +
+        if (type == 1) {
+            if (DS_DRONE_UPGRADES[i].level > 3) {
+                continue;
+            }
+        }
+        else if (type == 2) {
+            if (DS_DRONE_UPGRADES[i].level > 6) {
+                continue;
+            }
+        }
+        else if (type == 3) {
+            if (DS_DRONE_UPGRADES[i].level > 9) {
+                continue;
+            }
+        }
+
+        inputQuantity = document.getElementById('quantity_' + i);
+        quantity = toInt(inputQuantity.value);
+        inputQuantity.value = ++quantity;
+    }
+
+    syncData();
+}
+
+function init() {
+    const upgradeContainer = document.getElementById('upgradeContainer');
+    let upgradeContainerInnerHTML = '';
+    let i;
+
+    for (i = 0; i < DS_DRONE_UPGRADES.length; i++) {
+        if (DS_DRONE_UPGRADES[i].level == 1) {
+            continue;
+        }
+
+        upgradeContainerInnerHTML += '<div class="col-md-6">' +
             '<div class="item">' + '<div class="row align-items-center">' +
             '<div class="col">' + '<div class="item-title">Level&nbsp;' + DS_DRONE_UPGRADES[i].level + '</div>' +
             '</div>' +
@@ -95,15 +120,27 @@ function init() {
             '</div>';
     }
 
-    droneUpgradeContainer.innerHTML = droneUpgradeContainerInnerHTML;
+    upgradeContainer.innerHTML = upgradeContainerInnerHTML;
 
     // Set click event listener.
     document.getElementById('mainContainer').addEventListener('click', (e) => {
         if (e.target.matches('#buttonResetModifiers')) {
             resetModifiers();
         }
-        if (e.target.matches('#buttonResetDroneUpgrades')) {
-            resetDroneUpgrades();
+        if (e.target.matches('#buttonResetUpgrades')) {
+            resetUpgrades();
+        }
+        if (e.target.matches('#buttonT1PresetUpgrade')) {
+            presetUpgrade(1);
+        }
+        if (e.target.matches('#buttonT2PresetUpgrade')) {
+            presetUpgrade(2);
+        }
+        if (e.target.matches('#buttonT3PresetUpgrade')) {
+            presetUpgrade(3);
+        }
+        if (e.target.matches('#buttonT4PresetUpgrade')) {
+            presetUpgrade(4);
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);

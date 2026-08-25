@@ -1,13 +1,13 @@
-import { toInt, toFloat, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.7.3';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.3';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.3';
+import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.7.4';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.7.4';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.7.4';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
 }
 
 function syncData() {
-    const inputTitanUpgradeDiscountPercentage = document.getElementById('inputTitanUpgradeDiscountPercentage');
+    const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
     const spanTotalQuantity = document.getElementById('totalQuantity');
     const spanTotalPlatinumAmount = document.getElementById('totalPlatinumAmount');
     let inputQuantity, spanPlatinumAmount;
@@ -16,8 +16,7 @@ function syncData() {
     let totalQuantity = 0, totalPlatinumAmount = 0;
     let i, j;
 
-    // Get values of modifier inputs.
-    upgradeDiscountPercentage = Math.abs(toInt(inputTitanUpgradeDiscountPercentage.value));
+    upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
 
     for (i = 0; i < DS_T4_TITAN_UPGRADES.length; i++) {
         for (j = 0; j < DS_T4_TITAN_UPGRADES[i].length; j++) {
@@ -28,55 +27,67 @@ function syncData() {
             inputQuantity = document.getElementById(TYPES[i] + 'Quantity_' + j);
             spanPlatinumAmount = document.getElementById(TYPES[i] + 'PlatinumAmount_' + j);
 
-            // Calculate quantity and platinum amount.
             quantity = toInt(inputQuantity.value);
             platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_TITAN_UPGRADES[i][j].platinumAmount) * quantity;
 
-            // Set platinum amount.
             spanPlatinumAmount.textContent = platinumAmount;
 
-            // Total up quantity and platinum amount.
             totalQuantity += quantity;
             totalPlatinumAmount += platinumAmount;
         }
     }
 
-    // Set total quantity and total platinum amount.
     spanTotalQuantity.textContent = totalQuantity;
     spanTotalPlatinumAmount.textContent = totalPlatinumAmount;
 }
 
 function resetModifiers() {
+    resetInputs(['#inputUpgradeDiscountPercentage'], 0, syncData);
+}
+
+function resetT4HullUpgrades() {
     resetInputs([
-        '#inputTitanUpgradeDiscountPercentage'
+        '#t4HullUpgradeContainer .quantities'
     ], 0, syncData);
 }
 
-function resetT4TitanHullUpgrades() {
+function resetT4CoreUpgrades() {
     resetInputs([
-        '#t4TitanHullUpgradesContainer .quantities'
+        '#t4CoreUpgradeContainer .quantities'
     ], 0, syncData);
 }
 
-function resetT4TitanCoreUpgrades() {
+function resetT4EngineUpgrades() {
     resetInputs([
-        '#t4TitanCoreUpgradesContainer .quantities'
+        '#t4EngineUpgradeContainer .quantities'
     ], 0, syncData);
 }
 
-function resetT4TitanEngineUpgrades() {
-    resetInputs([
-        '#t4TitanEngineUpgradesContainer .quantities'
-    ], 0, syncData);
+function presetUpgrade(index) {
+    let inputQuantity;
+    let quantity = 0;
+    let i;
+
+    for (i = 0; i < DS_T4_TITAN_UPGRADES[index].length; i++) {
+        if (DS_T4_TITAN_UPGRADES[index][i].level == 1) {
+            continue;
+        }
+
+        inputQuantity = document.getElementById(TYPES[index] + 'Quantity_' + i);
+        quantity = toInt(inputQuantity.value);
+        inputQuantity.value = ++quantity;
+    }
+
+    syncData();
 }
 
 function init() {
-    const t4TitanUpgradesContainers = [
-        document.getElementById('t4TitanHullUpgradesContainer'),
-        document.getElementById('t4TitanCoreUpgradesContainer'),
-        document.getElementById('t4TitanEngineUpgradesContainer')
+    const t4UpgradeContainers = [
+        document.getElementById('t4HullUpgradeContainer'),
+        document.getElementById('t4CoreUpgradeContainer'),
+        document.getElementById('t4EngineUpgradeContainer')
     ];
-    const t4TitanUpgradesContainerInnerHTMLs = ['', '', ''];
+    const t4UpgradeContainerInnerHTMLs = ['', '', ''];
     let i, j;
 
     for (i = 0; i < DS_T4_TITAN_UPGRADES.length; i++) {
@@ -85,7 +96,7 @@ function init() {
                 continue;
             }
 
-            t4TitanUpgradesContainerInnerHTMLs[i] += '<div class="col-md-6 col-xxl-4">' +
+            t4UpgradeContainerInnerHTMLs[i] += '<div class="col-md-6 col-xxl-4">' +
                 '<div class="item">' + '<div class="row align-items-center">' +
                 '<div class="col">' + '<div class="item-title">Level ' + DS_T4_TITAN_UPGRADES[i][j].level + '</div>' +
                 '</div>' +
@@ -107,8 +118,8 @@ function init() {
         }
     }
 
-    for (i = 0; i < t4TitanUpgradesContainers.length; i++) {
-        t4TitanUpgradesContainers[i].innerHTML = t4TitanUpgradesContainerInnerHTMLs[i];
+    for (i = 0; i < t4UpgradeContainers.length; i++) {
+        t4UpgradeContainers[i].innerHTML = t4UpgradeContainerInnerHTMLs[i];
     }
 
     // Set click event listener.
@@ -116,14 +127,23 @@ function init() {
         if (e.target.matches('#buttonResetModifiers')) {
             resetModifiers();
         }
-        if (e.target.matches('#buttonResetT4TitanHullUpgrades')) {
-            resetT4TitanHullUpgrades();
+        if (e.target.matches('#buttonResetT4HullUpgrades')) {
+            resetT4HullUpgrades();
         }
-        if (e.target.matches('#buttonResetT4TitanCoreUpgrades')) {
-            resetT4TitanCoreUpgrades();
+        if (e.target.matches('#buttonResetT4CoreUpgrades')) {
+            resetT4CoreUpgrades();
         }
-        if (e.target.matches('#buttonResetT4TitanEngineUpgrades')) {
-            resetT4TitanEngineUpgrades();
+        if (e.target.matches('#buttonResetT4EngineUpgrades')) {
+            resetT4EngineUpgrades();
+        }
+        if (e.target.matches('#buttonT4HullPresetUpgrade')) {
+            presetUpgrade(0);
+        }
+        if (e.target.matches('#buttonT4CorePresetUpgrade')) {
+            presetUpgrade(1);
+        }
+        if (e.target.matches('#buttonT4EnginePresetUpgrade')) {
+            presetUpgrade(2);
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);
@@ -144,7 +164,7 @@ function init() {
     });
 }
 
-const TYPES = ['Hull', 'Core', 'Engine'];
+const TYPES = ['t4Hull', 't4Core', 't4Engine'];
 const DS_T4_TITAN_UPGRADES = [
     DS_T4_TITAN_HULL_UPGRADES, DS_T4_TITAN_CORE_UPGRADES, DS_T4_TITAN_ENGINE_UPGRADES
 ];

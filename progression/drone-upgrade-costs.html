@@ -29,11 +29,11 @@
         content="Calculate the exact microchips and upgrade tokens required for drone upgrades in War Robots." />
     <link rel="icon" type="image/png" sizes="32x32" href="/warrobots-calculator/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/warrobots-calculator/apple-touch-icon.png">
-    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.7.3">
-    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.7.3">
-    <link rel="stylesheet" href="./css/drone-upgrade-costs.css?v=1.7.3">
-    <script src="/warrobots-calculator/data/ds-drone-upgrades.js?v=1.7.3"></script>
-    <script type="module" src="./js/drone-upgrade-costs.js?v=1.7.3"></script>
+    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.7.4">
+    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.7.4">
+    <link rel="stylesheet" href="./css/drone-upgrade-costs.css?v=1.7.4">
+    <script src="/warrobots-calculator/data/ds-drone-upgrades.js?v=1.7.4"></script>
+    <script type="module" src="./js/drone-upgrade-costs.js?v=1.7.4"></script>
 </head>
 
 <body>
@@ -88,7 +88,7 @@
                     <div class="card-header font-weight-bold">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
-                                <span class="font-weight-bold">1. Modifiers</span>
+                                <span class="font-weight-bold">Modifiers</span>
                             </div>
                             <div class="col-auto">
                                 <button type="button" id="buttonResetModifiers"
@@ -100,23 +100,22 @@
                         <div class="container-fluid px-0">
                             <div class="row g-2 align-items-center">
                                 <div class="col-md-4">
-                                    <label for="inputDroneUpgradeDiscountPercentage"
+                                    <label for="inputUpgradeDiscountPercentage"
                                         class="form-label text-secondary small fw-medium">Upgrade Discount
                                         %</label>
                                     <input type="number" class="form-control sync-data"
-                                        id="inputDroneUpgradeDiscountPercentage" min="0" value="0">
+                                        id="inputUpgradeDiscountPercentage" min="0" value="0">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="font-weight-bold">2. Drone Upgrades</span>
+                                    <span class="font-weight-bold">Drone Upgrades</span>
                                     <button type="button"
                                         class="btn btn-sm btn-link text-secondary pt-0 pb-0 text-decoration-none fs-5"
                                         data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus"
@@ -128,19 +127,38 @@
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-sm btn-outline-danger"
-                                    id="buttonResetDroneUpgrades">Reset</button>
+                                <div class="row gx-2">
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonT1PresetUpgrade">Tier 1 Max</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonT2PresetUpgrade">Tier 2 Max</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonT3PresetUpgrade">Tier 3 Max</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonT4PresetUpgrade">Tier 4 Max</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            id="buttonResetUpgrades">Reset</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="container-fluid px-0">
-                            <div id="droneUpgradeContainer" class="row g-2"></div>
+                            <div id="upgradeContainer" class="row g-2"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- Right Column: Live Sticky Totals -->
             <div class="col-lg-4">
                 <div class="card border-primary sticky-top" style="top: 5rem; z-index: 1000;">
@@ -173,12 +191,12 @@
             </div>
             <div class="d-flex align-items-center gap-2">
                 <span
-                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.7.3</span>
-                <small class="text-muted">Updated Aug 24, 2026</small>
+                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.7.4</span>
+                <small class="text-muted">Updated Aug 26, 2026</small>
             </div>
         </div>
     </footer>
-    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.7.3"></script>
+    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.7.4"></script>
 </body>
 
 </html>

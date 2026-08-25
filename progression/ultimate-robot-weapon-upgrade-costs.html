@@ -5,35 +5,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Primary Meta Tags -->
-    <title>Robot Upgrade Costs Calculator - War Robots</title>
-    <meta name="title" content="Robot Upgrade Costs Calculator - War Robots" />
+    <title>War Robots Ultimate Weapon Upgrade Cost Calculator (Silver & Tokens)</title>
+    <meta name="title" content="War Robots Ultimate Weapon Upgrade Cost Calculator (Silver & Tokens)" />
     <meta name="description"
-        content="Calculate the exact Silver (Ag), Gold (Au), and Upgrade Tokens required for robot upgrades in War Robots." />
+        content="Calculate exact Silver (Ag) and Upgrade Token costs for Ultimate weapons in War Robots. Plan your ultimate weapon progression and resource spending efficiently." />
     <meta name="keywords"
-        content="War Robots robot upgrade costs, robot level calculator, silver upgrade cost, upgrade tokens, progression cost, war robots calculator" />
+        content="war robots ultimate weapon upgrade cost, wr ultimate weapon calculator, ultimate weapon silver cost, war robots upgrade tokens calculator, wr progression guide" />
     <link rel="canonical"
-        href="https://kokhong1995.github.io/warrobots-calculator/progression/robot-upgrade-costs.html" />
+        href="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-robot-weapon-upgrade-costs.html" />
+
     <!-- Open Graph / Facebook / Discord -->
     <meta property="og:type" content="website" />
     <meta property="og:url"
-        content="https://kokhong1995.github.io/warrobots-calculator/progression/robot-upgrade-costs.html" />
-    <meta property="og:title" content="Robot Upgrade Costs Calculator - War Robots" />
+        content="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-robot-weapon-upgrade-costs.html" />
+    <meta property="og:title" content="War Robots Ultimate Weapon Upgrade Cost Calculator (Silver & Tokens)" />
     <meta property="og:description"
-        content="Calculate the exact Silver (Ag), Gold (Au), and Upgrade Tokens required for robot upgrades in War Robots." />
+        content="Calculate exact Silver (Ag) and Upgrade Token costs for Ultimate weapons in War Robots. Plan your ultimate weapon progression and resource spending efficiently." />
+
     <!-- Twitter / X -->
-    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:card" content="summary" />
     <meta property="twitter:url"
-        content="https://kokhong1995.github.io/warrobots-calculator/progression/robot-upgrade-costs.html" />
-    <meta property="twitter:title" content="Robot Upgrade Costs Calculator - War Robots" />
+        content="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-robot-weapon-upgrade-costs.html" />
+    <meta property="twitter:title" content="War Robots Ultimate Weapon Upgrade Cost Calculator (Silver & Tokens)" />
     <meta property="twitter:description"
-        content="Calculate the exact Silver (Ag), Gold (Au), and Upgrade Tokens required for robot upgrades in War Robots." />
+        content="Calculate exact Silver (Ag) and Upgrade Token costs for Ultimate weapons in War Robots. Plan your ultimate weapon progression and resource spending efficiently." />
     <link rel="icon" type="image/png" sizes="32x32" href="/warrobots-calculator/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/warrobots-calculator/apple-touch-icon.png">
     <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.7.4">
     <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.7.4">
-    <link rel="stylesheet" href="./css/robot-upgrade-costs.css?v=1.7.4">
-    <script src="/warrobots-calculator/data/ds-t4-robot-upgrades.js?v=1.7.4"></script>
-    <script type="module" src="./js/robot-upgrade-costs.js?v=1.7.4"></script>
+    <link rel="stylesheet" href="./css/ultimate-robot-weapon-upgrade-costs.css?v=1.7.4">
+    <script src="/warrobots-calculator/data/ds-ultimate-robot-weapon-upgrades.js?v=1.7.4"></script>
+    <script type="module" src="./js/ultimate-robot-weapon-upgrade-costs.js?v=1.7.4"></script>
 </head>
 
 <body>
@@ -77,7 +79,7 @@
             <div class="col-12">
                 <div class="card shadow-sm border-0 bg-light p-3 mb-4">
                     <span class="badge bg-progression w-auto align-self-start mb-2">Progression</span>
-                    <h4 class="fw-bold mb-0">Robot Upgrade Costs</h4>
+                    <h4 class="fw-bold mb-0">Ultimate Robot Weapon Upgrade Costs</h4>
                 </div>
             </div>
         </div>
@@ -106,13 +108,6 @@
                                     <input type="number" class="form-control sync-data"
                                         id="inputUpgradeDiscountPercentage" min="0" value="0">
                                 </div>
-                                <!-- <div class="col-md-4">
-                                    <label for="inputUpgradeSpeedMultiplier"
-                                        class="form-label text-secondary small fw-medium">Upgrade Speed
-                                        Multiplier</label>
-                                    <input type="number" class="form-control sync-data"
-                                        id="inputUpgradeSpeedMultiplier" min="0" value="0" step="any">
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -122,7 +117,7 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="font-weight-bold">Tier 4 Robot Upgrades</span>
+                                    <span class="font-weight-bold">Ultimate Robot Weapon Upgrades</span>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -161,12 +156,6 @@
                         <div class="d-flex justify-content-between mb-2">
                             <span>Silver Amount</span> <span id="totalSilverAmount" class="fw-bold"
                                 title="0 Silver">0</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Gold Amount</span> <span id="totalGoldAmount" class="fw-bold" title="0 Gold">0</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Upgrade Duration</span> <span id="totalUpgradeDuration" class="fw-bold">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Upgrade Tokens</span> <span id="totalUpgradeTokens" class="fw-bold">0</span>
