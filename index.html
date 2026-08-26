@@ -26,8 +26,8 @@
         content="Optimize your War Robots progression. Free tools to calculate upgrade costs, microchips, upgrade tokens, and leaderboard event efficiency." />
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
-    <link rel="stylesheet" href="./bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.7.4">
-    <link rel="stylesheet" href="./css/index.css?v=1.7.4">
+    <link rel="stylesheet" href="./bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.8.0">
+    <link rel="stylesheet" href="./css/index.css?v=1.8.0">
 </head>
 
 <body>
@@ -75,66 +75,82 @@
             </p>
         </div>
     </div>
-    <!-- Main Content Grid Container -->
     <div class="container pb-5">
+        <h2>Leaderboard</h2>
         <div class="row g-4">
-            <!-- Leaderboard: Stunning Drones -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
                     <div class="card-body d-flex flex-column p-4">
                         <div class="mb-3">
-                            <span class="badge bg-leaderboard mb-2">Leaderboard</span>
                             <h5 class="card-title fw-bold">Stunning Drones</h5>
                             <p class="card-text text-muted small">Calculate the microchips and upgrade tokens required
                                 for drone upgrades to reach target points.</p>
                         </div>
                         <div class="mt-auto pt-3">
                             <a href="./leaderboard/stunning-drones.html"
-                                class="btn btn-outline-leaderboard w-100 fw-semibold">Open Calculator</a>
+                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Leaderboard: Fight To The Death -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
                     <div class="card-body d-flex flex-column p-4">
                         <div class="mb-3">
-                            <span class="badge bg-leaderboard mb-2">Leaderboard</span>
                             <h5 class="card-title fw-bold">Fight To The Death</h5>
                             <p class="card-text text-muted small">Calculate the silver amount, gold amount, upgrade
                                 duration, and upgrade tokens required to reach target points.</p>
                         </div>
                         <div class="mt-auto pt-3">
                             <a href="./leaderboard/fight-to-the-death.html"
-                                class="btn btn-outline-leaderboard w-100 fw-semibold">Open Calculator</a>
+                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Progression: Drone Upgrades -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 bg-light rounded-3 opacity-75">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-plus-circle text-muted mb-2" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        </svg>
+                        <h6 class="text-muted mb-0">More Tools Coming Soon</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container pb-5">
+        <h2>Progression</h2>
+        <div class="row g-4">
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
                     <div class="card-body d-flex flex-column p-4">
                         <div class="mb-3">
-                            <span class="badge bg-progression mb-2">Progression</span>
+                            <div class="d-flex gap-1">
+                                <span class="badge badge-drone mb-2">Drone</span>
+                            </div>
                             <h5 class="card-title fw-bold">Drone Upgrade Costs</h5>
                             <p class="card-text text-muted small">Calculate the microchips and upgrade tokens required
                                 for drone upgrades.</p>
                         </div>
                         <div class="mt-auto pt-3">
                             <a href="./progression/drone-upgrade-costs.html"
-                                class="btn btn-outline-progression w-100 fw-semibold">Open Calculator</a>
+                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Progression: Robot Upgrades -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
                     <div class="card-body d-flex flex-column p-4">
                         <div class="mb-3">
-                            <span class="badge bg-progression mb-2">Progression</span>
+                            <div class="d-flex gap-1">
+                                <span class="badge badge-robot mb-2">Robot</span>
+                            </div>
                             <h5 class="card-title fw-bold">Robot Upgrade Costs</h5>
                             <p class="card-text text-muted small">Calculate the silver amount, gold amount, upgrade
                                 duration, and upgrade tokens required
@@ -142,17 +158,19 @@
                         </div>
                         <div class="mt-auto pt-3">
                             <a href="./progression/robot-upgrade-costs.html"
-                                class="btn btn-outline-progression w-100 fw-semibold">Open Calculator</a>
+                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Progression: Robot Weapon Upgrades -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
                     <div class="card-body d-flex flex-column p-4">
                         <div class="mb-3">
-                            <span class="badge bg-progression mb-2">Progression</span>
+                            <div class="d-flex gap-1">
+                                <span class="badge badge-robot mb-2">Robot</span>
+                                <span class="badge badge-weapon mb-2">Weapon</span>
+                            </div>
                             <h5 class="card-title fw-bold">Robot Weapon Upgrade Costs</h5>
                             <p class="card-text text-muted small">Calculate the silver amount, gold amount, upgrade
                                 duration, and upgrade tokens required
@@ -160,17 +178,40 @@
                         </div>
                         <div class="mt-auto pt-3">
                             <a href="./progression/robot-weapon-upgrade-costs.html"
-                                class="btn btn-outline-progression w-100 fw-semibold">Open Calculator</a>
+                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Progression: Ultimate Robot Weapon Upgrades -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
                     <div class="card-body d-flex flex-column p-4">
                         <div class="mb-3">
-                            <span class="badge bg-progression mb-2">Progression</span>
+                            <div class="d-flex gap-1">
+                                <span class="badge badge-ultimate mb-2">Ultimate</span>
+                                <span class="badge badge-robot mb-2">Robot</span>
+                            </div>
+                            <h5 class="card-title fw-bold">Ultimate Robot Upgrade Costs</h5>
+                            <p class="card-text text-muted small">Calculate the silver amount and upgrade
+                                tokens required
+                                for ultimate robot upgrades.</p>
+                        </div>
+                        <div class="mt-auto pt-3">
+                            <a href="./progression/ultimate-robot-upgrade-costs.html"
+                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
+                    <div class="card-body d-flex flex-column p-4">
+                        <div class="mb-3">
+                            <div class="d-flex gap-1">
+                                <span class="badge badge-ultimate mb-2">Ultimate</span>
+                                <span class="badge badge-robot mb-2">Robot</span>
+                                <span class="badge badge-weapon mb-2">Weapon</span>
+                            </div>
                             <h5 class="card-title fw-bold">Ultimate Robot Weapon Upgrade Costs</h5>
                             <p class="card-text text-muted small">Calculate the silver amount and upgrade
                                 tokens required
@@ -178,46 +219,48 @@
                         </div>
                         <div class="mt-auto pt-3">
                             <a href="./progression/ultimate-robot-weapon-upgrade-costs.html"
-                                class="btn btn-outline-progression w-100 fw-semibold">Open Calculator</a>
+                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Progression: Titan Upgrades -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
                     <div class="card-body d-flex flex-column p-4">
                         <div class="mb-3">
-                            <span class="badge bg-progression mb-2">Progression</span>
+                            <div class="d-flex gap-1">
+                                <span class="badge badge-titan mb-2">Titan</span>
+                            </div>
                             <h5 class="card-title fw-bold">Titan Upgrade Costs</h5>
                             <p class="card-text text-muted small">Calculate the platinum amount required
                                 for titan upgrades.</p>
                         </div>
                         <div class="mt-auto pt-3">
                             <a href="./progression/titan-upgrade-costs.html"
-                                class="btn btn-outline-progression w-100 fw-semibold">Open Calculator</a>
+                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Progression: Titan Weapon Upgrades -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3">
                     <div class="card-body d-flex flex-column p-4">
                         <div class="mb-3">
-                            <span class="badge bg-progression mb-2">Progression</span>
+                            <div class="d-flex gap-1">
+                                <span class="badge badge-titan mb-2">Titan</span>
+                                <span class="badge badge-weapon mb-2">Weapon</span>
+                            </div>
                             <h5 class="card-title fw-bold">Titan Weapon Upgrade Costs</h5>
                             <p class="card-text text-muted small">Calculate the platinum amount required
                                 for titan weapon upgrades.</p>
                         </div>
                         <div class="mt-auto pt-3">
                             <a href="./progression/titan-weapon-upgrade-costs.html"
-                                class="btn btn-outline-progression w-100 fw-semibold">Open Calculator</a>
+                                class="btn btn-outline-primary w-100 fw-semibold">Open Calculator</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Placeholder Card for Future Tools -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light rounded-3 opacity-75">
                     <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
@@ -246,12 +289,12 @@
             </div>
             <div class="d-flex align-items-center gap-2">
                 <span
-                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.7.4</span>
+                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.8.0</span>
                 <small class="text-muted">Updated Aug 26, 2026</small>
             </div>
         </div>
     </footer>
-    <script src="./bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.7.4"></script>
+    <script src="./bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.8.0"></script>
 </body>
 
 </html>

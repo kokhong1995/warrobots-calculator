@@ -29,11 +29,11 @@
         content="Calculate the exact Platinum (Pt) required to upgrade your Titan's Hull, Core, and Engine subsystems in War Robots. Plan your base Titan level progression." />
     <link rel="icon" type="image/png" sizes="32x32" href="/warrobots-calculator/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/warrobots-calculator/apple-touch-icon.png">
-    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.7.4">
-    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.7.4">
-    <link rel="stylesheet" href="./css/titan-upgrade-costs.css?v=1.7.4">
-    <script src="/warrobots-calculator/data/ds-t4-titan-upgrades.js?v=1.7.4"></script>
-    <script type="module" src="./js/titan-upgrade-costs.js?v=1.7.4"></script>
+    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.8.0">
+    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.8.0">
+    <link rel="stylesheet" href="./css/titan-upgrade-costs.css?v=1.8.0">
+    <script src="/warrobots-calculator/data/ds-t4-titan-upgrades.js?v=1.8.0"></script>
+    <script type="module" src="./js/titan-upgrade-costs.js?v=1.8.0"></script>
 </head>
 
 <body>
@@ -76,7 +76,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="card shadow-sm border-0 bg-light p-3 mb-4">
-                    <span class="badge bg-progression w-auto align-self-start mb-2">Progression</span>
+                    <div class="d-flex gap-1">
+                        <span class="badge badge-titan mb-2">Titan</span>
+                    </div>
                     <h4 class="fw-bold mb-0">Titan Upgrade Costs</h4>
                 </div>
             </div>
@@ -85,10 +87,10 @@
             <!-- Left Column: Inputs -->
             <div class="col-lg-8">
                 <div class="card mb-4">
-                    <div class="card-header font-weight-bold">
+                    <div class="card-header fw-bold">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
-                                <span class="font-weight-bold">Modifiers</span>
+                                <span class="fw-bold">Modifiers</span>
                             </div>
                             <div class="col-auto">
                                 <button type="button" id="buttonResetModifiers"
@@ -116,7 +118,7 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="font-weight-bold">Tier 4 Titan Hull Upgrades</span>
+                                    <span class="fw-bold">Tier 4 Titan Hull Upgrades</span>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -145,7 +147,7 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="font-weight-bold">Tier 4 Titan Core Upgrades</span>
+                                    <span class="fw-bold">Tier 4 Titan Core Upgrades</span>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -174,7 +176,7 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="font-weight-bold">Tier 4 Titan Engine Upgrades</span>
+                                    <span class="fw-bold">Tier 4 Titan Engine Upgrades</span>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -227,12 +229,12 @@
             </div>
             <div class="d-flex align-items-center gap-2">
                 <span
-                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.7.4</span>
+                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.8.0</span>
                 <small class="text-muted">Updated Aug 26, 2026</small>
             </div>
         </div>
     </footer>
-    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.7.4"></script>
+    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.8.0"></script>
 </body>
 
 </html>
