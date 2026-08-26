@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.9.0';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.9.0';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.9.0';
+import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.9.1';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.9.1';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.9.1';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -36,7 +36,13 @@ function syncData() {
 
         quantity = toInt(inputQuantity.value);
         silverAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_WEAPON_UPGRADES[i].silverAmount) * quantity;
-        goldAmount = DS_T4_ROBOT_WEAPON_UPGRADES[i].goldAmount * quantity;
+        // Gold amount for enhancing to MK2 is discountable. 
+        if (DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 2 && DS_T4_ROBOT_WEAPON_UPGRADES[i].level == 0) {
+            goldAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_WEAPON_UPGRADES[i].goldAmount) * quantity;
+        }
+        else {
+            goldAmount = DS_T4_ROBOT_WEAPON_UPGRADES[i].goldAmount * quantity;
+        }
         upgradeDuration = DS_T4_ROBOT_WEAPON_UPGRADES[i].upgradeDurationSeconds * quantity;
         upgradeTokens = DS_T4_ROBOT_WEAPON_UPGRADES[i].upgradeTokens * quantity;
 

@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.9.0';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.9.0';
-import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.9.0';
+import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.9.1';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.9.1';
+import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.9.1';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -41,6 +41,13 @@ function syncData() {
             quantity = toInt(inputQuantity.value);
             silverAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_FIGHT_TO_THE_DEATH[i][j].silverAmount) * quantity;
             goldAmount = DS_FIGHT_TO_THE_DEATH[i][j].goldAmount * quantity;
+            // Gold amount for enhancing to MK2 is discountable. 
+            if (DS_FIGHT_TO_THE_DEATH[i][j].mark == 2 && DS_FIGHT_TO_THE_DEATH[i][j].level == 0) {
+                goldAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_FIGHT_TO_THE_DEATH[i][j].goldAmount) * quantity;
+            }
+            else {
+                goldAmount = DS_FIGHT_TO_THE_DEATH[i][j].goldAmount * quantity;
+            }
             upgradeDuration = DS_FIGHT_TO_THE_DEATH[i][j].upgradeDurationSeconds * quantity;
             upgradeTokens = DS_FIGHT_TO_THE_DEATH[i][j].upgradeTokens * quantity;
             points = DS_FIGHT_TO_THE_DEATH[i][j].points.fightToTheDeath * quantity;
