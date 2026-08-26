@@ -43,3 +43,4 @@ Got questions, feature requests, or bug reports? Join our Discord community to c
 ## 🙏 Acknowledgements
 
 * **cosmikro** – For providing the War Robots Upgrade Cost Combined Table.
+* Members of the WR Calculator Discord for their constant support and energy.
