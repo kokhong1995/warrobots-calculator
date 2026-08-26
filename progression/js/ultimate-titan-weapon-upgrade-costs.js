@@ -10,35 +10,41 @@ function syncData() {
     const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
     const spanTotalQuantity = document.getElementById('totalQuantity');
     const spanTotalPlatinumAmount = document.getElementById("totalPlatinumAmount");
-    let inputQuantity, spanPlatinumAmount;
+    const spanTotalUpgradeTokens = document.getElementById('totalUpgradeTokens');
+    let inputQuantity, spanPlatinumAmount, spanUpgradeTokens;
     let upgradeDiscountPercentage = 0;
-    let quantity = 0, platinumAmount = 0;
-    let totalQuantity = 0, totalPlatinumAmount = 0;
+    let quantity = 0, platinumAmount = 0, upgradeTokens = 0;
+    let totalQuantity = 0, totalPlatinumAmount = 0, totalUpgradeTokens = 0;
     let i;
 
     upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
 
-    for (i = 0; i < DS_T4_TITAN_WEAPON_UPGRADES.length; i++) {
-        if (DS_T4_TITAN_WEAPON_UPGRADES[i].level == 1) {
+    for (i = 0; i < DS_ULTIMATE_TITAN_WEAPON_UPGRADES.length; i++) {
+        if (DS_ULTIMATE_TITAN_WEAPON_UPGRADES[i].level == 1) {
             continue;
         }
 
         inputQuantity = document.getElementById('quantity_' + i);
         spanPlatinumAmount = document.getElementById('platinumAmount_' + i);
+        spanUpgradeTokens = document.getElementById('upgradeTokens_' + i);
 
         quantity = toInt(inputQuantity.value);
-        platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_TITAN_WEAPON_UPGRADES[i].platinumAmount) * quantity;
+        platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_ULTIMATE_TITAN_WEAPON_UPGRADES[i].platinumAmount) * quantity;
+        upgradeTokens = DS_ULTIMATE_TITAN_WEAPON_UPGRADES[i].upgradeTokens * quantity;
 
         spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
         spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
+        spanUpgradeTokens.textContent = upgradeTokens;
 
         totalQuantity += quantity;
         totalPlatinumAmount += platinumAmount;
+        totalUpgradeTokens += upgradeTokens;
     }
 
     spanTotalQuantity.textContent = totalQuantity;
     spanTotalPlatinumAmount.textContent = getStrAmount(totalPlatinumAmount);
     spanTotalPlatinumAmount.title = thousandSeperator(totalPlatinumAmount, ' ') + ' Platinum';
+    spanTotalUpgradeTokens.textContent = totalUpgradeTokens;
 }
 
 function resetModifiers() {
@@ -54,8 +60,8 @@ function presetUpgrade() {
     let quantity = 0;
     let i;
 
-    for (i = 0; i < DS_T4_TITAN_WEAPON_UPGRADES.length; i++) {
-        if (DS_T4_TITAN_WEAPON_UPGRADES[i].level == 1) {
+    for (i = 0; i < DS_ULTIMATE_TITAN_WEAPON_UPGRADES.length; i++) {
+        if (DS_ULTIMATE_TITAN_WEAPON_UPGRADES[i].level == 1) {
             continue;
         }
 
@@ -72,14 +78,14 @@ function init() {
     let upgradeContainerInnerHTML = '';
     let i;
 
-    for (i = 0; i < DS_T4_TITAN_WEAPON_UPGRADES.length; i++) {
-        if (DS_T4_TITAN_WEAPON_UPGRADES[i].level == 1) {
+    for (i = 0; i < DS_ULTIMATE_TITAN_WEAPON_UPGRADES.length; i++) {
+        if (DS_ULTIMATE_TITAN_WEAPON_UPGRADES[i].level == 1) {
             continue;
         }
 
         upgradeContainerInnerHTML += '<div class="col-md-6">' +
             '<div class="item">' + '<div class="row align-items-center">' +
-            '<div class="col">' + '<div class="item-title">Level ' + DS_T4_TITAN_WEAPON_UPGRADES[i].level + '</div>' +
+            '<div class="col">' + '<div class="item-title">Level ' + DS_ULTIMATE_TITAN_WEAPON_UPGRADES[i].level + '</div>' +
             '</div>' +
             '<div class="col">' +
             '<div class="input-group">' +
@@ -91,6 +97,7 @@ function init() {
             '<div class="col-12">' +
             '<div class="d-flex flex-wrap gap-1 mt-2">' +
             '<span class="badge bg-light text-dark border" title="0 Platinum">Platinum: <span id="platinumAmount_' + i + '" class="platinum-amount">0</span></span>' +
+            '<span class="badge bg-light text-dark border">Upgrade Tokens: <span id="upgradeTokens_' + i + '" class="upgrade-tokens">0</span></span>' +
             '</div>' +
             '</div>' +
             '</div>' +

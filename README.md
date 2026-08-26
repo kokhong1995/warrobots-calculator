@@ -10,13 +10,14 @@ A modern web application featuring specialized calculators for **War Robots** co
 
 - **Stunning Drones Leaderboard Calculator:** Calculate the microchips and upgrade tokens required to reach target points.
 - **Fight To The Death Leaderboard Calculator:** Calculate the silver amount, gold amount, upgrade duration, and upgrade tokens required to reach target points.
-- **Drone Upgrade Costs Calculator:** Calculate the microchips and upgrade tokens required for drone upgrades.
-- **Robot Upgrade Costs Calculator:** Calculate the silver amount, gold amount, upgrade duration, and upgrade tokens required for robot upgrades.
-- **Robot Weapon Upgrade Costs Calculator:** Calculate the silver amount, gold amount, upgrade duration, and upgrade tokens required for robot weapon upgrades.
-- **Ultimate Robot Upgrade Costs Calculator:** Calculate the silver amount and upgrade tokens required for ultimate robot upgrades.
-- **Ultimate Robot Weapon Upgrade Costs Calculator:** Calculate the silver amount and upgrade tokens required for ultimate robot weapon upgrades.
-- **Titan Upgrade Costs Calculator:** Calculate the platinum amount required for titan upgrades.
-- **Titan Weapon Upgrade Costs Calculator:** Calculate the platinum amount required for titan weapon upgrades.
+- **Drone Upgrade Cost Calculator:** Calculate the microchips and upgrade tokens required for drone upgrades.
+- **Robot Upgrade Cost Calculator:** Calculate the silver amount, gold amount, upgrade duration, and upgrade tokens required for robot upgrades.
+- **Robot Weapon Upgrade Cost Calculator:** Calculate the silver amount, gold amount, upgrade duration, and upgrade tokens required for robot weapon upgrades.
+- **Ultimate Robot Upgrade Cost Calculator:** Calculate the silver amount and upgrade tokens required for ultimate robot upgrades.
+- **Ultimate Robot Weapon Upgrade Cost Calculator:** Calculate the silver amount and upgrade tokens required for ultimate robot weapon upgrades.
+- **Ultimate Titan Weapon Upgrade Cost Calculator:** Calculate the platinum amount and upgrade tokens required for ultimate titan weapon upgrades.
+- **Titan Upgrade Cost Calculator:** Calculate the platinum amount required for titan upgrades.
+- **Titan Weapon Upgrade Cost Calculator:** Calculate the platinum amount required for titan weapon upgrades.
 - **Clean Dashboard Layout:** Modern, high-contrast UI designed for desktop and mobile navigation.
 - **More Tools Coming Soon:** Modular grid framework ready for additional resource calculators.
 

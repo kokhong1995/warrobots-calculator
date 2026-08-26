@@ -5,35 +5,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Primary Meta Tags -->
-    <title>War Robots Titan Hull, Core & Engine Upgrade Calculator | Platinum</title>
-    <meta name="title" content="War Robots Titan Hull, Core & Engine Upgrade Calculator | Platinum" />
+    <title>War Robots Ultimate Titan Weapon Upgrade Cost Calculator (Pt & Tokens)</title>
+    <meta name="title" content="War Robots Ultimate Titan Weapon Upgrade Cost Calculator (Pt & Tokens)" />
     <meta name="description"
-        content="Calculate the exact Platinum (Pt) required to upgrade your Titan's Hull, Core, and Engine subsystems in War Robots. Plan your base Titan level progression." />
+        content="Calculate exact Platinum (Pt) and Upgrade Token costs for Ultimate Titan weapons in War Robots. Plan your progression and optimize resource spending." />
     <meta name="keywords"
-        content="War Robots titan upgrade costs, titan hull upgrade cost, titan core platinum cost, titan engine level calculator, platinum titan calculator war robots" />
+        content="war robots ultimate titan weapon upgrade costs, wr ultimate titan weapon calculator, ultimate titan weapon platinum cost, upgrade tokens, war robots ultimate progression, wr ultimate pt calculator" />
     <link rel="canonical"
-        href="https://kokhong1995.github.io/warrobots-calculator/progression/titan-upgrade-costs.html" />
+        href="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-titan-weapon-upgrade-costs.html" />
     <!-- Open Graph / Facebook / Discord -->
     <meta property="og:type" content="website" />
     <meta property="og:url"
-        content="https://kokhong1995.github.io/warrobots-calculator/progression/titan-upgrade-costs.html" />
-    <meta property="og:title" content="War Robots Titan Hull, Core & Engine Upgrade Calculator | Platinum" />
+        content="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-titan-weapon-upgrade-costs.html" />
+    <meta property="og:title" content="War Robots Ultimate Titan Weapon Upgrade Cost Calculator (Pt & Tokens)" />
     <meta property="og:description"
-        content="Calculate the exact Platinum (Pt) required to upgrade your Titan's Hull, Core, and Engine subsystems in War Robots. Plan your base Titan level progression." />
+        content="Calculate exact Platinum (Pt) and Upgrade Token costs for Ultimate Titan weapons in War Robots. Plan your progression and optimize resource spending." />
     <!-- Twitter / X -->
     <meta property="twitter:card" content="summary" />
     <meta property="twitter:url"
-        content="https://kokhong1995.github.io/warrobots-calculator/progression/titan-upgrade-costs.html" />
-    <meta property="twitter:title" content="War Robots Titan Hull, Core & Engine Upgrade Calculator | Platinum" />
+        content="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-titan-weapon-upgrade-costs.html" />
+    <meta property="twitter:title" content="War Robots Ultimate Titan Weapon Upgrade Cost Calculator (Pt & Tokens)" />
     <meta property="twitter:description"
-        content="Calculate the exact Platinum (Pt) required to upgrade your Titan's Hull, Core, and Engine subsystems in War Robots. Plan your base Titan level progression." />
+        content="Calculate exact Platinum (Pt) and Upgrade Token costs for Ultimate Titan weapons in War Robots. Plan your progression and optimize resource spending." />
     <link rel="icon" type="image/png" sizes="32x32" href="/warrobots-calculator/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/warrobots-calculator/apple-touch-icon.png">
     <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.9.0">
     <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.9.0">
-    <link rel="stylesheet" href="./css/titan-upgrade-costs.css?v=1.9.0">
-    <script src="/warrobots-calculator/data/ds-t4-titan-upgrades.js?v=1.9.0"></script>
-    <script type="module" src="./js/titan-upgrade-costs.js?v=1.9.0"></script>
+    <link rel="stylesheet" href="./css/ultimate-titan-weapon-upgrade-costs.css?v=1.9.0">
+    <script src="/warrobots-calculator/data/ds-ultimate-titan-weapon-upgrades.js?v=1.9.0"></script>
+    <script type="module" src="./js/ultimate-titan-weapon-upgrade-costs.js?v=1.9.0"></script>
 </head>
 
 <body>
@@ -77,9 +77,11 @@
             <div class="col-12">
                 <div class="card shadow-sm border-0 bg-light p-3 mb-4">
                     <div class="d-flex gap-1">
+                        <span class="badge badge-ultimate mb-2">Ultimate</span>
                         <span class="badge badge-titan mb-2">Titan</span>
+                        <span class="badge badge-weapon mb-2">Weapon</span>
                     </div>
-                    <h4 class="fw-bold mb-0">Titan Upgrade Costs</h4>
+                    <h4 class="fw-bold mb-0">Ultimate Titan Weapon Upgrade Costs</h4>
                 </div>
             </div>
         </div>
@@ -112,82 +114,23 @@
                         </div>
                     </div>
                 </div>
-                <!-- Tier 4 Titan Hull Upgrades -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-auto">
-                                <div class="d-flex align-items-center">
-                                    <span class="fw-bold">Tier 4 Titan Hull Upgrades</span>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <div class="row gx-2">
-                                    <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            id="buttonT4HullPresetUpgrade">Max Level</button>
-                                    </div>
-                                    <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-danger"
-                                            id="buttonResetT4HullUpgrades">Reset</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="container-fluid px-0">
-                            <div id="t4HullUpgradeContainer" class="row g-2"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Tier 4 Titan Core Upgrades -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-auto">
-                                <div class="d-flex align-items-center">
-                                    <span class="fw-bold">Tier 4 Titan Core Upgrades</span>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <div class="row gx-2">
-                                    <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            id="buttonT4CorePresetUpgrade">Max Level</button>
-                                    </div>
-                                    <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-danger"
-                                            id="buttonResetT4CoreUpgrades">Reset</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="container-fluid px-0">
-                            <div id="t4CoreUpgradeContainer" class="row g-2"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Tier 4 Titan Engine Upgrades -->
                 <div class="card">
                     <div class="card-header">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="fw-bold">Tier 4 Titan Engine Upgrades</span>
+                                    <span class="fw-bold">Ultimate Titan Weapon Upgrades</span>
                                 </div>
                             </div>
                             <div class="col-auto">
                                 <div class="row gx-2">
                                     <div class="col-auto mt-2 mt-md-0">
                                         <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            id="buttonT4EnginePresetUpgrade">Max Level</button>
+                                            id="buttonPresetUpgrade">Max Level</button>
                                     </div>
                                     <div class="col-auto mt-2 mt-md-0">
                                         <button type="button" class="btn btn-sm btn-outline-danger"
-                                            id="buttonResetT4EngineUpgrades">Reset</button>
+                                            id="buttonResetUpgrades">Reset</button>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +138,7 @@
                     </div>
                     <div class="card-body">
                         <div class="container-fluid px-0">
-                            <div id="t4EngineUpgradeContainer" class="row g-2"></div>
+                            <div id="upgradeContainer" class="row g-2"></div>
                         </div>
                     </div>
                 </div>
@@ -209,7 +152,11 @@
                             <span>Quantity</span> <span id="totalQuantity" class="fw-bold">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Platinum Amount</span> <span id="totalPlatinumAmount" class="fw-bold">0</span>
+                            <span>Platinum Amount</span> <span id="totalPlatinumAmount" class="fw-bold"
+                                title="0 Platinum">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Upgrade Tokens</span> <span id="totalUpgradeTokens" class="fw-bold">0</span>
                         </div>
                     </div>
                 </div>
