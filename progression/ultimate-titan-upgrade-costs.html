@@ -5,35 +5,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Primary Meta Tags -->
-    <title>War Robots Ultimate Robot Upgrade Cost Calculator (Silver & Tokens)</title>
-    <meta name="title" content="War Robots Ultimate Robot Upgrade Cost Calculator (Silver & Tokens)" />
+    <title>Ultimate Titan Upgrade Calculator | War Robots</title>
+    <meta name="title" content="Ultimate Titan Upgrade Calculator | War Robots" />
     <meta name="description"
-        content="Calculate exact Silver (Ag) and Upgrade Token costs for Ultimate robots in War Robots. Plan your ultimate robot progression and resource spending efficiently." />
+        content="Calculate Platinum and Upgrade Tokens for Ultimate Titan upgrades in War Robots. Plan your exact progression and resource costs accurately." />
     <meta name="keywords"
-        content="war robots ultimate robot upgrade cost, wr ultimate robot calculator, ultimate robot silver cost, war robots upgrade tokens calculator, wr progression guide" />
+        content="ultimate titan upgrade calculator, war robots ultimate titan costs, ultimate titan platinum tokens, ultimate titan hull core engine" />
     <link rel="canonical"
-        href="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-robot-upgrade-costs.html" />
+        href="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-titan-upgrade-costs.html" />
     <!-- Open Graph / Facebook / Discord -->
     <meta property="og:type" content="website" />
     <meta property="og:url"
-        content="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-robot-upgrade-costs.html" />
-    <meta property="og:title" content="War Robots Ultimate Robot Upgrade Cost Calculator (Silver & Tokens)" />
+        content="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-titan-upgrade-costs.html" />
+    <meta property="og:title" content="Ultimate Titan Upgrade Calculator | War Robots" />
     <meta property="og:description"
-        content="Calculate exact Silver (Ag) and Upgrade Token costs for Ultimate robots in War Robots. Plan your ultimate robot progression and resource spending efficiently." />
+        content="Calculate Platinum and Upgrade Tokens for Ultimate Titan upgrades in War Robots. Plan your exact progression and resource costs accurately." />
     <!-- Twitter / X -->
     <meta property="twitter:card" content="summary" />
     <meta property="twitter:url"
-        content="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-robot-upgrade-costs.html" />
-    <meta property="twitter:title" content="War Robots Ultimate Robot Upgrade Cost Calculator (Silver & Tokens)" />
+        content="https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-titan-upgrade-costs.html" />
+    <meta property="twitter:title" content="Ultimate Titan Upgrade Calculator | War Robots" />
     <meta property="twitter:description"
-        content="Calculate exact Silver (Ag) and Upgrade Token costs for Ultimate robots in War Robots. Plan your ultimate robot progression and resource spending efficiently." />
+        content="Calculate Platinum and Upgrade Tokens for Ultimate Titan upgrades in War Robots. Plan your exact progression and resource costs accurately." />
     <link rel="icon" type="image/png" sizes="32x32" href="/warrobots-calculator/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/warrobots-calculator/apple-touch-icon.png">
     <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.10.0">
     <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.10.0">
-    <link rel="stylesheet" href="./css/ultimate-robot-upgrade-costs.css?v=1.10.0">
-    <script src="/warrobots-calculator/data/ds-ultimate-robot-upgrades.js?v=1.10.0"></script>
-    <script type="module" src="./js/ultimate-robot-upgrade-costs.js?v=1.10.0"></script>
+    <link rel="stylesheet" href="./css/ultimate-titan-upgrade-costs.css?v=1.10.0">
+    <script src="/warrobots-calculator/data/ds-ultimate-titan-upgrades.js?v=1.10.0"></script>
+    <script type="module" src="./js/ultimate-titan-upgrade-costs.js?v=1.10.0"></script>
 </head>
 
 <body>
@@ -78,9 +78,9 @@
                 <div class="card shadow-sm border-0 bg-light p-3 mb-4">
                     <div class="d-flex gap-1">
                         <span class="badge badge-ultimate mb-2">Ultimate</span>
-                        <span class="badge badge-robot mb-2">Robot</span>
+                        <span class="badge badge-titan mb-2">Titan</span>
                     </div>
-                    <h4 class="fw-bold mb-0">Ultimate Robot Upgrade Costs</h4>
+                    <h4 class="fw-bold mb-0">Ultimate Titan Upgrade Costs</h4>
                 </div>
             </div>
         </div>
@@ -113,27 +113,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <!-- Hull Upgrades -->
+                <div class="card mb-4">
                     <div class="card-header">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
-                                    <span class="fw-bold">Ultimate Robot Upgrades</span>
+                                    <span class="fw-bold">Hull Upgrades</span>
                                 </div>
                             </div>
                             <div class="col-auto">
                                 <div class="row gx-2">
                                     <div class="col-auto mt-2 mt-md-0">
                                         <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            id="buttonPresetUpgrade1">MK1 to MK2</button>
-                                    </div>
-                                    <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            id="buttonPresetUpgrade2">MK2 to MK3</button>
+                                            id="buttonHullPresetUpgrade">Max Level</button>
                                     </div>
                                     <div class="col-auto mt-2 mt-md-0">
                                         <button type="button" class="btn btn-sm btn-outline-danger"
-                                            id="buttonResetUpgrades">Reset</button>
+                                            id="buttonResetHullUpgrades">Reset</button>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +138,94 @@
                     </div>
                     <div class="card-body">
                         <div class="container-fluid px-0">
-                            <div id="upgradeContainer" class="row g-2"></div>
+                            <div id="hullUpgradeContainer" class="row g-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Core Upgrades -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto">
+                                <div class="d-flex align-items-center">
+                                    <span class="fw-bold">Core Upgrades</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="row gx-2">
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonCorePresetUpgrade">Max Level</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            id="buttonResetCoreUpgrades">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid px-0">
+                            <div id="coreUpgradeContainer" class="row g-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Engine Upgrades -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto">
+                                <div class="d-flex align-items-center">
+                                    <span class="fw-bold">Engine Upgrades</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="row gx-2">
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonEnginePresetUpgrade">Max Level</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            id="buttonResetEngineUpgrades">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid px-0">
+                            <div id="engineUpgradeContainer" class="row g-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ultimate Upgrades -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto">
+                                <div class="d-flex align-items-center">
+                                    <span class="fw-bold">Ultimate Upgrades</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="row gx-2">
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            id="buttonUltimatePresetUpgrade">Max Level</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            id="buttonResetUltimateUpgrades">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid px-0">
+                            <div id="ultimateUpgradeContainer" class="row g-2"></div>
                         </div>
                     </div>
                 </div>
@@ -155,8 +239,7 @@
                             <span>Quantity</span> <span id="totalQuantity" class="fw-bold">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Silver Amount</span> <span id="totalSilverAmount" class="fw-bold"
-                                title="0 Silver">0</span>
+                            <span>Platinum Amount</span> <span id="totalPlatinumAmount" class="fw-bold">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Upgrade Tokens</span> <span id="totalUpgradeTokens" class="fw-bold">0</span>

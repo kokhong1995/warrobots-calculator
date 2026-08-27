@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.9.1';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.9.1';
-import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.9.1';
+import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.10.0';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.10.0';
+import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.10.0';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -89,12 +89,10 @@ function resetModifiers() {
     ], 0, syncData);
 }
 
-function resetT4RobotUpgrades() {
-    resetInputs(['#t4RobotUpgradeContainer .quantities'], 0, syncData);
-}
-
-function resetT4RobotWeaponUpgrades() {
-    resetInputs(['#t4RobotWeaponUpgradeContainer .quantities'], 0, syncData);
+function resetUpgrades(index) {
+    resetInputs([
+        '#' + TYPES[index] + 'UpgradeContainer .quantities'
+    ], 0, syncData);
 }
 
 function presetUpgrade(index, type) {
@@ -143,12 +141,14 @@ function presetUpgrade(index, type) {
 }
 
 function init() {
-    const containers = [
-        document.getElementById('t4RobotUpgradeContainer'),
-        document.getElementById('t4RobotWeaponUpgradeContainer')
-    ];
-    const containerInnerHTMLs = ['', ''];
+    const containers = [];
+    const containerInnerHTMLs = [];
     let i, j;
+
+    for (i = 0; i < TYPES.length; i++) {
+        containers.push(document.getElementById(TYPES[i] + 'UpgradeContainer'));
+        containerInnerHTMLs.push('');
+    }
 
     for (i = 0; i < DS_FIGHT_TO_THE_DEATH.length; i++) {
         for (j = 0; j < DS_FIGHT_TO_THE_DEATH[i].length; j++) {
@@ -194,10 +194,10 @@ function init() {
             resetModifiers();
         }
         if (e.target.matches('#buttonResetT4RobotUpgrades')) {
-            resetT4RobotUpgrades();
+            resetUpgrades(0);
         }
         if (e.target.matches('#buttonResetT4RobotWeaponUpgrades')) {
-            resetT4RobotWeaponUpgrades();
+            resetUpgrades(1);
         }
         if (e.target.matches('#buttonT4RobotPresetUpgrade1')) {
             presetUpgrade(0, 1);
