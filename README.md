@@ -15,9 +15,10 @@ A modern web application featuring specialized calculators for **War Robots** co
 - **Robot Weapon Upgrade Cost Calculator:** Calculate the silver amount, gold amount, upgrade duration, and upgrade tokens required for robot weapon upgrades.
 - **Ultimate Robot Upgrade Cost Calculator:** Calculate the silver amount and upgrade tokens required for ultimate robot upgrades.
 - **Ultimate Robot Weapon Upgrade Cost Calculator:** Calculate the silver amount and upgrade tokens required for ultimate robot weapon upgrades.
-- **Ultimate Titan Weapon Upgrade Cost Calculator:** Calculate the platinum amount and upgrade tokens required for ultimate titan weapon upgrades.
 - **Titan Upgrade Cost Calculator:** Calculate the platinum amount required for titan upgrades.
 - **Titan Weapon Upgrade Cost Calculator:** Calculate the platinum amount required for titan weapon upgrades.
+- **Ultimate Titan Upgrade Cost Calculator:** Calculate the platinum amount and upgrade tokens required for ultimate titan upgrades.
+- **Ultimate Titan Weapon Upgrade Cost Calculator:** Calculate the platinum amount and upgrade tokens required for ultimate titan weapon upgrades.
 - **Clean Dashboard Layout:** Modern, high-contrast UI designed for desktop and mobile navigation.
 - **More Tools Coming Soon:** Modular grid framework ready for additional resource calculators.
 
