@@ -29,11 +29,11 @@
         content="Calculate the exact Platinum (Pt) required to upgrade your Titan's Hull, Core, and Engine subsystems in War Robots. Plan your base Titan level progression." />
     <link rel="icon" type="image/png" sizes="32x32" href="/warrobots-calculator/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/warrobots-calculator/apple-touch-icon.png">
-    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.10.0">
-    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.10.0">
-    <link rel="stylesheet" href="./css/titan-upgrade-costs.css?v=1.10.0">
-    <script src="/warrobots-calculator/data/ds-t4-titan-upgrades.js?v=1.10.0"></script>
-    <script type="module" src="./js/titan-upgrade-costs.js?v=1.10.0"></script>
+    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.10.1">
+    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.10.1">
+    <link rel="stylesheet" href="./css/titan-upgrade-costs.css?v=1.10.1">
+    <script src="/warrobots-calculator/data/ds-t4-titan-upgrades.js?v=1.10.1"></script>
+    <script type="module" src="./js/titan-upgrade-costs.js?v=1.10.1"></script>
 </head>
 
 <body>
@@ -102,9 +102,12 @@
                         <div class="container-fluid px-0">
                             <div class="row g-2 align-items-center">
                                 <div class="col-md-4">
-                                    <label for="inputUpgradeDiscountPercentage"
-                                        class="form-label text-secondary small fw-medium">Upgrade Discount
-                                        %</label>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label for="inputUpgradeDiscountPercentage"
+                                            class="form-label text-secondary small fw-medium mb-0">
+                                            Upgrade Discount %
+                                        </label>
+                                    </div>
                                     <input type="number" class="form-control sync-data"
                                         id="inputUpgradeDiscountPercentage" min="0" value="0">
                                 </div>
@@ -124,7 +127,7 @@
                             <div class="col-auto">
                                 <div class="row gx-2">
                                     <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        <button type="button" class="btn btn-sm btn-outline-t4"
                                             id="buttonT4HullPresetUpgrade">Max Level</button>
                                     </div>
                                     <div class="col-auto mt-2 mt-md-0">
@@ -153,7 +156,7 @@
                             <div class="col-auto">
                                 <div class="row gx-2">
                                     <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        <button type="button" class="btn btn-sm btn-outline-t4"
                                             id="buttonT4CorePresetUpgrade">Max Level</button>
                                     </div>
                                     <div class="col-auto mt-2 mt-md-0">
@@ -182,7 +185,7 @@
                             <div class="col-auto">
                                 <div class="row gx-2">
                                     <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        <button type="button" class="btn btn-sm btn-outline-t4"
                                             id="buttonT4EnginePresetUpgrade">Max Level</button>
                                     </div>
                                     <div class="col-auto mt-2 mt-md-0">
@@ -229,12 +232,12 @@
             </div>
             <div class="d-flex align-items-center gap-2">
                 <span
-                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.10.0</span>
-                <small class="text-muted">Updated Aug 27, 2026</small>
+                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.10.1</span>
+                <small class="text-muted">Updated Aug 28, 2026</small>
             </div>
         </div>
     </footer>
-    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.10.0"></script>
+    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.10.1"></script>
 </body>
 
 </html>

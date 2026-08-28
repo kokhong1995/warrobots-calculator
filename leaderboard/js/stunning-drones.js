@@ -1,6 +1,6 @@
-import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.10.0';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.10.0';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.10.0';
+import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.10.1';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.10.1';
+import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.10.1';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -10,6 +10,7 @@ function syncData() {
     const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
     const inputInitialPoints = document.getElementById('inputInitialPoints');
     const inputBattlesToWin = document.getElementById('inputBattlesToWin');
+    const inputTotalTitanDeploys = document.getElementById('inputTotalTitanDeploys');
     const inputQuantities = document.querySelectorAll(".quantities");
     const spanTotalQuantity = document.getElementById('totalQuantity');
     const spanTotalMicrochips = document.getElementById('totalMicrochips');
@@ -19,7 +20,7 @@ function syncData() {
     let upgradeDiscountPercentage = 0;
     let quantity = 0, microchips = 0, upgradeTokens = 0, points = 0;
     let totalQuantity = 0, totalMicrochips = 0, totalUpgradeTokens = 0;
-    let totalPoints = 0, initialPoints = 0, battlesToWinPoints = 0;
+    let totalPoints = 0, initialPoints = 0, battlesToWinPoints = 0, totalTitanDeploysPoints = 0;
     let i;
 
     upgradeDiscountPercentage = toInt(inputUpgradeDiscountPercentage.value);
@@ -50,7 +51,8 @@ function syncData() {
     }
     initialPoints = toInt(inputInitialPoints.value);
     battlesToWinPoints = toInt(inputBattlesToWin.value) * 10;
-    totalPoints += initialPoints + battlesToWinPoints;
+    totalTitanDeploysPoints = calculateTotalTitanDeployPoints(toInt(inputTotalTitanDeploys.value));
+    totalPoints += initialPoints + battlesToWinPoints + totalTitanDeploysPoints;
 
     spanTotalQuantity.textContent = totalQuantity;
     spanTotalMicrochips.textContent = totalMicrochips;
@@ -60,7 +62,8 @@ function syncData() {
 
 function resetModifiers() {
     resetInputs([
-        '#inputUpgradeDiscountPercentage', '#inputInitialPoints', '#inputBattlesToWin'
+        '#inputUpgradeDiscountPercentage', '#inputInitialPoints', 
+        '#inputBattlesToWin', '#inputTotalTitanDeploys'
     ], 0, syncData);
 }
 

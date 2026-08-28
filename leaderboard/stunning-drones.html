@@ -28,11 +28,11 @@
         content="Calculate the exact microchips and upgrade tokens required for drone upgrades to hit target leaderboard points in War Robots." />
     <link rel="icon" type="image/png" sizes="32x32" href="/warrobots-calculator/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/warrobots-calculator/apple-touch-icon.png">
-    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.10.0">
-    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.10.0">
-    <link rel="stylesheet" href="./css/stunning-drones.css?v=1.10.0">
-    <script src="/warrobots-calculator/data/ds-drone-upgrades.js?v=1.10.0"></script>
-    <script type="module" src="./js/stunning-drones.js?v=1.10.0"></script>
+    <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.10.1">
+    <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.10.1">
+    <link rel="stylesheet" href="./css/stunning-drones.css?v=1.10.1">
+    <script src="/warrobots-calculator/data/ds-drone-upgrades.js?v=1.10.1"></script>
+    <script type="module" src="./js/stunning-drones.js?v=1.10.1"></script>
 </head>
 
 <body>
@@ -96,27 +96,72 @@
                     </div>
                     <div class="card-body">
                         <div class="container-fluid px-0">
-                            <div class="row g-2 align-items-center">
+                            <div class="row g-2 align-items-end">
                                 <div class="col-md-4">
-                                    <label for="inputUpgradeDiscountPercentage"
-                                        class="form-label text-secondary small fw-medium">Upgrade Discount
-                                        %</label>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label for="inputUpgradeDiscountPercentage"
+                                            class="form-label text-secondary small fw-medium mb-0">
+                                            Upgrade Discount %
+                                        </label>
+                                    </div>
                                     <input type="number" class="form-control sync-data"
                                         id="inputUpgradeDiscountPercentage" min="0" value="0">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="inputInitialPoints"
-                                        class="form-label text-secondary small fw-medium">Initial
-                                        Points</label>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label for="inputInitialPoints"
+                                            class="form-label text-secondary small fw-medium mb-0">
+                                            Initial Points
+                                        </label>
+                                    </div>
                                     <input type="number" class="form-control sync-data" id="inputInitialPoints" min="0"
                                         value="0">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="inputBattlesToWin"
-                                        class="form-label text-secondary small fw-medium">Battles
-                                        To Win</label>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label for="inputBattlesToWin"
+                                            class="form-label text-secondary small fw-medium mb-0">
+                                            Battles To Win
+                                        </label>
+                                        &nbsp;
+                                        <button type="button"
+                                            class="btn btn-link text-secondary p-0 border-0 lh-1 small text-decoration-none"
+                                            data-bs-toggle="popover" data-bs-placement="right" data-bs-trigger="focus"
+                                            data-bs-content="Subject to event leaderboard rules.">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                <path
+                                                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
                                     <input type="number" class="form-control sync-data" id="inputBattlesToWin" min="0"
                                         value="0">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label for="inputTotalTitanDeploys"
+                                            class="form-label text-secondary small fw-medium mb-0">
+                                            Total Titan Deploys
+                                        </label>
+                                        &nbsp;
+                                        <button type="button"
+                                            class="btn btn-link text-secondary p-0 border-0 lh-1 small text-decoration-none"
+                                            data-bs-toggle="popover" data-bs-placement="right" data-bs-trigger="focus"
+                                            data-bs-content="Subject to event leaderboard rules.">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                <path
+                                                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <input type="number" class="form-control sync-data" id="inputTotalTitanDeploys"
+                                        min="0" value="0">
                                 </div>
                             </div>
                         </div>
@@ -128,33 +173,40 @@
                             <div class="col-auto">
                                 <div class="d-flex align-items-center">
                                     <span class="fw-bold">Drone Upgrades</span>
+                                    &nbsp;
                                     <button type="button"
-                                        class="btn btn-sm btn-link text-secondary pt-0 pb-0 text-decoration-none fs-5"
-                                        data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus"
+                                        class="btn btn-link text-secondary p-0 border-0 lh-1 small text-decoration-none"
+                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-trigger="focus"
                                         data-bs-html="true" data-bs-title="Max Level Caps"
                                         data-bs-content="<ul class='list-unstyled mb-0 small'><li><strong>Tier 1:</strong> Max Level 3</li><li><strong>Tier 2:</strong> Max Level 6</li><li><strong>Tier 3:</strong> Max Level 9</li><li><strong>Tier 4:</strong> Max Level 12</li></ul>"
                                         aria-label="Tier Level Limits Information">
-                                        <i class="bi bi-info-circle-fill"></i> ⓘ
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                            <path
+                                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                        </svg>
                                     </button>
                                 </div>
                             </div>
                             <div class="col-auto">
                                 <div class="row gx-2">
                                     <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            id="buttonT1PresetUpgrade">Tier 1 Max</button>
+                                        <button type="button" class="btn btn-sm btn-outline-t1"
+                                            id="buttonT1PresetUpgrade">T1 Max</button>
                                     </div>
                                     <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            id="buttonT2PresetUpgrade">Tier 2 Max</button>
+                                        <button type="button" class="btn btn-sm btn-outline-t2"
+                                            id="buttonT2PresetUpgrade">T2 Max</button>
                                     </div>
                                     <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            id="buttonT3PresetUpgrade">Tier 3 Max</button>
+                                        <button type="button" class="btn btn-sm btn-outline-t3"
+                                            id="buttonT3PresetUpgrade">T3 Max</button>
                                     </div>
                                     <div class="col-auto mt-2 mt-md-0">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            id="buttonT4PresetUpgrade">Tier 4 Max</button>
+                                        <button type="button" class="btn btn-sm btn-outline-t4"
+                                            id="buttonT4PresetUpgrade">T4 Max</button>
                                     </div>
                                     <div class="col-auto mt-2 mt-md-0">
                                         <button type="button" class="btn btn-sm btn-outline-danger"
@@ -206,12 +258,12 @@
             </div>
             <div class="d-flex align-items-center gap-2">
                 <span
-                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.10.0</span>
-                <small class="text-muted">Updated Aug 27, 2026</small>
+                    class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">v1.10.1</span>
+                <small class="text-muted">Updated Aug 28, 2026</small>
             </div>
         </div>
     </footer>
-    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.10.0"></script>
+    <script src="/warrobots-calculator/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js?v=1.10.1"></script>
 </body>
 
 </html>
