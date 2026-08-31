@@ -1,6 +1,6 @@
-import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.10.1';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.10.1';
-import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.10.1';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.11.0';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.11.0';
+import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints, calculateTotalWinningBattlePoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.11.0';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -8,10 +8,9 @@ function updateInputValue(eventType, inputId) {
 
 function syncData() {
     const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
-    const inputInitialPoints = document.getElementById('inputInitialPoints');
-    const inputBattlesToWin = document.getElementById('inputBattlesToWin');
-    const inputTotalTitanDeploys = document.getElementById('inputTotalTitanDeploys');
-    const inputQuantities = document.querySelectorAll(".quantities");
+    const inputCurrentPoints = document.getElementById('inputCurrentPoints');
+    const inputTotalTitanDeployments = document.getElementById('inputTotalTitanDeployments');
+    const inputTotalVictories = document.getElementById('inputTotalVictories');
     const spanTotalQuantity = document.getElementById('totalQuantity');
     const spanTotalMicrochips = document.getElementById('totalMicrochips');
     const spanTotalUpgradeTokens = document.getElementById('totalUpgradeTokens');
@@ -20,84 +19,92 @@ function syncData() {
     let upgradeDiscountPercentage = 0;
     let quantity = 0, microchips = 0, upgradeTokens = 0, points = 0;
     let totalQuantity = 0, totalMicrochips = 0, totalUpgradeTokens = 0;
-    let totalPoints = 0, initialPoints = 0, battlesToWinPoints = 0, totalTitanDeploysPoints = 0;
-    let i;
+    let totalPoints = 0, currentPoints = 0, totalTitanDeploymentPoints = 0, totalVictoryPoints = 0;
+    let i, j;
 
-    upgradeDiscountPercentage = toInt(inputUpgradeDiscountPercentage.value);
+    upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
 
-    for (i = 0; i < DS_DRONE_UPGRADES.length; i++) {
-        if (DS_DRONE_UPGRADES[i].level == 1) {
-            continue;
+    for (i = 0; i < DS_STUNNING_DRONES.length; i++) {
+        for (j = 0; j < DS_STUNNING_DRONES[i].length; j++) {
+            if (DS_STUNNING_DRONES[i][j].level == 1) {
+                continue;
+            }
+
+            inputQuantity = document.getElementById(`inputQuantity${TYPES[i]}_${j}`);
+            spanMicrochips = document.getElementById(`spanMicrochips${TYPES[i]}_${j}`);
+            spanUpgradeTokens = document.getElementById(`spanUpgradeTokens${TYPES[i]}_${j}`);
+            spanPoints = document.getElementById(`spanPoints${TYPES[i]}_${j}`);
+
+            quantity = toInt(inputQuantity.value);
+            microchips = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_STUNNING_DRONES[i][j].microchips) * quantity;
+            upgradeTokens = DS_STUNNING_DRONES[i][j].upgradeTokens * quantity;
+            points = DS_STUNNING_DRONES[i][j].points.stunningDrones * quantity;
+
+            spanMicrochips.textContent = getStrAmount(microchips);
+            spanMicrochips.parentElement.title = thousandSeperator(microchips, ' ') + ' Microchips';
+            spanUpgradeTokens.textContent = getStrAmount(upgradeTokens);
+            spanUpgradeTokens.parentElement.title = thousandSeperator(upgradeTokens, ' ') + ' Upgrade Tokens';
+            spanPoints.textContent = getStrAmount(points);
+            spanPoints.parentElement.title = thousandSeperator(points, ' ') + ' Points';
+
+            totalQuantity += quantity;
+            totalMicrochips += microchips;
+            totalUpgradeTokens += upgradeTokens;
+            totalPoints += points;
         }
-
-        inputQuantity = document.getElementById('quantity_' + i);
-        spanMicrochips = document.getElementById('microchips_' + i);
-        spanUpgradeTokens = document.getElementById('upgradeTokens_' + i);
-        spanPoints = document.getElementById('points_' + i);
-
-        quantity = toInt(inputQuantity.value);
-        microchips = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_DRONE_UPGRADES[i].microchips) * quantity;
-        upgradeTokens = DS_DRONE_UPGRADES[i].upgradeTokens * quantity;
-        points = DS_DRONE_UPGRADES[i].points.stunningDrones * quantity;
-
-        spanMicrochips.textContent = microchips;
-        spanUpgradeTokens.textContent = upgradeTokens;
-        spanPoints.textContent = points;
-
-        totalQuantity += quantity;
-        totalMicrochips += microchips;
-        totalUpgradeTokens += upgradeTokens;
-        totalPoints += points;
     }
-    initialPoints = toInt(inputInitialPoints.value);
-    battlesToWinPoints = toInt(inputBattlesToWin.value) * 10;
-    totalTitanDeploysPoints = calculateTotalTitanDeployPoints(toInt(inputTotalTitanDeploys.value));
-    totalPoints += initialPoints + battlesToWinPoints + totalTitanDeploysPoints;
+    currentPoints = toInt(inputCurrentPoints.value);
+    totalTitanDeploymentPoints = calculateTotalTitanDeployPoints(toInt(inputTotalTitanDeployments.value));
+    totalVictoryPoints = calculateTotalWinningBattlePoints(toInt(inputTotalVictories.value));
+    totalPoints += currentPoints + totalTitanDeploymentPoints + totalVictoryPoints;
 
     spanTotalQuantity.textContent = totalQuantity;
-    spanTotalMicrochips.textContent = totalMicrochips;
-    spanTotalUpgradeTokens.textContent = totalUpgradeTokens;
-    spanTotalPoints.textContent = totalPoints;
+    spanTotalMicrochips.textContent = getStrAmount(totalMicrochips);
+    spanTotalMicrochips.title = thousandSeperator(totalMicrochips, ' ') + ' Microchips';
+    spanTotalUpgradeTokens.textContent = getStrAmount(totalUpgradeTokens);
+    spanTotalUpgradeTokens.title = thousandSeperator(totalUpgradeTokens, ' ') + ' Upgrade Tokens';
+    spanTotalPoints.textContent = getStrAmount(totalPoints);
+    spanTotalPoints.title = thousandSeperator(totalPoints, ' ') + ' Points';
 }
 
 function resetModifiers() {
     resetInputs([
-        '#inputUpgradeDiscountPercentage', '#inputInitialPoints', 
-        '#inputBattlesToWin', '#inputTotalTitanDeploys'
+        '#inputUpgradeDiscountPercentage', '#inputCurrentPoints',
+        '#inputTotalTitanDeployments', '#inputTotalVictories'
     ], 0, syncData);
 }
 
-function resetUpgrades() {
-    resetInputs(['#upgradeContainer .quantities'], 0, syncData);
+function resetUpgrades(index) {
+    resetInputs([`#container${TYPES[index]}Upgrades .quantities`], 0, syncData);
 }
 
-function presetUpgrade(type) {
+function presetUpgrades(index, type) {
     let inputQuantity;
     let quantity = 0;
     let i;
 
-    for (i = 0; i < DS_DRONE_UPGRADES.length; i++) {
-        if (DS_DRONE_UPGRADES[i].level == 1) {
+    for (i = 0; i < DS_STUNNING_DRONES[index].length; i++) {
+        if (DS_STUNNING_DRONES[index][i].level == 1) {
             continue;
         }
 
-        if (type == 1) {
-            if (DS_DRONE_UPGRADES[i].level > 3) {
+        if (type == 0) {
+            if (DS_STUNNING_DRONES[index][i].level > 3) {
+                continue;
+            }
+        }
+        else if (type == 1) {
+            if (DS_STUNNING_DRONES[index][i].level > 6) {
                 continue;
             }
         }
         else if (type == 2) {
-            if (DS_DRONE_UPGRADES[i].level > 6) {
-                continue;
-            }
-        }
-        else if (type == 3) {
-            if (DS_DRONE_UPGRADES[i].level > 9) {
+            if (DS_STUNNING_DRONES[index][i].level > 9) {
                 continue;
             }
         }
 
-        inputQuantity = document.getElementById('quantity_' + i);
+        inputQuantity = document.getElementById(`inputQuantity${TYPES[index]}_${i}`);
         quantity = toInt(inputQuantity.value);
         inputQuantity.value = ++quantity;
     }
@@ -106,59 +113,68 @@ function presetUpgrade(type) {
 }
 
 function init() {
-    const upgradeContainer = document.getElementById('upgradeContainer');
-    let upgradeContainerInnerHTML = '';
-    let i;
+    const containers = [];
+    const containerInnerHTMLs = [];
+    let i, j;
 
-    for (i = 0; i < DS_DRONE_UPGRADES.length; i++) {
-        if (DS_DRONE_UPGRADES[i].level == 1) {
-            continue;
-        }
-
-        upgradeContainerInnerHTML += '<div class="col-md-6">' +
-            '<div class="item">' + '<div class="row align-items-center">' +
-            '<div class="col">' + '<div class="item-title">Level&nbsp;' + DS_DRONE_UPGRADES[i].level + '</div>' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="input-group">' +
-            '<button type="button" class="btn btn-danger btn-decrement" data-wc-target="quantity_' + i + '">-</button>' +
-            '<input id="quantity_' + i + '" type="number" class="form-control quantities sync-data" min="0" value="0">' +
-            '<button type="button" class="btn btn-success btn-increment" data-wc-target="quantity_' + i + '">+</button>' +
-            '</div>' +
-            '</div>' +
-            '<div class="col-12">' +
-            '<div class="d-flex flex-wrap gap-1 mt-2">' +
-            '<span class="badge bg-light text-dark border">Microchips: <span id="microchips_' + i + '" class="microchips">0</span></span>' +
-            '<span class="badge bg-light text-dark border">Upgrade Tokens: <span id="upgradeTokens_' + i + '" class="upgrade-tokens">0</span></span>' +
-            '<span class="badge bg-light text-dark border">Points: <span id="points_' + i + '" class="points">0</span></span>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+    for (i = 0; i < TYPES.length; i++) {
+        containers.push(document.getElementById(`container${TYPES[i]}Upgrades`));
+        containerInnerHTMLs.push('');
     }
 
-    upgradeContainer.innerHTML = upgradeContainerInnerHTML;
+    for (i = 0; i < DS_STUNNING_DRONES.length; i++) {
+        for (j = 0; j < DS_STUNNING_DRONES[i].length; j++) {
+            if (DS_STUNNING_DRONES[i][j].level == 1) {
+                continue;
+            }
+
+            containerInnerHTMLs[i] += '<div class="col-md-6">' +
+                '<div class="item">' + '<div class="row align-items-center">' +
+                `<div class="col"><div class="item-title">Level ${DS_STUNNING_DRONES[i][j].level}</div>` +
+                '</div>' +
+                '<div class="col">' +
+                '<div class="input-group">' +
+                `<button type="button" class="btn btn-danger btn-decrement" data-wc-target="inputQuantity${TYPES[i]}_${j}">-</button>` +
+                `<input id="inputQuantity${TYPES[i]}_${j}" type="number" class="form-control quantities sync-data" min="0" value="0">` +
+                `<button type="button" class="btn btn-success btn-increment" data-wc-target="inputQuantity${TYPES[i]}_${j}">+</button>` +
+                '</div>' +
+                '</div>' +
+                '<div class="col-12">' +
+                '<div class="d-flex flex-wrap gap-1 mt-2">' +
+                `<span class="badge bg-light text-dark border" title="0 Microchips">Microchips: <span id="spanMicrochips${TYPES[i]}_${j}" class="microchips">0</span></span>` +
+                `<span class="badge bg-light text-dark border" title="0 Upgrade Tokens">Upgrade Tokens: <span id="spanUpgradeTokens${TYPES[i]}_${j}" class="upgrade-tokens">0</span></span>` +
+                `<span class="badge bg-light text-dark border" title="0 Points">Points: <span id="spanPoints${TYPES[i]}_${j}" class="points">0</span></span>` +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        }
+    }
+
+    for (i = 0; i < containers.length; i++) {
+        containers[i].innerHTML = containerInnerHTMLs[i];
+    }
 
     // Set click event listener.
     document.getElementById('mainContainer').addEventListener('click', (e) => {
         if (e.target.matches('#buttonResetModifiers')) {
             resetModifiers();
         }
-        if (e.target.matches('#buttonResetUpgrades')) {
-            resetUpgrades();
+        if (e.target.matches('#buttonResetDroneUpgrades')) {
+            resetUpgrades(0);
         }
-        if (e.target.matches('#buttonT1PresetUpgrade')) {
-            presetUpgrade(1);
+        if (e.target.matches('#buttonPresetDroneUpgrades_0')) {
+            presetUpgrades(0, 0);
         }
-        if (e.target.matches('#buttonT2PresetUpgrade')) {
-            presetUpgrade(2);
+        if (e.target.matches('#buttonPresetDroneUpgrades_1')) {
+            presetUpgrades(0, 1);
         }
-        if (e.target.matches('#buttonT3PresetUpgrade')) {
-            presetUpgrade(3);
+        if (e.target.matches('#buttonPresetDroneUpgrades_2')) {
+            presetUpgrades(0, 2);
         }
-        if (e.target.matches('#buttonT4PresetUpgrade')) {
-            presetUpgrade(4);
+        if (e.target.matches('#buttonPresetDroneUpgrades_3')) {
+            presetUpgrades(0, 3);
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);
@@ -181,5 +197,10 @@ function init() {
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 }
+
+const TYPES = ['Drone'];
+const DS_STUNNING_DRONES = [
+    DS_DRONE_UPGRADES
+];
 
 init();

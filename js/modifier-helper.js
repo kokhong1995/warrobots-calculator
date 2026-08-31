@@ -25,4 +25,13 @@ const calculateTotalTitanDeployPoints = (totalTitanDeploys) => {
     return titanDeployPoints * totalTitanDeploys;
 };
 
-export { applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier, calculateTotalTitanDeployPoints };
+const calculateTotalWinningBattlePoints = (totalWinningBattles) => {
+    const winningBattlePoints = 10;
+
+    return winningBattlePoints * totalWinningBattles;
+};
+
+export {
+    applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier,
+    calculateTotalTitanDeployPoints, calculateTotalWinningBattlePoints
+};

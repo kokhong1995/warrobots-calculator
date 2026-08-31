@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.10.1';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.10.1';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.10.1';
+import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.11.0';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.11.0';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.11.0';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -17,47 +17,48 @@ function syncData() {
     let upgradeDiscountPercentage = 0;
     let quantity = 0, silverAmount = 0, goldAmount = 0, upgradeDuration = 0, upgradeTokens = 0;
     let totalQuantity = 0, totalSilverAmount = 0, totalGoldAmount = 0, totalUpgradeDuration = 0, totalUpgradeTokens = 0;
-    let i;
+    let i, j;
 
     upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
 
-    for (i = 0; i < DS_T4_ROBOT_WEAPON_UPGRADES.length; i++) {
-        if ((DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 1 && DS_T4_ROBOT_WEAPON_UPGRADES[i].level == 1) ||
-            (DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 2 && DS_T4_ROBOT_WEAPON_UPGRADES[i].level == 1)
-        ) {
-            continue;
+    for (i = 0; i < DS_ROBOT_WEAPON_UPGRADE_COSTS.length; i++) {
+        for (j = 0; j < DS_ROBOT_WEAPON_UPGRADE_COSTS[i].length; j++) {
+            if (DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].level == 1) {
+                continue;
+            }
+
+            inputQuantity = document.getElementById(`inputQuantity${TYPES[i]}_${j}`);
+            spanSilverAmount = document.getElementById(`spanSilverAmount${TYPES[i]}_${j}`);
+            spanGoldAmount = document.getElementById(`spanGoldAmount${TYPES[i]}_${j}`);
+            spanUpgradeDuration = document.getElementById(`spanUpgradeDuration${TYPES[i]}_${j}`);
+            spanUpgradeTokens = document.getElementById(`spanUpgradeTokens${TYPES[i]}_${j}`);
+
+            quantity = toInt(inputQuantity.value);
+            silverAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].silverAmount) * quantity;
+            // Gold amount for enhancing to MK2 is discountable. 
+            if (DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].mark == 2 && DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].level == 0) {
+                goldAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].goldAmount) * quantity;
+            }
+            else {
+                goldAmount = DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].goldAmount * quantity;
+            }
+            upgradeDuration = DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].upgradeDurationSeconds * quantity;
+            upgradeTokens = DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].upgradeTokens * quantity;
+
+            spanSilverAmount.textContent = getStrAmount(silverAmount);
+            spanSilverAmount.parentElement.title = thousandSeperator(silverAmount, ' ') + ' Silver';
+            spanGoldAmount.textContent = getStrAmount(goldAmount);
+            spanGoldAmount.parentElement.title = thousandSeperator(goldAmount, ' ') + ' Gold';
+            spanUpgradeDuration.textContent = getStrDuration(upgradeDuration);
+            spanUpgradeTokens.textContent = getStrAmount(upgradeTokens);
+            spanUpgradeTokens.parentElement.title = thousandSeperator(upgradeTokens, ' ') + ' Upgrade Tokens';
+
+            totalQuantity += quantity;
+            totalSilverAmount += silverAmount;
+            totalGoldAmount += goldAmount;
+            totalUpgradeDuration += upgradeDuration;
+            totalUpgradeTokens += upgradeTokens;
         }
-
-        inputQuantity = document.getElementById('quantity_' + i);
-        spanSilverAmount = document.getElementById('silverAmount_' + i);
-        spanGoldAmount = document.getElementById('goldAmount_' + i);
-        spanUpgradeDuration = document.getElementById('upgradeDuration_' + i);
-        spanUpgradeTokens = document.getElementById('upgradeTokens_' + i);
-
-        quantity = toInt(inputQuantity.value);
-        silverAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_WEAPON_UPGRADES[i].silverAmount) * quantity;
-        // Gold amount for enhancing to MK2 is discountable. 
-        if (DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 2 && DS_T4_ROBOT_WEAPON_UPGRADES[i].level == 0) {
-            goldAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_ROBOT_WEAPON_UPGRADES[i].goldAmount) * quantity;
-        }
-        else {
-            goldAmount = DS_T4_ROBOT_WEAPON_UPGRADES[i].goldAmount * quantity;
-        }
-        upgradeDuration = DS_T4_ROBOT_WEAPON_UPGRADES[i].upgradeDurationSeconds * quantity;
-        upgradeTokens = DS_T4_ROBOT_WEAPON_UPGRADES[i].upgradeTokens * quantity;
-
-        spanSilverAmount.textContent = getStrAmount(silverAmount);
-        spanSilverAmount.parentElement.title = thousandSeperator(silverAmount, ' ') + ' Silver';
-        spanGoldAmount.textContent = getStrAmount(goldAmount);
-        spanGoldAmount.parentElement.title = thousandSeperator(goldAmount, ' ') + ' Gold';
-        spanUpgradeDuration.textContent = getStrDuration(upgradeDuration);
-        spanUpgradeTokens.textContent = upgradeTokens;
-
-        totalQuantity += quantity;
-        totalSilverAmount += silverAmount;
-        totalGoldAmount += goldAmount;
-        totalUpgradeDuration += upgradeDuration;
-        totalUpgradeTokens += upgradeTokens;
     }
 
     spanTotalQuantity.textContent = totalQuantity;
@@ -66,55 +67,54 @@ function syncData() {
     spanTotalGoldAmount.textContent = getStrAmount(totalGoldAmount);
     spanTotalGoldAmount.title = thousandSeperator(totalGoldAmount, ' ') + ' Gold';
     spanTotalUpgradeDuration.textContent = getStrDuration(totalUpgradeDuration);
-    spanTotalUpgradeTokens.textContent = totalUpgradeTokens;
+    spanTotalUpgradeTokens.textContent = getStrAmount(totalUpgradeTokens);
+    spanTotalUpgradeTokens.title = thousandSeperator(totalUpgradeTokens, ' ') + ' Upgrade Tokens';
 }
 
 function resetModifiers() {
     resetInputs(['#inputUpgradeDiscountPercentage'], 0, syncData);
 }
 
-function resetUpgrades() {
-    resetInputs(['#upgradeContainer .quantities'], 0, syncData);
+function resetUpgrades(index) {
+    resetInputs([`#container${TYPES[index]}Upgrades .quantities`], 0, syncData);
 }
 
-function presetUpgrade(type) {
+function presetUpgrades(index, type) {
     let inputQuantity;
     let quantity = 0;
     let i;
 
-    for (i = 0; i < DS_T4_ROBOT_WEAPON_UPGRADES.length; i++) {
-        if ((DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 1 && DS_T4_ROBOT_WEAPON_UPGRADES[i].level == 1) ||
-            (DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 2 && DS_T4_ROBOT_WEAPON_UPGRADES[i].level == 1)
-        ) {
+    for (i = 0; i < DS_ROBOT_WEAPON_UPGRADE_COSTS[index].length; i++) {
+        if (DS_ROBOT_WEAPON_UPGRADE_COSTS[index][i].level == 1) {
             continue;
         }
 
         // MK1 to MK2.
-        if (type == 1) {
+        if (type == 0) {
             // Skip MK2 : Level 0 above.
-            if (DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 2 &&
-                DS_T4_ROBOT_WEAPON_UPGRADES[i].level > 0) {
+            if (DS_ROBOT_WEAPON_UPGRADE_COSTS[index][i].mark == 2 &&
+                DS_ROBOT_WEAPON_UPGRADE_COSTS[index][i].level > 0) {
                 continue;
             }
             // Skip all MK3.
-            else if (DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 3) {
+            else if (DS_ROBOT_WEAPON_UPGRADE_COSTS[index][i].mark == 3) {
                 continue;
             }
         }
         // MK2 to MK3.
         else {
             // Skip all MK1.
-            if (DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 1) {
+            if (DS_ROBOT_WEAPON_UPGRADE_COSTS[index][i].mark == 1) {
                 continue;
             }
             // Skip MK2: Level 0 only.
-            else if (DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 2 &&
-                DS_T4_ROBOT_WEAPON_UPGRADES[i].level == 0) {
+            else if (DS_ROBOT_WEAPON_UPGRADE_COSTS[index][i].mark == 2 &&
+                DS_ROBOT_WEAPON_UPGRADE_COSTS[index][i].level == 0) {
                 continue;
             }
         }
 
-        inputQuantity = document.getElementById('quantity_' + i);
+        inputQuantity = document.getElementById(`inputQuantity${TYPES[index]}_${i}`);
         quantity = toInt(inputQuantity.value);
         inputQuantity.value = ++quantity;
     }
@@ -123,56 +123,63 @@ function presetUpgrade(type) {
 }
 
 function init() {
-    const upgradeContainer = document.getElementById('upgradeContainer');
-    let upgradeContainerInnerHTML = '';
-    let i;
+    const containers = [];
+    const containerInnerHTMLs = [];
+    let i, j;
 
-    for (i = 0; i < DS_T4_ROBOT_WEAPON_UPGRADES.length; i++) {
-        if ((DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 1 && DS_T4_ROBOT_WEAPON_UPGRADES[i].level == 1) ||
-            (DS_T4_ROBOT_WEAPON_UPGRADES[i].mark == 2 && DS_T4_ROBOT_WEAPON_UPGRADES[i].level == 1)
-        ) {
-            continue;
-        }
-
-        upgradeContainerInnerHTML += '<div class="col-md-6">' +
-            '<div class="item">' + '<div class="row align-items-center">' +
-            '<div class="col">' + '<div class="item-title">' + getStrLevel(DS_T4_ROBOT_WEAPON_UPGRADES[i].mark, DS_T4_ROBOT_WEAPON_UPGRADES[i].level) + '</div>' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="input-group">' +
-            '<button type="button" class="btn btn-danger btn-decrement" data-wc-target="quantity_' + i + '">-</button>' +
-            '<input id="quantity_' + i + '" type="number" class="form-control quantities sync-data" min="0" value="0">' +
-            '<button type="button" class="btn btn-success btn-increment" data-wc-target="quantity_' + i + '">+</button>' +
-            '</div>' +
-            '</div>' +
-            '<div class="col-12">' +
-            '<div class="d-flex flex-wrap gap-1 mt-2">' +
-            '<span class="badge bg-light text-dark border" title="0 Silver">Silver: <span id="silverAmount_' + i + '" class="silver-amount">0</span></span>' +
-            '<span class="badge bg-light text-dark border" title="0 Gold">Gold: <span id="goldAmount_' + i + '" class="gold-amount">0</span></span>' +
-            '<span class="badge bg-light text-dark border">Upgrade Duration: <span id="upgradeDuration_' + i + '" class="upgrade-duration">0</span></span>' +
-            '<span class="badge bg-light text-dark border">Upgrade Tokens: <span id="upgradeTokens_' + i + '" class="upgrade-tokens">0</span></span>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+    for (i = 0; i < TYPES.length; i++) {
+        containers.push(document.getElementById(`container${TYPES[i]}Upgrades`));
+        containerInnerHTMLs.push('');
     }
 
-    upgradeContainer.innerHTML = upgradeContainerInnerHTML;
+    for (i = 0; i < DS_ROBOT_WEAPON_UPGRADE_COSTS.length; i++) {
+        for (j = 0; j < DS_ROBOT_WEAPON_UPGRADE_COSTS[i].length; j++) {
+            if (DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].level == 1) {
+                continue;
+            }
+
+            containerInnerHTMLs[i] += '<div class="col-md-6">' +
+                '<div class="item">' + '<div class="row align-items-center">' +
+                `<div class="col"><div class="item-title">${getStrLevel(DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].mark, DS_ROBOT_WEAPON_UPGRADE_COSTS[i][j].level)}</div>` +
+                '</div>' +
+                '<div class="col">' +
+                '<div class="input-group">' +
+                `<button type="button" class="btn btn-danger btn-decrement" data-wc-target="inputQuantity${TYPES[i]}_${j}">-</button>` +
+                `<input id="inputQuantity${TYPES[i]}_${j}" type="number" class="form-control quantities sync-data" min="0" value="0">` +
+                `<button type="button" class="btn btn-success btn-increment" data-wc-target="inputQuantity${TYPES[i]}_${j}">+</button>` +
+                '</div>' +
+                '</div>' +
+                '<div class="col-12">' +
+                '<div class="d-flex flex-wrap gap-1 mt-2">' +
+                `<span class="badge bg-light text-dark border" title="0 Silver">Silver: <span id="spanSilverAmount${TYPES[i]}_${j}" class="silver-amount">0</span></span>` +
+                `<span class="badge bg-light text-dark border" title="0 Gold">Gold: <span id="spanGoldAmount${TYPES[i]}_${j}" class="gold-amount">0</span></span>` +
+                `<span class="badge bg-light text-dark border">Upgrade Duration: <span id="spanUpgradeDuration${TYPES[i]}_${j}" class="upgrade-duration">0</span></span>` +
+                `<span class="badge bg-light text-dark border" title="0 Upgrade Tokens">Upgrade Tokens: <span id="spanUpgradeTokens${TYPES[i]}_${j}" class="upgrade-tokens">0</span></span>` +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        }
+    }
+
+    for (i = 0; i < containers.length; i++) {
+        containers[i].innerHTML = containerInnerHTMLs[i];
+    }
 
     // Set click event listener.
     document.getElementById('mainContainer').addEventListener('click', (e) => {
         if (e.target.matches('#buttonResetModifiers')) {
             resetModifiers();
         }
-        if (e.target.matches('#buttonResetUpgrades')) {
-            resetUpgrades();
+        if (e.target.matches('#buttonResetT4WeaponUpgrades')) {
+            resetUpgrades(0);
         }
-        if (e.target.matches('#buttonPresetUpgrade1')) {
-            presetUpgrade(1);
+        if (e.target.matches('#buttonPresetT4WeaponUpgrades_0')) {
+            presetUpgrades(0, 0);
         }
-        if (e.target.matches('#buttonPresetUpgrade2')) {
-            presetUpgrade(2);
+        if (e.target.matches('#buttonPresetT4WeaponUpgrades_1')) {
+            presetUpgrades(0, 1);
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);
@@ -191,6 +198,12 @@ function init() {
             syncData();
         }
     });
+
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 }
+
+const TYPES = ['T4Weapon'];
+const DS_ROBOT_WEAPON_UPGRADE_COSTS = [DS_T4_ROBOT_WEAPON_UPGRADES];
 
 init();

@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>War Robots Calculator: Titan Upgrade Cost Calculator</title>
+    <title>War Robots Calculator: Titanic Efforts Leaderboard Calculator</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/warrobots-calculator/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/warrobots-calculator/apple-touch-icon.png">
     <link rel="stylesheet" href="/warrobots-calculator/bootstrap-5.3.8-dist/css/bootstrap.min.css?v=1.11.0">
     <link rel="stylesheet" href="/warrobots-calculator/css/index.css?v=1.11.0">
-    <link rel="stylesheet" href="./css/titan-upgrade-costs.css?v=1.11.0">
+    <link rel="stylesheet" href="./css/titanic-efforts.css?v=1.11.0">
     <script src="/warrobots-calculator/data/ds-t4-titan-upgrades.js?v=1.11.0"></script>
-    <script type="module" src="./js/titan-upgrade-costs.js?v=1.11.0"></script>
+    <script src="/warrobots-calculator/data/ds-t4-titan-weapon-upgrades.js?v=1.11.0"></script>
+    <script type="module" src="./js/titanic-efforts.js?v=1.11.0"></script>
 </head>
 
 <body>
@@ -54,11 +55,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="card shadow-sm border-0 bg-light p-3 mb-4">
-                    <div class="d-flex gap-1">
-                        <span class="badge badge-titan mb-2">Titan</span>
-                    </div>
-                    <h4 class="fw-bold mb-1">Titan Upgrade Costs</h4>
-                    <p class="text-muted mb-4">Calculate the exact Platinum needed for Titan upgrades.</p>
+                    <h4 class="fw-bold mb-1">Titanic Efforts</h4>
+                    <p class="text-muted mb-4">
+                        Calculate the exact Platinum needed to hit your target Leaderboard milestone.
+                    </p>
                     <div class="accordion" id="calculatorGuide">
                         <div class="accordion-item border-0 shadow-sm">
                             <h2 class="accordion-header">
@@ -74,17 +74,21 @@
                                     <ol class="ps-3 mb-0">
                                         <li class="mb-2">
                                             <strong>Configure Modifiers:</strong>
-                                            Set your values in <a href="#modifiers">Modifiers</a> (upgrade discount %).
+                                            Set your values in <a href="#modifiers">Modifiers</a> (upgrade discount %,
+                                            current points, and total Titan deployments).
                                         </li>
                                         <li class="mb-2">
-                                            <strong>Select Upgrades:</strong> Input your planned Tier 4
+                                            <strong>Select Upgrades:</strong>
+                                            Input your planned Tier 4
                                             <a href="#containerT4HullSubsystemUpgrades"
                                                 class="text-decoration-underline">Hull</a>,
                                             <a href="#containerT4CoreSubsystemUpgrades"
                                                 class="text-decoration-underline">Core</a>,
-                                            or
                                             <a href="#containerT4EngineSubsystemUpgrades"
-                                                class="text-decoration-underline">Engine</a> Subsystem Upgrades.
+                                                class="text-decoration-underline">Engine Subsystem</a>,
+                                            or
+                                            <a href="#containerT4WeaponUpgrades"
+                                                class="text-decoration-underline">Weapon</a> Upgrades.
                                             Use quick actions for faster entry.
                                         </li>
                                         <li>
@@ -143,6 +147,56 @@
                                     </div>
                                     <input type="number" class="form-control sync-data"
                                         id="inputUpgradeDiscountPercentage" min="0" value="0">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label for="inputCurrentPoints"
+                                            class="form-label text-secondary small fw-medium mb-0">
+                                            Current Points
+                                        </label>
+                                        &nbsp;
+                                        <button type="button"
+                                            class="btn btn-link text-secondary p-0 border-0 lh-1 small text-decoration-none"
+                                            data-bs-toggle="popover" data-bs-placement="right" data-bs-trigger="focus"
+                                            data-bs-html="true" data-bs-title="Current Points"
+                                            data-bs-content="<p class='mb-0'>Your current points on the event leaderboard.</p>"
+                                            aria-label="Current Points">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                <path
+                                                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <input type="number" class="form-control sync-data" id="inputCurrentPoints" min="0"
+                                        value="0">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label for="inputTotalTitanDeployments"
+                                            class="form-label text-secondary small fw-medium mb-0">
+                                            Total Titan Deployments
+                                        </label>
+                                        &nbsp;
+                                        <button type="button"
+                                            class="btn btn-link text-secondary p-0 border-0 lh-1 small text-decoration-none"
+                                            data-bs-toggle="popover" data-bs-placement="right" data-bs-trigger="focus"
+                                            data-bs-html="true" data-bs-title="Total Titan Deployments"
+                                            data-bs-content="<p class='mb-2'>The total number of Titan deployments required.</p><p class='mb-2'>Deploying a Titan yields 3 points.</p><p class='text-muted small fst-italic mb-0'>Only applicable if active for the current Leaderboard event.</p>"
+                                            aria-label="Total Titan Deployments">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                <path
+                                                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <input type="number" class="form-control sync-data" id="inputTotalTitanDeployments"
+                                        min="0" value="0">
                                 </div>
                             </div>
                         </div>
@@ -237,7 +291,7 @@
                     </div>
                 </div>
                 <!-- Tier 4 Engine Subsystem Upgrades -->
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-auto">
@@ -280,6 +334,51 @@
                         </div>
                     </div>
                 </div>
+                <!-- Tier 4 Weapon Upgrades -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto">
+                                <div class="d-flex align-items-center">
+                                    <span class="fw-bold">Tier 4 Weapon Upgrades</span>
+                                    &nbsp;
+                                    <button type="button"
+                                        class="btn btn-link text-secondary p-0 border-0 lh-1 small text-decoration-none"
+                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-trigger="focus"
+                                        data-bs-html="true" data-bs-title="Tier 4 Weapon Upgrades"
+                                        data-bs-content="<p class='mb-2'>Calculate upgrade costs from Level 2 to 25.</p><p class='fw-semibold mb-1'>Quick Actions:</p><ul class='ps-3 mb-0'><li><strong>Max Level:</strong> Increase all upgrade quantities by 1.</li><li><strong>Reset:</strong> Reset all upgrade quantities to 0.</li></ul>"
+                                        aria-label="Tier 4 Weapon Upgrades">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                            <path
+                                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="row gx-2">
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-t4"
+                                            id="buttonPresetT4WeaponUpgrades">Max
+                                            Level</button>
+                                    </div>
+                                    <div class="col-auto mt-2 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            id="buttonResetT4WeaponUpgrades">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid px-0">
+                            <div id="containerT4WeaponUpgrades" class="row g-2"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Right Column: Live Sticky Totals -->
             <div class="col-lg-4">
@@ -292,9 +391,12 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Quantity</span> <span id="totalQuantity" class="fw-bold">0</span>
                             </div>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between mb-2">
                                 <span>Platinum</span> <span id="totalPlatinumAmount" class="fw-bold"
                                     title="0 Platinum">0</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Points</span> <span id="totalPoints" class="fw-bold" title="0 Points">0</span>
                             </div>
                         </div>
                     </div>

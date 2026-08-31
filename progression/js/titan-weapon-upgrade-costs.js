@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.10.1';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.10.1';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.10.1';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.11.0';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.11.0';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.11.0';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -9,31 +9,33 @@ function updateInputValue(eventType, inputId) {
 function syncData() {
     const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
     const spanTotalQuantity = document.getElementById('totalQuantity');
-    const spanTotalPlatinumAmount = document.getElementById("totalPlatinumAmount");
+    const spanTotalPlatinumAmount = document.getElementById('totalPlatinumAmount');
     let inputQuantity, spanPlatinumAmount;
     let upgradeDiscountPercentage = 0;
     let quantity = 0, platinumAmount = 0;
     let totalQuantity = 0, totalPlatinumAmount = 0;
-    let i;
+    let i, j;
 
     upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
 
-    for (i = 0; i < DS_T4_TITAN_WEAPON_UPGRADES.length; i++) {
-        if (DS_T4_TITAN_WEAPON_UPGRADES[i].level == 1) {
-            continue;
+    for (i = 0; i < DS_TITAN_WEAPON_UPGRADE_COSTS.length; i++) {
+        for (j = 0; j < DS_TITAN_WEAPON_UPGRADE_COSTS[i].length; j++) {
+            if (DS_TITAN_WEAPON_UPGRADE_COSTS[i][j].level == 1) {
+                continue;
+            }
+
+            inputQuantity = document.getElementById(`inputQuantity${TYPES[i]}_${j}`);
+            spanPlatinumAmount = document.getElementById(`spanPlatinumAmount${TYPES[i]}_${j}`);
+
+            quantity = toInt(inputQuantity.value);
+            platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_TITAN_WEAPON_UPGRADE_COSTS[i][j].platinumAmount) * quantity;
+
+            spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
+            spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
+
+            totalQuantity += quantity;
+            totalPlatinumAmount += platinumAmount;
         }
-
-        inputQuantity = document.getElementById('quantity_' + i);
-        spanPlatinumAmount = document.getElementById('platinumAmount_' + i);
-
-        quantity = toInt(inputQuantity.value);
-        platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_TITAN_WEAPON_UPGRADES[i].platinumAmount) * quantity;
-
-        spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
-        spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
-
-        totalQuantity += quantity;
-        totalPlatinumAmount += platinumAmount;
     }
 
     spanTotalQuantity.textContent = totalQuantity;
@@ -45,21 +47,21 @@ function resetModifiers() {
     resetInputs(['#inputUpgradeDiscountPercentage'], 0, syncData);
 }
 
-function resetUpgrades() {
-    resetInputs(['#upgradeContainer .quantities'], 0, syncData);
+function resetUpgrades(index) {
+    resetInputs([`#container${TYPES[index]}Upgrades .quantities`], 0, syncData);
 }
 
-function presetUpgrade() {
+function presetUpgrades(index) {
     let inputQuantity;
     let quantity = 0;
     let i;
 
-    for (i = 0; i < DS_T4_TITAN_WEAPON_UPGRADES.length; i++) {
-        if (DS_T4_TITAN_WEAPON_UPGRADES[i].level == 1) {
+    for (i = 0; i < DS_TITAN_WEAPON_UPGRADE_COSTS[index].length; i++) {
+        if (DS_TITAN_WEAPON_UPGRADE_COSTS[index][i].level == 1) {
             continue;
         }
 
-        inputQuantity = document.getElementById('quantity_' + i);
+        inputQuantity = document.getElementById(`inputQuantity${TYPES[index]}_${i}`);
         quantity = toInt(inputQuantity.value);
         inputQuantity.value = ++quantity;
     }
@@ -68,48 +70,57 @@ function presetUpgrade() {
 }
 
 function init() {
-    const upgradeContainer = document.getElementById('upgradeContainer');
-    let upgradeContainerInnerHTML = '';
-    let i;
+    const containers = [];
+    const containerInnerHTMLs = [];
+    let i, j;
 
-    for (i = 0; i < DS_T4_TITAN_WEAPON_UPGRADES.length; i++) {
-        if (DS_T4_TITAN_WEAPON_UPGRADES[i].level == 1) {
-            continue;
-        }
-
-        upgradeContainerInnerHTML += '<div class="col-md-6">' +
-            '<div class="item">' + '<div class="row align-items-center">' +
-            '<div class="col">' + '<div class="item-title">Level ' + DS_T4_TITAN_WEAPON_UPGRADES[i].level + '</div>' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="input-group">' +
-            '<button type="button" class="btn btn-danger btn-decrement" data-wc-target="quantity_' + i + '">-</button>' +
-            '<input id="quantity_' + i + '" type="number" class="form-control quantities sync-data" min="0" value="0">' +
-            '<button type="button" class="btn btn-success btn-increment" data-wc-target="quantity_' + i + '">+</button>' +
-            '</div>' +
-            '</div>' +
-            '<div class="col-12">' +
-            '<div class="d-flex flex-wrap gap-1 mt-2">' +
-            '<span class="badge bg-light text-dark border" title="0 Platinum">Platinum: <span id="platinumAmount_' + i + '" class="platinum-amount">0</span></span>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+    for (i = 0; i < TYPES.length; i++) {
+        containers.push(document.getElementById(`container${TYPES[i]}Upgrades`));
+        containerInnerHTMLs.push('');
     }
 
-    upgradeContainer.innerHTML = upgradeContainerInnerHTML;
+    for (i = 0; i < DS_TITAN_WEAPON_UPGRADE_COSTS.length; i++) {
+        for (j = 0; j < DS_TITAN_WEAPON_UPGRADE_COSTS[i].length; j++) {
+            if (DS_TITAN_WEAPON_UPGRADE_COSTS[i][j].level == 1) {
+                continue;
+            }
+
+            containerInnerHTMLs[i] += '<div class="col-md-6">' +
+                '<div class="item">' + '<div class="row align-items-center">' +
+                `<div class="col"><div class="item-title">Level ${DS_TITAN_WEAPON_UPGRADE_COSTS[i][j].level}</div>` +
+                '</div>' +
+                '<div class="col">' +
+                '<div class="input-group">' +
+                `<button type="button" class="btn btn-danger btn-decrement" data-wc-target="inputQuantity${TYPES[i]}_${j}">-</button>` +
+                `<input id="inputQuantity${TYPES[i]}_${j}" type="number" class="form-control quantities sync-data" min="0" value="0">` +
+                `<button type="button" class="btn btn-success btn-increment" data-wc-target="inputQuantity${TYPES[i]}_${j}">+</button>` +
+                '</div>' +
+                '</div>' +
+                '<div class="col-12">' +
+                '<div class="d-flex flex-wrap gap-1 mt-2">' +
+                `<span class="badge bg-light text-dark border" title="0 Platinum">Platinum: <span id="spanPlatinumAmount${TYPES[i]}_${j}" class="platinum-amount">0</span></span>` +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        }
+    }
+
+    for (i = 0; i < containers.length; i++) {
+        containers[i].innerHTML = containerInnerHTMLs[i];
+    }
 
     // Set click event listener.
     document.getElementById('mainContainer').addEventListener('click', (e) => {
         if (e.target.matches('#buttonResetModifiers')) {
             resetModifiers();
         }
-        if (e.target.matches('#buttonResetUpgrades')) {
-            resetUpgrades();
+        if (e.target.matches('#buttonResetT4WeaponUpgrades')) {
+            resetUpgrades(0);
         }
-        if (e.target.matches('#buttonPresetUpgrade')) {
-            presetUpgrade();
+        if (e.target.matches('#buttonPresetT4WeaponUpgrades')) {
+            presetUpgrades(0);
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);
@@ -128,6 +139,12 @@ function init() {
             syncData();
         }
     });
+
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 }
+
+const TYPES = ['T4Weapon'];
+const DS_TITAN_WEAPON_UPGRADE_COSTS = [DS_T4_TITAN_WEAPON_UPGRADES];
 
 init();

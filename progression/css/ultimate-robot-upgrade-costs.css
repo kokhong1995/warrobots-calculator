@@ -2,6 +2,14 @@
     z-index: 10000;
 }
 
+.header-height-match {
+    min-height: 47.4px;
+}
+
+#calculatorGuide .accordion-button::after {
+    filter: brightness(0) invert(1) !important;
+}
+
 .item {
     background-color: white;
     padding: 8px;

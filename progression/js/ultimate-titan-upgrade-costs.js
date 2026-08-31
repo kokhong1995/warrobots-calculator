@@ -1,6 +1,6 @@
-import { toInt } from '/warrobots-calculator/js/data-helper.js?v=1.10.1';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.10.1';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.10.1';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.11.0';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.11.0';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.11.0';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -19,22 +19,24 @@ function syncData() {
 
     upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
 
-    for (i = 0; i < DS_ULTIMATE_TITAN_UPGRADES.length; i++) {
-        for (j = 0; j < DS_ULTIMATE_TITAN_UPGRADES[i].length; j++) {
-            if (DS_ULTIMATE_TITAN_UPGRADES[i][j].level == 1) {
+    for (i = 0; i < DS_ULTIMATE_TITAN_UPGRADE_COSTS.length; i++) {
+        for (j = 0; j < DS_ULTIMATE_TITAN_UPGRADE_COSTS[i].length; j++) {
+            if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].level == 1) {
                 continue;
             }
 
-            inputQuantity = document.getElementById(TYPES[i] + 'Quantity_' + j);
-            spanPlatinumAmount = document.getElementById(TYPES[i] + 'PlatinumAmount_' + j);
-            spanUpgradeTokens = document.getElementById(TYPES[i] + 'UpgradeTokens_' + j);
+            inputQuantity = document.getElementById(`inputQuantity${TYPES[i]}_${j}`);
+            spanPlatinumAmount = document.getElementById(`spanPlatinumAmount${TYPES[i]}_${j}`);
+            spanUpgradeTokens = document.getElementById(`spanUpgradeTokens${TYPES[i]}_${j}`);
 
             quantity = toInt(inputQuantity.value);
-            platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_ULTIMATE_TITAN_UPGRADES[i][j].platinumAmount) * quantity;
-            upgradeTokens = DS_ULTIMATE_TITAN_UPGRADES[i][j].upgradeTokens * quantity;
+            platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].platinumAmount) * quantity;
+            upgradeTokens = DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].upgradeTokens * quantity;
 
-            spanPlatinumAmount.textContent = platinumAmount;
-            spanUpgradeTokens.textContent = upgradeTokens;
+            spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
+            spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
+            spanUpgradeTokens.textContent = getStrAmount(upgradeTokens);
+            spanUpgradeTokens.parentElement.title = thousandSeperator(upgradeTokens, ' ') + ' Upgrade Tokens';
 
             totalQuantity += quantity;
             totalPlatinumAmount += platinumAmount;
@@ -43,8 +45,10 @@ function syncData() {
     }
 
     spanTotalQuantity.textContent = totalQuantity;
-    spanTotalPlatinumAmount.textContent = totalPlatinumAmount;
-    spanTotalUpgradeTokens.textContent = totalUpgradeTokens;
+    spanTotalPlatinumAmount.textContent = getStrAmount(totalPlatinumAmount);
+    spanTotalPlatinumAmount.title = thousandSeperator(totalPlatinumAmount, ' ') + ' Platinum';
+    spanTotalUpgradeTokens.textContent = getStrAmount(totalUpgradeTokens);
+    spanTotalUpgradeTokens.title = thousandSeperator(totalUpgradeTokens, ' ') + ' Upgrade Tokens';
 }
 
 function resetModifiers() {
@@ -52,22 +56,20 @@ function resetModifiers() {
 }
 
 function resetUpgrades(index) {
-    resetInputs([
-        '#' + TYPES[index] + 'UpgradeContainer .quantities'
-    ], 0, syncData);
+    resetInputs([`#container${TYPES[index]}Upgrades .quantities`], 0, syncData);
 }
 
-function presetUpgrade(index) {
+function presetUpgrades(index) {
     let inputQuantity;
     let quantity = 0;
     let i;
 
-    for (i = 0; i < DS_ULTIMATE_TITAN_UPGRADES[index].length; i++) {
-        if (DS_ULTIMATE_TITAN_UPGRADES[index][i].level == 1) {
+    for (i = 0; i < DS_ULTIMATE_TITAN_UPGRADE_COSTS[index].length; i++) {
+        if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[index][i].level == 1) {
             continue;
         }
 
-        inputQuantity = document.getElementById(TYPES[index] + 'Quantity_' + i);
+        inputQuantity = document.getElementById(`inputQuantity${TYPES[index]}_${i}`);
         quantity = toInt(inputQuantity.value);
         inputQuantity.value = ++quantity;
     }
@@ -76,36 +78,36 @@ function presetUpgrade(index) {
 }
 
 function init() {
-    const upgradeContainers = [];
-    const upgradeContainerInnerHTMLs = [];
+    const containers = [];
+    const containerInnerHTMLs = [];
     let i, j;
 
     for (i = 0; i < TYPES.length; i++) {
-        upgradeContainers.push(document.getElementById(TYPES[i] + 'UpgradeContainer'));
-        upgradeContainerInnerHTMLs.push('');
+        containers.push(document.getElementById(`container${TYPES[i]}Upgrades`));
+        containerInnerHTMLs.push('');
     }
 
-    for (i = 0; i < DS_ULTIMATE_TITAN_UPGRADES.length; i++) {
-        for (j = 0; j < DS_ULTIMATE_TITAN_UPGRADES[i].length; j++) {
-            if (DS_ULTIMATE_TITAN_UPGRADES[i][j].level == 1) {
+    for (i = 0; i < DS_ULTIMATE_TITAN_UPGRADE_COSTS.length; i++) {
+        for (j = 0; j < DS_ULTIMATE_TITAN_UPGRADE_COSTS[i].length; j++) {
+            if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].level == 1) {
                 continue;
             }
 
-            upgradeContainerInnerHTMLs[i] += '<div class="col-md-6">' +
+            containerInnerHTMLs[i] += '<div class="col-md-6">' +
                 '<div class="item">' + '<div class="row align-items-center">' +
-                '<div class="col">' + '<div class="item-title">Level ' + DS_ULTIMATE_TITAN_UPGRADES[i][j].level + '</div>' +
+                `<div class="col"><div class="item-title">Level ${DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].level}</div>` +
                 '</div>' +
                 '<div class="col">' +
                 '<div class="input-group">' +
-                '<button type="button" class="btn btn-danger btn-decrement" data-wc-target="' + TYPES[i] + 'Quantity_' + j + '">-</button>' +
-                '<input id="' + TYPES[i] + 'Quantity_' + j + '" type="number" class="form-control quantities sync-data" min="0" value="0">' +
-                '<button type="button" class="btn btn-success btn-increment" data-wc-target="' + TYPES[i] + 'Quantity_' + j + '">+</button>' +
+                `<button type="button" class="btn btn-danger btn-decrement" data-wc-target="inputQuantity${TYPES[i]}_${j}">-</button>` +
+                `<input id="inputQuantity${TYPES[i]}_${j}" type="number" class="form-control quantities sync-data" min="0" value="0">` +
+                `<button type="button" class="btn btn-success btn-increment" data-wc-target="inputQuantity${TYPES[i]}_${j}">+</button>` +
                 '</div>' +
                 '</div>' +
                 '<div class="col-12">' +
                 '<div class="d-flex flex-wrap gap-1 mt-2">' +
-                '<span class="badge bg-light text-dark border" title="0 Platinum">Platinum: <span id="' + TYPES[i] + 'PlatinumAmount_' + j + '" class="platinum-amount">0</span></span>' +
-                '<span class="badge bg-light text-dark border">Upgrade Tokens: <span id="' + TYPES[i] + 'UpgradeTokens_' + j + '" class="upgrade-tokens">0</span></span>' +
+                `<span class="badge bg-light text-dark border" title="0 Platinum">Platinum: <span id="spanPlatinumAmount${TYPES[i]}_${j}" class="platinum-amount">0</span></span>` +
+                `<span class="badge bg-light text-dark border" title="0 Upgrade Tokens">Upgrade Tokens: <span id="spanUpgradeTokens${TYPES[i]}_${j}" class="upgrade-tokens">0</span></span>` +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -114,8 +116,8 @@ function init() {
         }
     }
 
-    for (i = 0; i < upgradeContainers.length; i++) {
-        upgradeContainers[i].innerHTML = upgradeContainerInnerHTMLs[i];
+    for (i = 0; i < containers.length; i++) {
+        containers[i].innerHTML = containerInnerHTMLs[i];
     }
 
     // Set click event listener.
@@ -123,29 +125,29 @@ function init() {
         if (e.target.matches('#buttonResetModifiers')) {
             resetModifiers();
         }
-        if (e.target.matches('#buttonResetHullUpgrades')) {
+        if (e.target.matches('#buttonResetHullSubsystemUpgrades')) {
             resetUpgrades(0);
         }
-        if (e.target.matches('#buttonResetCoreUpgrades')) {
+        if (e.target.matches('#buttonResetCoreSubsystemUpgrades')) {
             resetUpgrades(1);
         }
-        if (e.target.matches('#buttonResetEngineUpgrades')) {
+        if (e.target.matches('#buttonResetEngineSubsystemUpgrades')) {
             resetUpgrades(2);
         }
-        if (e.target.matches('#buttonResetUltimateUpgrades')) {
+        if (e.target.matches('#buttonResetUltimateSubsystemUpgrades')) {
             resetUpgrades(3);
         }
-        if (e.target.matches('#buttonHullPresetUpgrade')) {
-            presetUpgrade(0);
+        if (e.target.matches('#buttonPresetHullSubsystemUpgrades')) {
+            presetUpgrades(0);
         }
-        if (e.target.matches('#buttonCorePresetUpgrade')) {
-            presetUpgrade(1);
+        if (e.target.matches('#buttonPresetCoreSubsystemUpgrades')) {
+            presetUpgrades(1);
         }
-        if (e.target.matches('#buttonEnginePresetUpgrade')) {
-            presetUpgrade(2);
+        if (e.target.matches('#buttonPresetEngineSubsystemUpgrades')) {
+            presetUpgrades(2);
         }
-        if (e.target.matches('#buttonUltimatePresetUpgrade')) {
-            presetUpgrade(3);
+        if (e.target.matches('#buttonPresetUltimateSubsystemUpgrades')) {
+            presetUpgrades(3);
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);
@@ -164,10 +166,13 @@ function init() {
             syncData();
         }
     });
+
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 }
 
-const TYPES = ['hull', 'core', 'engine', 'ultimate'];
-const DS_ULTIMATE_TITAN_UPGRADES = [
+const TYPES = ['HullSubsystem', 'CoreSubsystem', 'EngineSubsystem', 'UltimateSubsystem'];
+const DS_ULTIMATE_TITAN_UPGRADE_COSTS = [
     DS_ULTIMATE_TITAN_HULL_UPGRADES, DS_ULTIMATE_TITAN_CORE_UPGRADES,
     DS_ULTIMATE_TITAN_ENGINE_UPGRADES, DS_ULTIMATE_TITAN_ULTIMATE_UPGRADES
 ];
