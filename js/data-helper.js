@@ -54,7 +54,30 @@ const getStrDuration = (seconds) => {
     return parts.join(' ') || 0;
 };
 
+const calculateTotalSuperchestUnlocked = (totalKeySpentForSuperchest) => {
+    const SUPERCHEST_REQUIRED_KEYS = 50000;
+
+    return Math.trunc(totalKeySpentForSuperchest / SUPERCHEST_REQUIRED_KEYS);
+};
+
+const calculateKeysForNextSuperchest = (totalKeys) => {
+    const SUPERCHEST_REQUIRED_KEYS = 50000;
+    const CURRENT_PROGRESS = totalKeys % SUPERCHEST_REQUIRED_KEYS;
+
+    return SUPERCHEST_REQUIRED_KEYS - CURRENT_PROGRESS;
+};
+
+const calculateNextSuperchestProgressPercent = (totalKeys) => {
+    const SUPERCHEST_REQUIRED_KEYS = 50000;
+    const CURRENT_PROGRESS = totalKeys % SUPERCHEST_REQUIRED_KEYS;
+
+    return (CURRENT_PROGRESS / SUPERCHEST_REQUIRED_KEYS) * 100;
+};
+
 export {
     toInt, toFloat, thousandSeperator,
-    getStrLevel, getStrAmount, getStrDuration
+    getStrLevel, getStrAmount, getStrDuration,
+    calculateTotalSuperchestUnlocked,
+    calculateKeysForNextSuperchest,
+    calculateNextSuperchestProgressPercent
 };

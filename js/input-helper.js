@@ -1,4 +1,4 @@
-import { toInt } from './data-helper.js?v=1.11.1';
+import { toInt } from './data-helper.js?v=1.12.0';
 
 const resetInputs = (selectors, value = '', callback) => {
     let i, j;

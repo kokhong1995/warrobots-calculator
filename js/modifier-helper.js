@@ -31,7 +31,12 @@ const calculateTotalWinningBattlePoints = (totalWinningBattles) => {
     return winningBattlePoints * totalWinningBattles;
 };
 
+const applyFillingRate = (fillingRate, keySpent) => {
+    return keySpent * (fillingRate || 1);
+};
+
 export {
     applyUpgradeDiscountPercentage, applyUpgradeSpeedMultiplier,
-    calculateTotalTitanDeployPoints, calculateTotalWinningBattlePoints
+    calculateTotalTitanDeployPoints, calculateTotalWinningBattlePoints,
+    applyFillingRate
 };
