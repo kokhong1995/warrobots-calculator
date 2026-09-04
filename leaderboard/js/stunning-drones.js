@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.12.3';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.12.3';
-import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints, calculateTotalWinningBattlePoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.12.3';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.12.4';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.12.4';
+import { applyUpgradeDiscountPercentage, calculateTotalTitanDeployPoints, calculateTotalWinningBattlePoints } from '/warrobots-calculator/js/modifier-helper.js?v=1.12.4';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
