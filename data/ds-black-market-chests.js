@@ -20,12 +20,12 @@ const DS_BLACK_MARKET_CHESTS = [
         eventSpecific: false
     },
     {
-        name: 'Drones',
+        name: 'Pilots',
         keys: 1000,
         eventSpecific: true
     },
     {
-        name: 'Pilots',
+        name: 'Drones',
         keys: 1000,
         eventSpecific: true
     },
