@@ -28,7 +28,7 @@ A modern web application featuring specialized calculators for **War Robots** co
 
 ## 📜 Background & Motivation
 
-On August 15, 2026, during an active *Stunning Drones* leaderboard event featuring a Robot Gold Data Pad as the top prize, a 40% drone upgrade discount caught my attention. I began tracking my upgrade costs alongside the event points earned in a spreadsheet. Successfully securing the main prize felt incredible, which sparked a natural question: *Why isn't there a dedicated tool to calculate and optimize leaderboard scoring?* 
+On August 15, 2026, during an active *Stunning Drones* leaderboard event featuring a Gold Data Pad as the top prize, a 40% drone upgrade discount caught my attention. I began tracking my upgrade costs alongside the event points earned in a spreadsheet. Successfully securing the main prize felt incredible, which sparked a natural question: *Why isn't there a dedicated tool to calculate and optimize leaderboard scoring?* 
 <img width="837" height="845" alt="Screenshot From 2026-09-14 23-45-13" src="https://github.com/user-attachments/assets/4f24818c-bb55-4f3d-a3fa-f31d929b3541" />
 
 Seeing the initial LibreOffice prototype accurately project upgrade costs and point gains validated the concept. Realizing how many *War Robots* players narrowly miss top-tier rewards without precise planning, I decided to build a free, open-source web application for the entire community. Two days later, on August 17, 2026, the first version of the WR Calculator was officially published.
