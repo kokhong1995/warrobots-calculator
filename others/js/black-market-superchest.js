@@ -1,6 +1,6 @@
-import { toInt, toFloat, thousandSeperator, getStrAmount, calculateTotalSuperchestUnlocked, calculateKeysForNextSuperchest, calculateNextSuperchestProgressPercent } from '/warrobots-calculator/js/data-helper.js?v=1.12.10';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.12.10';
-import { applyFillingRate } from '/warrobots-calculator/js/modifier-helper.js?v=1.12.10';
+import { toInt, toFloat, thousandSeperator, getStrAmount, calculateTotalSuperchestUnlocked, calculateKeysForNextSuperchest, calculateNextSuperchestProgressPercent } from '/warrobots-calculator/js/data-helper.js?v=1.12.11';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.12.11';
+import { applyFillingRate } from '/warrobots-calculator/js/modifier-helper.js?v=1.12.11';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -174,16 +174,22 @@ function init() {
             presetChests(0, 'Titans');
         }
         if (e.target.matches('#buttonPresetChests_3')) {
-            presetChests(0, 'Drones');
+            presetChests(0, 'Pilots');
         }
         if (e.target.matches('#buttonPresetChests_4')) {
-            presetChests(0, 'Pilots');
+            presetChests(0, 'Drones');
         }
         if (e.target.matches('#buttonPresetChests_5')) {
             presetChests(0, 'Ships');
         }
         if (e.target.matches('#buttonPresetChests_6')) {
-            presetChests(0, 'Promo');
+            presetChests(0, 'Promo (500)');
+        }
+        if (e.target.matches('#buttonPresetChests_7')) {
+            presetChests(0, 'Promo (1000)');
+        }
+        if (e.target.matches('#buttonPresetChests_8')) {
+            presetChests(0, 'Promo (2000)');
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);
