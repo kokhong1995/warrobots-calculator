@@ -1,5 +1,5 @@
-import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.13.1';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.13.1';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.13.2';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.13.2';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
