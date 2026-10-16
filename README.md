@@ -20,7 +20,9 @@ A modern web application featuring specialized calculators for **War Robots** co
 - **Titan Weapon Upgrade Cost Calculator:** Calculate the exact Platinum needed for Titan Weapon upgrades.
 - **Ultimate Titan Upgrade Cost Calculator:** Calculate the exact Platinum and Upgrade Tokens needed for Ultimate Titan upgrades.
 - **Ultimate Titan Weapon Upgrade Cost Calculator:** Calculate the exact Platinum and Upgrade Tokens needed for Ultimate Titan Weapon upgrades.
-- **Black Market Superchest:** Calculate the exact Keys needed to unlock superchests.
+- **Black Market Superchest Calculator:** Calculate the exact Keys needed to unlock superchests.
+- **Mothership Upgrade Cost Calculator:** Calculate the exact components needed for Mothership upgrades.
+- **Robot Pilot Upgrade Cost Calculator:** Calculate the exact Gold, Memorium and Upgrade Tokens needed for Robot Pilot upgrades.
 - **Clean Dashboard Layout:** Modern, high-contrast UI designed for desktop and mobile navigation.
 - **More Tools Coming Soon:** Modular grid framework ready for additional resource calculators.
 

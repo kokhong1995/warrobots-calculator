@@ -54,6 +54,11 @@
   color: #FFFFFF !important;
 }
 
+.badge-pilot {
+  background-color: #1976D2 !important;
+  color: #FFFFFF !important;
+}
+
 .btn-outline-t1 {
   --bs-btn-color: var(--t1-outline-color);
   --bs-btn-border-color: var(--t1-outline-color);
