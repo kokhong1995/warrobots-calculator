@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.14.3';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.14.3';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.14.3';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.16.2';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.16.2';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.16.2';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -18,23 +18,24 @@ function syncData() {
 
     upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
 
-    for (i = 0; i < DS_T4_TITAN_UPGRADE_COSTS.length; i++) {
-        for (j = 0; j < DS_T4_TITAN_UPGRADE_COSTS[i].length; j++) {
-            if (DS_T4_TITAN_UPGRADE_COSTS[i][j].level == 1) {
+    for (i = 0; i < DS_TITAN_UPGRADE_COSTS.length; i++) {
+        for (j = 0; j < DS_TITAN_UPGRADE_COSTS[i].length; j++) {
+            if (DS_TITAN_UPGRADE_COSTS[i][j].upgradeCost == false) {
                 continue;
             }
 
             inputQuantity = document.getElementById(`inputQuantity${TYPES[i]}_${j}`);
-            spanPlatinumAmount = document.getElementById(`spanPlatinumAmount${TYPES[i]}_${j}`);
-
             quantity = toInt(inputQuantity.value);
-            platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_T4_TITAN_UPGRADE_COSTS[i][j].platinumAmount) * quantity;
-
-            spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
-            spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
-
             totalQuantity += quantity;
-            totalPlatinumAmount += platinumAmount;
+
+            // Upgrade Cost.
+            if (DS_TITAN_UPGRADE_COSTS[i][j]['upgradeCost']['currency'] == 'Platinum') {
+                spanPlatinumAmount = document.getElementById(`spanPlatinumAmount${TYPES[i]}_${j}`);
+                platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_TITAN_UPGRADE_COSTS[i][j]['upgradeCost']['value']) * quantity;
+                spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
+                spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
+                totalPlatinumAmount += platinumAmount;
+            }
         }
     }
 
@@ -56,8 +57,8 @@ function presetUpgrades(index) {
     let quantity = 0;
     let i;
 
-    for (i = 0; i < DS_T4_TITAN_UPGRADE_COSTS[index].length; i++) {
-        if (DS_T4_TITAN_UPGRADE_COSTS[index][i].level == 1) {
+    for (i = 0; i < DS_TITAN_UPGRADE_COSTS[index].length; i++) {
+        if (DS_TITAN_UPGRADE_COSTS[index][i].upgradeCost == false) {
             continue;
         }
 
@@ -79,15 +80,15 @@ function init() {
         containerInnerHTMLs.push('');
     }
 
-    for (i = 0; i < DS_T4_TITAN_UPGRADE_COSTS.length; i++) {
-        for (j = 0; j < DS_T4_TITAN_UPGRADE_COSTS[i].length; j++) {
-            if (DS_T4_TITAN_UPGRADE_COSTS[i][j].level == 1) {
+    for (i = 0; i < DS_TITAN_UPGRADE_COSTS.length; i++) {
+        for (j = 0; j < DS_TITAN_UPGRADE_COSTS[i].length; j++) {
+            if (DS_TITAN_UPGRADE_COSTS[i][j].upgradeCost == false) {
                 continue;
             }
 
             containerInnerHTMLs[i] += '<div class="col-md-6">' +
                 '<div class="item">' + '<div class="row align-items-center">' +
-                `<div class="col"><div class="item-title">Level ${DS_T4_TITAN_UPGRADE_COSTS[i][j].level}</div>` +
+                `<div class="col"><div class="item-title">Level ${DS_TITAN_UPGRADE_COSTS[i][j].level}</div>` +
                 '</div>' +
                 '<div class="col">' +
                 '<div class="input-group">' +
@@ -116,23 +117,37 @@ function init() {
         if (e.target.matches('#buttonResetModifiers')) {
             resetModifiers();
         }
-        if (e.target.matches('#buttonResetT4HullSubsystemUpgrades')) {
+        if (e.target.matches('#buttonResetT4SubsystemUpgrades')) {
             resetUpgrades(0);
         }
-        if (e.target.matches('#buttonResetT4CoreSubsystemUpgrades')) {
+        if (e.target.matches('#buttonResetT3SubsystemUpgrades')) {
             resetUpgrades(1);
         }
-        if (e.target.matches('#buttonResetT4EngineSubsystemUpgrades')) {
+        if (e.target.matches('#buttonResetT2SubsystemUpgrades')) {
             resetUpgrades(2);
         }
-        if (e.target.matches('#buttonPresetT4HullSubsystemUpgrades')) {
+        if (e.target.matches('#buttonResetT1SubsystemUpgrades')) {
+            resetUpgrades(3);
+        }
+        if (e.target.matches('#buttonPresetT4SubsystemUpgrades_0') ||
+            e.target.matches('#buttonPresetT4SubsystemUpgrades_1') ||
+            e.target.matches('#buttonPresetT4SubsystemUpgrades_2')) {
             presetUpgrades(0);
         }
-        if (e.target.matches('#buttonPresetT4CoreSubsystemUpgrades')) {
+        if (e.target.matches('#buttonPresetT3SubsystemUpgrades_0') ||
+            e.target.matches('#buttonPresetT3SubsystemUpgrades_1') ||
+            e.target.matches('#buttonPresetT3SubsystemUpgrades_2')) {
             presetUpgrades(1);
         }
-        if (e.target.matches('#buttonPresetT4EngineSubsystemUpgrades')) {
+        if (e.target.matches('#buttonPresetT2SubsystemUpgrades_0') ||
+            e.target.matches('#buttonPresetT2SubsystemUpgrades_1') ||
+            e.target.matches('#buttonPresetT2SubsystemUpgrades_2')) {
             presetUpgrades(2);
+        }
+        if (e.target.matches('#buttonPresetT1SubsystemUpgrades_0') ||
+            e.target.matches('#buttonPresetT1SubsystemUpgrades_1') ||
+            e.target.matches('#buttonPresetT1SubsystemUpgrades_2')) {
+            presetUpgrades(3);
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);
@@ -158,10 +173,10 @@ function init() {
     syncData();
 }
 
-const TYPES = ['T4HullSubsystem', 'T4CoreSubsystem', 'T4EngineSubsystem'];
-const DS_T4_TITAN_UPGRADE_COSTS = [
-    DS_T4_TITAN_HULL_UPGRADES, DS_T4_TITAN_CORE_UPGRADES,
-    DS_T4_TITAN_ENGINE_UPGRADES
+const TYPES = ['T4Subsystem', 'T3Subsystem', 'T2Subsystem', 'T1Subsystem'];
+const DS_TITAN_UPGRADE_COSTS = [
+    DS_T4_TITAN_SUBSYSTEM_UPGRADES, DS_T3_TITAN_SUBSYSTEM_UPGRADES,
+    DS_T2_TITAN_SUBSYSTEM_UPGRADES, DS_T1_TITAN_SUBSYSTEM_UPGRADES
 ];
 
 init();

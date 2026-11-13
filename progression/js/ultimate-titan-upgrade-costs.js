@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.14.3';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.14.3';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.14.3';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.16.2';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.16.2';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.16.2';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -21,26 +21,29 @@ function syncData() {
 
     for (i = 0; i < DS_ULTIMATE_TITAN_UPGRADE_COSTS.length; i++) {
         for (j = 0; j < DS_ULTIMATE_TITAN_UPGRADE_COSTS[i].length; j++) {
-            if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].level == 1) {
+            if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].upgradeCost == false) {
                 continue;
             }
 
             inputQuantity = document.getElementById(`inputQuantity${TYPES[i]}_${j}`);
-            spanPlatinumAmount = document.getElementById(`spanPlatinumAmount${TYPES[i]}_${j}`);
-            spanUpgradeTokens = document.getElementById(`spanUpgradeTokens${TYPES[i]}_${j}`);
-
             quantity = toInt(inputQuantity.value);
-            platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].platinumAmount) * quantity;
-            upgradeTokens = DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].upgradeTokens * quantity;
-
-            spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
-            spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
-            spanUpgradeTokens.textContent = getStrAmount(upgradeTokens);
-            spanUpgradeTokens.parentElement.title = thousandSeperator(upgradeTokens, ' ') + ' Upgrade Tokens';
-
             totalQuantity += quantity;
-            totalPlatinumAmount += platinumAmount;
-            totalUpgradeTokens += upgradeTokens;
+
+            // Upgrade Cost.
+            if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j]['upgradeCost']['currency'] == 'Platinum') {
+                platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j]['upgradeCost']['value']) * quantity;
+                spanPlatinumAmount = document.getElementById(`spanPlatinumAmount${TYPES[i]}_${j}`);
+                spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
+                spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
+                totalPlatinumAmount += platinumAmount;
+            }
+            else if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j]['upgradeCost']['currency'] == 'UpgradeToken') {
+                upgradeTokens = DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j]['upgradeCost']['value'] * quantity;
+                spanUpgradeTokens = document.getElementById(`spanUpgradeTokens${TYPES[i]}_${j}`);
+                spanUpgradeTokens.textContent = getStrAmount(upgradeTokens);
+                spanUpgradeTokens.parentElement.title = thousandSeperator(upgradeTokens, ' ') + ' Upgrade Tokens';
+                totalUpgradeTokens += upgradeTokens;
+            }
         }
     }
 
@@ -65,7 +68,7 @@ function presetUpgrades(index) {
     let i;
 
     for (i = 0; i < DS_ULTIMATE_TITAN_UPGRADE_COSTS[index].length; i++) {
-        if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[index][i].level == 1) {
+        if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[index][i].upgradeCost == false) {
             continue;
         }
 
@@ -89,7 +92,7 @@ function init() {
 
     for (i = 0; i < DS_ULTIMATE_TITAN_UPGRADE_COSTS.length; i++) {
         for (j = 0; j < DS_ULTIMATE_TITAN_UPGRADE_COSTS[i].length; j++) {
-            if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].level == 1) {
+            if (DS_ULTIMATE_TITAN_UPGRADE_COSTS[i][j].upgradeCost == false) {
                 continue;
             }
 
@@ -125,29 +128,14 @@ function init() {
         if (e.target.matches('#buttonResetModifiers')) {
             resetModifiers();
         }
-        if (e.target.matches('#buttonResetHullSubsystemUpgrades')) {
+        if (e.target.matches('#buttonResetSubsystemUpgrades')) {
             resetUpgrades(0);
         }
-        if (e.target.matches('#buttonResetCoreSubsystemUpgrades')) {
-            resetUpgrades(1);
-        }
-        if (e.target.matches('#buttonResetEngineSubsystemUpgrades')) {
-            resetUpgrades(2);
-        }
-        if (e.target.matches('#buttonResetUltimateSubsystemUpgrades')) {
-            resetUpgrades(3);
-        }
-        if (e.target.matches('#buttonPresetHullSubsystemUpgrades')) {
+        if (e.target.matches('#buttonPresetSubsystemUpgrades_0') ||
+            e.target.matches('#buttonPresetSubsystemUpgrades_1') ||
+            e.target.matches('#buttonPresetSubsystemUpgrades_2') ||
+            e.target.matches('#buttonPresetSubsystemUpgrades_3')) {
             presetUpgrades(0);
-        }
-        if (e.target.matches('#buttonPresetCoreSubsystemUpgrades')) {
-            presetUpgrades(1);
-        }
-        if (e.target.matches('#buttonPresetEngineSubsystemUpgrades')) {
-            presetUpgrades(2);
-        }
-        if (e.target.matches('#buttonPresetUltimateSubsystemUpgrades')) {
-            presetUpgrades(3);
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);
@@ -173,10 +161,7 @@ function init() {
     syncData();
 }
 
-const TYPES = ['HullSubsystem', 'CoreSubsystem', 'EngineSubsystem', 'UltimateSubsystem'];
-const DS_ULTIMATE_TITAN_UPGRADE_COSTS = [
-    DS_ULTIMATE_TITAN_HULL_UPGRADES, DS_ULTIMATE_TITAN_CORE_UPGRADES,
-    DS_ULTIMATE_TITAN_ENGINE_UPGRADES, DS_ULTIMATE_TITAN_ULTIMATE_UPGRADES
-];
+const TYPES = ['Subsystem'];
+const DS_ULTIMATE_TITAN_UPGRADE_COSTS = [DS_ULTIMATE_TITAN_SUBSYSTEM_UPGRADES];
 
 init();

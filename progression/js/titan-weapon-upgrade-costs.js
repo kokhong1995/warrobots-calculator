@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.14.3';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.14.3';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.14.3';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.16.2';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.16.2';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.16.2';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -20,21 +20,22 @@ function syncData() {
 
     for (i = 0; i < DS_TITAN_WEAPON_UPGRADE_COSTS.length; i++) {
         for (j = 0; j < DS_TITAN_WEAPON_UPGRADE_COSTS[i].length; j++) {
-            if (DS_TITAN_WEAPON_UPGRADE_COSTS[i][j].level == 1) {
+            if (DS_TITAN_WEAPON_UPGRADE_COSTS[i][j].upgradeCost == false) {
                 continue;
             }
 
             inputQuantity = document.getElementById(`inputQuantity${TYPES[i]}_${j}`);
-            spanPlatinumAmount = document.getElementById(`spanPlatinumAmount${TYPES[i]}_${j}`);
-
             quantity = toInt(inputQuantity.value);
-            platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_TITAN_WEAPON_UPGRADE_COSTS[i][j].platinumAmount) * quantity;
-
-            spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
-            spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
-
             totalQuantity += quantity;
-            totalPlatinumAmount += platinumAmount;
+
+            // Upgrade Cost.
+            if (DS_TITAN_WEAPON_UPGRADE_COSTS[i][j]['upgradeCost']['currency'] == 'Platinum') {
+                spanPlatinumAmount = document.getElementById(`spanPlatinumAmount${TYPES[i]}_${j}`);
+                platinumAmount = applyUpgradeDiscountPercentage(upgradeDiscountPercentage, DS_TITAN_WEAPON_UPGRADE_COSTS[i][j]['upgradeCost']['value']) * quantity;
+                spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
+                spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
+                totalPlatinumAmount += platinumAmount;
+            }
         }
     }
 
@@ -57,7 +58,7 @@ function presetUpgrades(index) {
     let i;
 
     for (i = 0; i < DS_TITAN_WEAPON_UPGRADE_COSTS[index].length; i++) {
-        if (DS_TITAN_WEAPON_UPGRADE_COSTS[index][i].level == 1) {
+        if (DS_TITAN_WEAPON_UPGRADE_COSTS[index][i].upgradeCost == false) {
             continue;
         }
 
@@ -81,7 +82,7 @@ function init() {
 
     for (i = 0; i < DS_TITAN_WEAPON_UPGRADE_COSTS.length; i++) {
         for (j = 0; j < DS_TITAN_WEAPON_UPGRADE_COSTS[i].length; j++) {
-            if (DS_TITAN_WEAPON_UPGRADE_COSTS[i][j].level == 1) {
+            if (DS_TITAN_WEAPON_UPGRADE_COSTS[i][j].upgradeCost == false) {
                 continue;
             }
 
@@ -119,8 +120,26 @@ function init() {
         if (e.target.matches('#buttonResetT4WeaponUpgrades')) {
             resetUpgrades(0);
         }
+        if (e.target.matches('#buttonResetT3WeaponUpgrades')) {
+            resetUpgrades(1);
+        }
+        if (e.target.matches('#buttonResetT2WeaponUpgrades')) {
+            resetUpgrades(2);
+        }
+        if (e.target.matches('#buttonResetT1WeaponUpgrades')) {
+            resetUpgrades(3);
+        }
         if (e.target.matches('#buttonPresetT4WeaponUpgrades')) {
             presetUpgrades(0);
+        }
+        if (e.target.matches('#buttonPresetT3WeaponUpgrades')) {
+            presetUpgrades(1);
+        }
+        if (e.target.matches('#buttonPresetT2WeaponUpgrades')) {
+            presetUpgrades(2);
+        }
+        if (e.target.matches('#buttonPresetT1WeaponUpgrades')) {
+            presetUpgrades(3);
         }
         if (e.target.matches('.btn-decrement')) {
             updateInputValue('-', e.target.dataset.wcTarget);
@@ -146,7 +165,10 @@ function init() {
     syncData();
 }
 
-const TYPES = ['T4Weapon'];
-const DS_TITAN_WEAPON_UPGRADE_COSTS = [DS_T4_TITAN_WEAPON_UPGRADES];
+const TYPES = ['T4Weapon', 'T3Weapon', 'T2Weapon', 'T1Weapon'];
+const DS_TITAN_WEAPON_UPGRADE_COSTS = [
+    DS_T4_TITAN_WEAPON_UPGRADES, DS_T3_TITAN_WEAPON_UPGRADES,
+    DS_T2_TITAN_WEAPON_UPGRADES, DS_T1_TITAN_WEAPON_UPGRADES
+];
 
 init();
