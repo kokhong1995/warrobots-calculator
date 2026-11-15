@@ -8,23 +8,26 @@ A modern web application featuring specialized calculators for **War Robots** co
 
 ## 🛠️ Features
 
-- **Stunning Drones Leaderboard Calculator:** Calculate the exact Microchips and Upgrade Tokens needed to hit your target Leaderboard milestone.
-- **Fight To The Death Leaderboard Calculator:** Calculate the exact Silver, Gold, Upgrade Duration, and Upgrade Tokens needed to hit your target Leaderboard milestone.
-- **Titanic Efforts Leaderboard Calculator:** Calculate the exact Platinum needed to hit your target Leaderboard milestone.
-- **Drone Upgrade Cost Calculator:** Calculate the exact Microchips and Upgrade Tokens needed for Drone upgrades.
-- **Robot Upgrade Cost Calculator:** Calculate the exact Silver, Gold, Upgrade Duration, and Upgrade Tokens needed for Robot upgrades.
-- **Robot Weapon Upgrade Cost Calculator:** Calculate the exact Silver, Gold, Upgrade Duration, and Upgrade Tokens needed for Robot Weapon upgrades.
-- **Ultimate Robot Upgrade Cost Calculator:** Calculate the exact Silver and Upgrade Tokens needed for Ultimate Robot upgrades.
-- **Ultimate Robot Weapon Upgrade Cost Calculator:** Calculate the exact Silver and Upgrade Tokens needed for Ultimate Robot Weapon upgrades.
-- **Titan Upgrade Cost Calculator:** Calculate the exact Platinum needed for Titan upgrades.
-- **Titan Weapon Upgrade Cost Calculator:** Calculate the exact Platinum needed for Titan Weapon upgrades.
-- **Ultimate Titan Upgrade Cost Calculator:** Calculate the exact Platinum and Upgrade Tokens needed for Ultimate Titan upgrades.
-- **Ultimate Titan Weapon Upgrade Cost Calculator:** Calculate the exact Platinum and Upgrade Tokens needed for Ultimate Titan Weapon upgrades.
-- **Black Market Superchest Calculator:** Calculate the exact Keys needed to unlock superchests.
-- **Mothership Upgrade Cost Calculator:** Calculate the exact components needed for Mothership upgrades.
-- **Robot Pilot Upgrade Cost Calculator:** Calculate the exact Gold, Memorium and Upgrade Tokens needed for Robot Pilot upgrades.
-- **Clean Dashboard Layout:** Modern, high-contrast UI designed for desktop and mobile navigation.
-- **More Tools Coming Soon:** Modular grid framework ready for additional resource calculators.
+- **Leaderboard Calculators**
+  - [Fight To The Death](https://kokhong1995.github.io/warrobots-calculator/leaderboard/fight-to-the-death.html)
+  - [Pilot Rush](https://kokhong1995.github.io/warrobots-calculator/leaderboard/pilot-rush.html)
+  - [Titanic Efforts](https://kokhong1995.github.io/warrobots-calculator/leaderboard/titanic-efforts.html)
+  - [Stunning Drones](https://kokhong1995.github.io/warrobots-calculator/leaderboard/stunning-drones.html)
+- **Upgrade Cost Calculators**
+  - [Robot](https://kokhong1995.github.io/warrobots-calculator/progression/robot-upgrade-costs.html)
+  - [Robot Weapon](https://kokhong1995.github.io/warrobots-calculator/progression/robot-weapon-upgrade-costs.html)
+  - [Ultimate Robot](https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-robot-upgrade-costs.html)
+  - [Ultimate Robot Weapon](https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-robot-weapon-upgrade-costs.html)
+  - [Robot Pilot](https://kokhong1995.github.io/warrobots-calculator/progression/robot-pilot-upgrade-costs.html)
+  - [Titan Pilot](https://kokhong1995.github.io/warrobots-calculator/progression/titan-pilot-upgrade-costs.html)
+  - [Titan](https://kokhong1995.github.io/warrobots-calculator/progression/titan-upgrade-costs.html)
+  - [Titan Weapon](https://kokhong1995.github.io/warrobots-calculator/progression/titan-weapon-upgrade-costs.html)
+  - [Ultimate Titan](https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-titan-upgrade-costs.html)
+  - [Ultimate Titan Weapon](https://kokhong1995.github.io/warrobots-calculator/progression/ultimate-titan-weapon-upgrade-costs.html)
+  - [Drone](https://kokhong1995.github.io/warrobots-calculator/progression/drone-upgrade-costs.html)
+  - [Mothership](https://kokhong1995.github.io/warrobots-calculator/progression/mothership-upgrade-costs.html)
+- **Others**
+  - [Black Market Superchest Calculator](https://kokhong1995.github.io/warrobots-calculator/others/black-market-superchest.html)
 
 ---
 
