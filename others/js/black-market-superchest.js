@@ -1,6 +1,6 @@
-import { toInt, toFloat, thousandSeperator, getStrAmount, calculateTotalSuperchestUnlocked, calculateKeysForNextSuperchest, calculateNextSuperchestProgressPercent } from '/warrobots-calculator/js/data-helper.js?v=1.16.2';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.16.2';
-import { applyFillingRate } from '/warrobots-calculator/js/modifier-helper.js?v=1.16.2';
+import { toInt, toFloat, thousandSeperator, getStrAmount, calculateTotalSuperchestUnlocked, calculateKeysForNextSuperchest, calculateNextSuperchestProgressPercent } from '/warrobots-calculator/js/data-helper.js?v=1.17.2';
+import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.17.2';
+import { applyFillingRate } from '/warrobots-calculator/js/modifier-helper.js?v=1.17.2';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -26,8 +26,8 @@ function updateQuantityBadges(quantityBreakdownData) {
 function updateSuperchestProgressBar(superchestRequiredKeys, totalKeys) {
     const progressBar = document.getElementById('superchestProgressBar');
     const spanSuperchestRemainingKeys = document.getElementById('spanSuperchestRemainingKeys');
-    let keysNeeded = calculateKeysForNextSuperchest(superchestRequiredKeys, totalKeys);
-    let nextProgressBarPercent = calculateNextSuperchestProgressPercent(superchestRequiredKeys, totalKeys);
+    const keysNeeded = calculateKeysForNextSuperchest(superchestRequiredKeys, totalKeys);
+    const nextProgressBarPercent = calculateNextSuperchestProgressPercent(superchestRequiredKeys, totalKeys);
 
     spanSuperchestRemainingKeys.textContent = getStrAmount(keysNeeded);
     progressBar.style.width = nextProgressBarPercent + '%';
@@ -35,13 +35,14 @@ function updateSuperchestProgressBar(superchestRequiredKeys, totalKeys) {
 }
 
 function syncData() {
+    const inputCommanderLevel = document.getElementById('inputCommanderLevel');
     const inputFillingRate = document.getElementById('inputFillingRate');
     const inputKeySpent = document.getElementById('inputKeySpent');
     const spanTotalQuantity = document.getElementById('totalQuantity');
     const spanTotalKeys = document.getElementById('totalKeys');
     const spanTotalSuperchests = document.getElementById('totalSuperchests');
     let inputQuantity, spanKeys;
-    let fillingRate = 0;
+    let commanderLevel, fillingRate = 0;
     const quantityBreakdownData = [];
     let quantity = 0, keys = 0;
     let totalQuantity = 0, totalKeys = 0, totalKeySpentForSuperchest = 0, totalSuperchests = 0;
@@ -49,12 +50,18 @@ function syncData() {
     let i, j;
     let superchestRequiredKeys = 0;
 
+    commanderLevel = toInt(inputCommanderLevel.value);
     fillingRate = Math.abs(toFloat(inputFillingRate.value));
 
     for (i = 0; i < DS_BLACK_MARKET.length; i++) {
         for (j = 0; j < DS_BLACK_MARKET[i].length; j++) {
-            if (DS_BLACK_MARKET[i][j].name == 'Superchest') {
+            if (DS_BLACK_MARKET[i][j].name === 'Superchest') {
                 superchestRequiredKeys = DS_BLACK_MARKET[i][j].keys;
+                continue;
+            }
+            else if (DS_BLACK_MARKET[i][j].active === false ||
+                commanderLevel < DS_BLACK_MARKET[i][j].fromLevel ||
+                commanderLevel > DS_BLACK_MARKET[i][j].toLevel) {
                 continue;
             }
 
@@ -88,38 +95,13 @@ function syncData() {
     updateSuperchestProgressBar(superchestRequiredKeys, totalKeySpentForSuperchest);
 }
 
-function resetModifiers() {
-    resetInputs([
-        '#inputFillingRate', '#inputKeySpent'
-    ], 0, syncData);
-}
-
-function resetChests(index) {
-    resetInputs([`#container${TYPES[index]} .quantities`], 0, syncData);
-}
-
-function presetChests(index, chestName) {
-    let inputQuantity;
-    let quantity = 0;
-    let i;
-
-    for (i = 0; i < DS_BLACK_MARKET[index].length; i++) {
-        if (DS_BLACK_MARKET[index][i].name != chestName) {
-            continue;
-        }
-
-        inputQuantity = document.getElementById(`inputQuantity${TYPES[index]}_${i}`);
-        quantity = toInt(inputQuantity.value);
-        inputQuantity.value = quantity + 10;
-    }
-
-    syncData();
-}
-
-function init() {
+function initContainers() {
     const containers = [];
     const containerInnerHTMLs = [];
+    const inputCommanderLevel = document.getElementById('inputCommanderLevel');
+    let commanderLevel = toInt(inputCommanderLevel.value);
     let i, j;
+
 
     for (i = 0; i < TYPES.length; i++) {
         containers.push(document.getElementById(`container${TYPES[i]}`));
@@ -128,7 +110,10 @@ function init() {
 
     for (i = 0; i < DS_BLACK_MARKET.length; i++) {
         for (j = 0; j < DS_BLACK_MARKET[i].length; j++) {
-            if (DS_BLACK_MARKET[i][j].name == 'Superchest') {
+            if (DS_BLACK_MARKET[i][j].active === false ||
+                DS_BLACK_MARKET[i][j].name === 'Superchest' ||
+                commanderLevel < DS_BLACK_MARKET[i][j].fromLevel ||
+                commanderLevel > DS_BLACK_MARKET[i][j].toLevel) {
                 continue;
             }
 
@@ -157,65 +142,135 @@ function init() {
     for (i = 0; i < containers.length; i++) {
         containers[i].innerHTML = containerInnerHTMLs[i];
     }
+}
 
-    // Set click event listener.
-    document.getElementById('mainContainer').addEventListener('click', (e) => {
-        if (e.target.matches('#buttonResetModifiers')) {
-            resetModifiers();
-        }
-        if (e.target.matches('#buttonResetBlackMarketChests')) {
-            resetChests(0);
-        }
-        if (e.target.matches('#buttonPresetChests_0')) {
-            presetChests(0, 'Robots');
-        }
-        if (e.target.matches('#buttonPresetChests_1')) {
-            presetChests(0, 'Weapons');
-        }
-        if (e.target.matches('#buttonPresetChests_2')) {
-            presetChests(0, 'Titans');
-        }
-        if (e.target.matches('#buttonPresetChests_3')) {
-            presetChests(0, 'Pilots');
-        }
-        if (e.target.matches('#buttonPresetChests_4')) {
-            presetChests(0, 'Drones');
-        }
-        if (e.target.matches('#buttonPresetChests_5')) {
-            presetChests(0, 'Ships');
-        }
-        if (e.target.matches('#buttonPresetChests_6')) {
-            presetChests(0, 'Promo (500)');
-        }
-        if (e.target.matches('#buttonPresetChests_7')) {
-            presetChests(0, 'Promo (1000)');
-        }
-        if (e.target.matches('#buttonPresetChests_8')) {
-            presetChests(0, 'Promo (1111)');
-        }
-        if (e.target.matches('#buttonPresetChests_9')) {
-            presetChests(0, 'Promo (2000)');
-        }
-        if (e.target.matches('#buttonPresetChests_10')) {
-            presetChests(0, 'Promo (5555)');
-        }
-        if (e.target.matches('.btn-decrement')) {
-            updateInputValue('-', e.target.dataset.wcTarget);
-        }
-        if (e.target.matches('.btn-increment')) {
-            updateInputValue('+', e.target.dataset.wcTarget);
-        }
+function resetModifiers() {
+    resetInputs(['#inputFillingRate', '#inputKeySpent'], 0);
+    resetInputs(['#inputCommanderLevel'], 30, function () {
+        initContainers();
+        initQuickActions();
+        setListeners();
+        resetChests(0);
     });
-    // Set input event listener.
-    document.getElementById('mainContainer').addEventListener('input', (e) => {
-        if (e.target.matches('.sync-data')) {
-            // Minimum value is 0.
-            if (e.target.value < 0) {
-                e.target.value = 0;
+}
+
+function resetChests(index) {
+    resetInputs([`#container${TYPES[index]} .quantities`], 0, syncData);
+}
+
+function presetChests(index, chestName) {
+    let inputQuantity;
+    let quantity = 0;
+    const inputCommanderLevel = document.getElementById('inputCommanderLevel');
+    let commanderLevel = toInt(inputCommanderLevel.value);
+    let i;
+
+    for (i = 0; i < DS_BLACK_MARKET[index].length; i++) {
+        if (DS_BLACK_MARKET[index][i].active === false ||
+            DS_BLACK_MARKET[index][i].name === 'Superchest' ||
+            DS_BLACK_MARKET[index][i].name !== chestName ||
+            commanderLevel < DS_BLACK_MARKET[index][i].fromLevel ||
+            commanderLevel > DS_BLACK_MARKET[index][i].toLevel
+        ) {
+            continue;
+        }
+
+        inputQuantity = document.getElementById(`inputQuantity${TYPES[index]}_${i}`);
+        quantity = toInt(inputQuantity.value);
+        inputQuantity.value = quantity + 10;
+    }
+
+    syncData();
+}
+
+function initQuickActions() {
+    const containerDynamicQuickActions = document.getElementById('containerDynamicQuickActions');
+    const inputCommanderLevel = document.getElementById('inputCommanderLevel');
+    let commanderLevel = toInt(inputCommanderLevel.value);
+    let buttonPresetClass;
+    let html = '';
+    let index = 0;
+    let i, j;
+
+    // Reset QUICK_ACTIONS.
+    QUICK_ACTIONS.length = 0;
+
+    for (i = 0; i < DS_BLACK_MARKET.length; i++) {
+        for (j = 0; j < DS_BLACK_MARKET[i].length; j++) {
+            if (DS_BLACK_MARKET[i][j].active === false ||
+                DS_BLACK_MARKET[i][j].name === 'Superchest' ||
+                commanderLevel < DS_BLACK_MARKET[i][j].fromLevel ||
+                commanderLevel > DS_BLACK_MARKET[i][j].toLevel) {
+                continue;
             }
-            syncData();
+
+            if (DS_BLACK_MARKET[i][j].name.includes('Promo')) {
+                buttonPresetClass = 'btn btn-sm btn-outline-t4';
+            }
+            else {
+                buttonPresetClass = 'btn btn-sm btn-outline-t1';
+            }
+            html += `<div class="col-auto mt-2"><button type="button" class="${buttonPresetClass}" ` +
+                `id="buttonPresetChests_${index}" data-name="${DS_BLACK_MARKET[i][j].name}">` +
+                `${DS_BLACK_MARKET[i][j].name} x10</button></div>`;
+
+            QUICK_ACTIONS.push(DS_BLACK_MARKET[i][j].name);
+            index++;
         }
-    });
+    }
+    // The reset button.
+    html += '<div class="col-auto mt-2"><button type="button" ' +
+        'class="btn btn-sm btn-outline-danger" id="buttonResetBlackMarketChests">Reset</button></div>';
+
+    containerDynamicQuickActions.innerHTML = html;
+}
+
+function handleMainClick(e) {
+    if (e.target.matches('#buttonResetModifiers')) {
+        resetModifiers();
+    }
+    else if (e.target.matches('#buttonResetBlackMarketChests')) {
+        resetChests(0);
+    }
+    else if (e.target.dataset.name && QUICK_ACTIONS.includes(e.target.dataset.name)) {
+        presetChests(0, e.target.dataset.name);
+    }
+    else if (e.target.matches('.btn-decrement')) {
+        updateInputValue('-', e.target.dataset.wcTarget);
+    }
+    else if (e.target.matches('.btn-increment')) {
+        updateInputValue('+', e.target.dataset.wcTarget);
+    }
+}
+
+function handleMainInput(e) {
+    if (e.target.matches('.sync-data')) {
+        // Minimum value is 0.
+        if (e.target.value < 0) {
+            e.target.value = 0;
+        }
+        syncData();
+    }
+    else if (e.target.matches('.init-data')) {
+        initContainers();
+        initQuickActions();
+        setListeners();
+        resetChests(0);
+    }
+}
+
+function setListeners() {
+    const mainContainer = document.getElementById('mainContainer');
+    mainContainer.removeEventListener('click', handleMainClick);
+    mainContainer.removeEventListener('input', handleMainInput);
+    mainContainer.addEventListener('click', handleMainClick);
+    mainContainer.addEventListener('input', handleMainInput);
+}
+
+function init() {
+    initContainers();
+    initQuickActions();
+    setListeners();
 
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
@@ -225,5 +280,6 @@ function init() {
 
 const TYPES = ['BlackMarketChests'];
 const DS_BLACK_MARKET = [DS_BLACK_MARKET_CHESTS];
+const QUICK_ACTIONS = [];
 
 init();
