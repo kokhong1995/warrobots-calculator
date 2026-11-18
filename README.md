@@ -11,6 +11,7 @@ A modern web application featuring specialized calculators for **War Robots** co
 - **Leaderboard Calculators**
   - [Fight To The Death](https://kokhong1995.github.io/warrobots-calculator/leaderboard/fight-to-the-death.html)
   - [Pilot Rush](https://kokhong1995.github.io/warrobots-calculator/leaderboard/pilot-rush.html)
+  - [Titanic Training](https://kokhong1995.github.io/warrobots-calculator/leaderboard/titanic-training.html)
   - [Titanic Efforts](https://kokhong1995.github.io/warrobots-calculator/leaderboard/titanic-efforts.html)
   - [Stunning Drones](https://kokhong1995.github.io/warrobots-calculator/leaderboard/stunning-drones.html)
 - **Upgrade Cost Calculators**
@@ -53,7 +54,7 @@ Seeing the initial LibreOffice prototype accurately project upgrade costs and po
 
 Got questions, feature requests, or bug reports? Join our Discord community to chat with us and stay updated on new releases!
 
-👉 [Join the War Robots Calculator Discord Server](https://discord.gg/ehZtNgXDHq)
+👉 [Join the War Robots Calculator Discord Server](https://discord.gg/5yrpcY5Z88)
 
 ---
 
