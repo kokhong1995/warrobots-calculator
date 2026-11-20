@@ -1,13 +1,11 @@
-import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.17.2';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.17.2';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.17.7';
+import { resetInputs, updateNumberInput, handleTotalSummaryElement } from '/warrobots-calculator/js/input-helper.js?v=1.17.7';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
 }
 
 function syncData() {
-    const spanTotalQuantity = document.getElementById('totalQuantity');
-    const spanTotalComponents = document.getElementById('totalComponents');
     let inputQuantity, spanComponents;
     let quantity = 0, components = 0;
     let totalQuantity = 0, totalComponents = 0;
@@ -34,9 +32,8 @@ function syncData() {
         }
     }
 
-    spanTotalQuantity.textContent = totalQuantity;
-    spanTotalComponents.textContent = getStrAmount(totalComponents);
-    spanTotalComponents.title = thousandSeperator(totalComponents, ' ') + ' Components';
+    handleTotalSummaryElement('totalQuantity', totalQuantity, 1);
+    handleTotalSummaryElement('totalComponents', totalComponents, 1, ' Components');
 }
 
 function resetUpgrades(index) {

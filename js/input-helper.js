@@ -1,4 +1,4 @@
-import { toInt } from './data-helper.js?v=1.17.2';
+import { toInt, getStrAmount, getStrDuration, thousandSeperator } from './data-helper.js?v=1.17.7';
 
 const resetInputs = (selectors, value = '', callback) => {
     let i, j;
@@ -39,4 +39,37 @@ const updateNumberInput = (eventType, inputId, callback) => {
     }
 };
 
-export { resetInputs, updateNumberInput };
+const handleTotalSummaryElement = (id, value, formatMethod, postfix, discountDetails) => {
+    const element = document.getElementById(id);
+
+    if (formatMethod === 1) {
+        element.textContent = getStrAmount(value);
+    }
+    else if (formatMethod === 2) {
+        element.textContent = getStrDuration(value);
+    }
+    else {
+        element.textContent = value;
+    }
+
+    if (typeof postfix === 'string' && postfix.trim().length > 0) {
+        element.title = thousandSeperator(value, ' ') + postfix;
+    }
+
+    if (typeof discountDetails === 'object' && discountDetails !== null && (!Array.isArray(discountDetails))) {
+        const discountElement = document.getElementById(id + 'Saved');
+
+        if (discountDetails.totalValueSaved > 0 && discountDetails.discountPercentage > 0) {
+            discountElement.textContent = `Saved ${getStrAmount(discountDetails.totalValueSaved)} (${discountDetails.discountPercentage}%)`;
+            discountElement.title = `Saved ${thousandSeperator(discountDetails.totalValueSaved, ' ')} (${discountDetails.discountPercentage}%)`;
+            discountElement.classList.remove('d-none');
+        }
+        else {
+            discountElement.textContent = '';
+            discountElement.title = '';
+            discountElement.classList.add('d-none');
+        }
+    }
+};
+
+export { resetInputs, updateNumberInput, handleTotalSummaryElement };

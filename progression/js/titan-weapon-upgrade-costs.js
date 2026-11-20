@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.17.2';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.17.2';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.17.2';
+import { toInt, thousandSeperator, getStrAmount } from '/warrobots-calculator/js/data-helper.js?v=1.17.7';
+import { resetInputs, updateNumberInput, handleTotalSummaryElement } from '/warrobots-calculator/js/input-helper.js?v=1.17.7';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.17.7';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -8,12 +8,10 @@ function updateInputValue(eventType, inputId) {
 
 function syncData() {
     const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
-    const spanTotalQuantity = document.getElementById('totalQuantity');
-    const spanTotalPlatinumAmount = document.getElementById('totalPlatinumAmount');
     let inputQuantity, spanPlatinumAmount;
     let upgradeDiscountPercentage = 0;
     let quantity = 0, platinumAmount = 0;
-    let totalQuantity = 0, totalPlatinumAmount = 0;
+    let totalQuantity = 0, totalPlatinumAmount = 0, totalPlatinumAmountSaved = 0;
     let i, j;
 
     upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
@@ -35,13 +33,18 @@ function syncData() {
                 spanPlatinumAmount.textContent = getStrAmount(platinumAmount);
                 spanPlatinumAmount.parentElement.title = thousandSeperator(platinumAmount, ' ') + ' Platinum';
                 totalPlatinumAmount += platinumAmount;
+                if (upgradeDiscountPercentage > 0) {
+                    totalPlatinumAmountSaved += (DS_TITAN_WEAPON_UPGRADE_COSTS[i][j]['upgradeCost']['value'] * quantity) - platinumAmount;
+                }
             }
         }
     }
 
-    spanTotalQuantity.textContent = totalQuantity;
-    spanTotalPlatinumAmount.textContent = getStrAmount(totalPlatinumAmount);
-    spanTotalPlatinumAmount.title = thousandSeperator(totalPlatinumAmount, ' ') + ' Platinum';
+    handleTotalSummaryElement('totalQuantity', totalQuantity, 1);
+    handleTotalSummaryElement('totalPlatinumAmount', totalPlatinumAmount, 1, ' Platinum', {
+        totalValueSaved: totalPlatinumAmountSaved,
+        discountPercentage: upgradeDiscountPercentage
+    });
 }
 
 function resetModifiers() {

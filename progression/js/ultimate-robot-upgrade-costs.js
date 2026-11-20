@@ -1,6 +1,6 @@
-import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.17.2';
-import { resetInputs, updateNumberInput } from '/warrobots-calculator/js/input-helper.js?v=1.17.2';
-import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.17.2';
+import { toInt, thousandSeperator, getStrLevel, getStrAmount, getStrDuration } from '/warrobots-calculator/js/data-helper.js?v=1.17.7';
+import { resetInputs, updateNumberInput, handleTotalSummaryElement } from '/warrobots-calculator/js/input-helper.js?v=1.17.7';
+import { applyUpgradeDiscountPercentage } from '/warrobots-calculator/js/modifier-helper.js?v=1.17.7';
 
 function updateInputValue(eventType, inputId) {
     updateNumberInput(eventType, inputId, syncData);
@@ -8,13 +8,11 @@ function updateInputValue(eventType, inputId) {
 
 function syncData() {
     const inputUpgradeDiscountPercentage = document.getElementById('inputUpgradeDiscountPercentage');
-    const spanTotalQuantity = document.getElementById('totalQuantity');
-    const spanTotalSilverAmount = document.getElementById('totalSilverAmount');
-    const spanTotalUpgradeTokens = document.getElementById('totalUpgradeTokens');
     let inputQuantity, spanSilverAmount, spanUpgradeTokens;
     let upgradeDiscountPercentage = 0;
     let quantity = 0, silverAmount = 0, upgradeTokens = 0;
     let totalQuantity = 0, totalSilverAmount = 0, totalUpgradeTokens = 0;
+    let totalSilverAmountSaved = 0;
     let i, j;
 
     upgradeDiscountPercentage = Math.abs(toInt(inputUpgradeDiscountPercentage.value));
@@ -36,6 +34,9 @@ function syncData() {
                 spanSilverAmount.textContent = getStrAmount(silverAmount);
                 spanSilverAmount.parentElement.title = thousandSeperator(silverAmount, ' ') + ' Silver';
                 totalSilverAmount += silverAmount;
+                if (upgradeDiscountPercentage > 0) {
+                    totalSilverAmountSaved += (DS_ULTIMATE_ROBOT_UPGRADE_COSTS[i][j]['upgradeCost']['value'] * quantity) - silverAmount;
+                }
             }
             else if (DS_ULTIMATE_ROBOT_UPGRADE_COSTS[i][j]['upgradeCost']['currency'] == 'UpgradeToken') {
                 spanUpgradeTokens = document.getElementById(`spanUpgradeTokens${TYPES[i]}_${j}`);
@@ -47,11 +48,12 @@ function syncData() {
         }
     }
 
-    spanTotalQuantity.textContent = totalQuantity;
-    spanTotalSilverAmount.textContent = getStrAmount(totalSilverAmount);
-    spanTotalSilverAmount.title = thousandSeperator(totalSilverAmount, ' ') + ' Silver';
-    spanTotalUpgradeTokens.textContent = getStrAmount(totalUpgradeTokens);
-    spanTotalUpgradeTokens.title = thousandSeperator(totalUpgradeTokens, ' ') + ' Upgrade Tokens';
+    handleTotalSummaryElement('totalQuantity', totalQuantity, 1);
+    handleTotalSummaryElement('totalSilverAmount', totalSilverAmount, 1, ' Silver', {
+        totalValueSaved: totalSilverAmountSaved, 
+        discountPercentage: upgradeDiscountPercentage
+    });
+    handleTotalSummaryElement('totalUpgradeTokens', totalUpgradeTokens, 1, ' Upgrade Tokens');
 }
 
 function resetModifiers() {
