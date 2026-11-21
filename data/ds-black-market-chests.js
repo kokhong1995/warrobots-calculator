@@ -125,6 +125,14 @@ const DS_BLACK_MARKET_CHESTS = [
         toLevel: 30,
         keys: 500,
         eventSpecific: true,
+        active: false
+    },
+    {
+        name: 'Promo (1000)',
+        fromLevel: 6,
+        toLevel: 30,
+        keys: 1000,
+        eventSpecific: true,
         active: true
     }
 ];
